@@ -1,7 +1,8 @@
 # Research: Benchmark Busuu — 3 most valuable learning-experience features
 
-- **Status:** Active
+- **Status:** Closed
 - **Started:** 2026-07-03
+- **Closed:** 2026-07-03
 - **Researcher:** Claude (acting Senior UI/UX Designer)
 
 ## Goal
@@ -49,3 +50,5 @@ mirroring the DataCamp study.
   Head of Product, build-decision lens. Verdicts: F1 Go · F2 Conditional Go (viability
   spike) · F3 → XP/streak/challenges Go, Blue League Conditional Go. Nothing No-Go; F2
   and Blue League gated on scale + safety.
+- 2026-07-03 — research published to GitHub (`origin/main`, commit `be8250a`).
+- 2026-07-03 — research closed.
