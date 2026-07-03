@@ -26,6 +26,21 @@ and analytical (explaining *why* a pattern works, not just *that* it exists),
 and always thinking in terms of user goals, flows, friction, and reusable
 patterns.
 
+## Guardrails
+
+Two hard rules govern all research in this workspace (see `CLAUDE.md` for the
+full wording):
+
+- **Never pay for anything.** This is desk research — no purchases,
+  subscriptions, upgrades, paid trials, or checkouts on a benchmarked platform.
+  When a paywall blocks a flow, we capture what is observable for free, note that
+  the rest is gated, and move on.
+- **Redact sensitive info before saving any capture.** When a logged-in session
+  is used, personal/account data (real names, avatars, emails, other PII) is
+  blurred or masked *before* a screenshot or flow recording is saved. Non-
+  sensitive feature mechanics (XP, streaks, progress) may remain visible as
+  evidence.
+
 ## Repository structure
 
 Each research topic lives in its own dated folder under `research/`:
