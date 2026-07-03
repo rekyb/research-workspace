@@ -12,9 +12,17 @@ Follow these steps exactly:
    STOP and tell the user there's an open research (`<path>`); ask them to run
    `/close-research` first, or confirm they want to switch anyway.
 
-2. **Derive the slug.** Lowercase the topic, replace spaces/punctuation with hyphens,
-   collapse repeats, trim. Get today's date with `date +%F`.
-   Folder path = `research/<YYYY-MM-DD>-<slug>/`.
+2. **Derive the slug.** Build it defensively from the topic:
+   - lowercase everything;
+   - strip quotes, apostrophes, brackets, and other punctuation entirely (don't
+     turn them into hyphens — `"users' data"` → `users-data`, not `users--data`);
+   - replace any run of spaces/remaining separators with a single hyphen;
+   - collapse repeated hyphens and trim leading/trailing hyphens;
+   - keep it concise — if the topic is a long sentence, use the meaningful head
+     (roughly the first 5–6 words / ~50 chars), not the whole thing.
+
+   Get today's date with `date +%F` (or the harness-provided current date if
+   available). Folder path = `research/<YYYY-MM-DD>-<slug>/`.
 
 3. **Scaffold the folder:**
    - `research/<...>/platforms/` (empty; one subfolder per platform gets added later)
