@@ -41,12 +41,38 @@ full wording):
   sensitive feature mechanics (XP, streaks, progress) may remain visible as
   evidence.
 
+## Requirements & setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/rekyb/research-workspace.git
+cd research-workspace
+```
+
+This is a research/automation workspace rather than a buildable app — there is no
+package to compile. What you need is the tooling that runs the research and
+produces its artifacts:
+
+| Tool | Used for | Notes |
+|---|---|---|
+| **Claude Code** | Runs the workflow commands (`/new-research`, `/synth-findings`, `/close-research`) and drives the research. | The workspace is designed to be operated through it; see `CLAUDE.md`. |
+| **Google Chrome** + **Claude-in-Chrome** tools | Browsing benchmarked platforms and capturing evidence (screenshots, recorded flows). | Chrome installed at `/usr/bin/google-chrome`. |
+| **Python 3** | Runs the helper scripts below. | Standard CPython 3. |
+| ├─ **python-docx** | Markdown → `.docx` export via `.claude/scripts/md_to_docx.py` (used by `/synth-findings --docx`). | `pip install python-docx`. **`pandoc` is *not* used.** |
+| └─ **Pillow (PIL)** | Extracting PNG stills from recorded flow GIFs into `screenshots/`. | `pip install Pillow`. |
+| **git** + **GitHub CLI (`gh`)** | Version control and pushing evidence to the remote. | Auth handled by `gh auth login`; the remote is `research-workspace`. |
+
+> Nothing here transacts or installs system packages on its own. Evidence capture
+> uses a logged-in browser session you control; personal data is redacted before
+> anything is saved (see **Guardrails**).
+
 ## Repository structure
 
 Each research topic lives in its own dated folder under `research/`:
 
 ```
-core-feature-research/
+research-workspace/
 ├── README.md                       # this file
 ├── CLAUDE.md                       # authoritative project brief & working rules
 ├── .claude/
@@ -121,6 +147,9 @@ draws from.
 - **Browsing & capture:** the Claude-in-Chrome MCP tools (`navigate`,
   `computer`, `read_page`, `gif_creator`, …). Chrome is installed at
   `/usr/bin/google-chrome`.
+- **Screenshots:** the core flow is recorded as a GIF and downloaded, then key
+  frames are extracted to numbered PNGs via **Pillow (PIL)** — redaction is
+  applied in-page before capture, so saved frames carry no PII.
 - **Word export:** `pandoc` is *not* installed. `.docx` files are generated
   from Markdown via `python-docx` using `.claude/scripts/md_to_docx.py`.
 - Temporary and working files stay in the session scratchpad — never inside a
