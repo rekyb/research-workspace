@@ -1,4 +1,4 @@
-# Core Feature Research
+# Research Workspace
 
 ## What this project is
 

@@ -1,4 +1,4 @@
-# Core Feature Research
+# Research Workspace
 
 > A secondary desk-research / benchmarking workspace that studies how existing
 > products solve UX and product problems, and turns those observations into
