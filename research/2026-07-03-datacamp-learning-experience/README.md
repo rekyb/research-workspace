@@ -27,3 +27,5 @@ why it works, so the findings can inform our own learning-product design.
 - 2026-07-03 — DataCamp benchmarked (logged-in Basic account); captured core
   learning flow (`flow.gif` + screenshots `01`–`08`), notes, and sources.
 - 2026-07-03 — synthesis written (`SYNTHESIS.md`): 3 features identified.
+- 2026-07-03 — agent review recorded (`SYNTHESIS.md` › Agent Review): PM / Tech Lead /
+  Head of Product, build-decision lens.

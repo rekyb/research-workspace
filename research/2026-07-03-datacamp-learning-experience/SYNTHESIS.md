@@ -170,3 +170,106 @@ Together they answer "why open the app today?" and "why is it worth resuming?".
 - The AI Tutor's live conversation UI loads in an embedded frame that did not
   expand in this session; its value proposition and entry points are captured, but
   a full tutor dialogue was not recorded.
+
+---
+
+## Agent Review
+
+*Recorded 2026-07-03 · three chained stakeholder personas (PM → Tech Lead → Head of
+Product) reviewing the three synthesized features. Judged with a **build-decision lens**
+(is this worth building / how feasible), grounded in the captured evidence above; no new
+findings introduced.*
+
+### Product Manager — product-side soundness
+- **F1 Exercise player — Sound.** Right feature for the goal, tightest loop, best-grounded
+  rationale; evidence (04/06/`flow.gif`) backs every claim. Caveat: the ranking rests on
+  learning-science priors, not DataCamp engagement data — treat as a hypothesis. One
+  validation arm (vs. video-only) is a lab study, not live analytics.
+- **F2 In-context help — Needs refinement.** The priced hint ladder is sound and shipping,
+  but the feature **bundles a verified mechanic with an unverified one**: the AI Tutor was
+  never actually observed (embedded frame never expanded). The "AI Assistant" is really a
+  *discovery* surface mis-filed under in-exercise help. Split them.
+- **F3 Motivation & retention — Needs refinement.** Over-bundled: habit (XP/streak),
+  competition (leaderboard), and context-rebuilding (AI recap) are different jobs. The
+  recap is arguably a *learning-effectiveness* feature, mis-filed under motivation.
+  Leaderboard has a demotivation tail for beginners; XP-gaming risk. Validation is strong
+  but the streak effect is confounded by self-selection.
+- **Cross-cutting:** "AI" groups features by *technology, not user job*; there is **no user
+  segmentation** (beginner vs. career-switcher vs. returning); F1 and F3 share the live-XP
+  surface (not cleanly separable); single-platform, no engagement data, and the
+  deepest/most-valuable surfaces were paywalled and never seen — so the priority order is
+  informed opinion, not measured demand.
+
+### Tech Lead — implementation feasibility
+- **F1 — High.** UI/editor/REPL is Medium and off-the-shelf (Monaco/CodeMirror + websocket
+  shell), but the real project is **sandboxed execution of untrusted user code**
+  (server-side microVM/gVisor *or* client-side Pyodide/WASM), with security review,
+  abuse/DoS protection, and per-user infra cost. Grading needs a test-harness + a
+  per-exercise content pipeline that scales with catalog size. *Top risk: the code sandbox.*
+- **F2 — Split: hints Low, AI Tutor/Assistant High.** Hints/Show Answer/Y-N are authored
+  content + a counter (zero ML, ships on F1's content schema). The AI surfaces are recurring
+  LLM inference OPEX, must be grounded to the learner's actual code, and carry
+  latency/hallucination/eval/safety cost — and the Tutor's scope is a *guess* because it was
+  never observed. *Top risk: unbounded, unspecced AI work.*
+- **F3 — Medium overall.** XP/streak/totals Low–Med (watch the timezone streak bug); Bit
+  League leaderboard Medium (ranking store, weekly rollover, peer-PII); **AI recap is High —
+  same AI cost profile as the Tutor, mis-filed under motivation.** *Top risk: the shared
+  real-time XP state (below).*
+- **Cross-cutting architecture:** model XP as **one shared event-stream/ledger service** — a
+  P0 dependency to decide *before* splitting teams. Done right it powers F1's live counter,
+  F2's penalty, and F3's totals/leaderboard from one substrate (net effort-saver); done
+  wrong it causes race conditions and counter/leaderboard disagreement.
+
+### Head of Product — business judgment (decides last)
+- **F1 — Go.** This is the core product, not a feature; strategic fit is total. Scope v1 to a
+  **narrow single-language track (client-side WASM where feasible)** to prove the loop before
+  buying a microVM fleet. The sandbox decision *is* the project — make it deliberately, with
+  security review.
+- **F2 — Split:** **Hint ladder / Show Answer / Y-N → Go** (cheap early win, bundle with F1).
+  **AI Tutor / AI Assistant → Conditional Go** — condition: (a) actually observe the surface
+  before speccing, and (b) it rides the shared AI grounding pipeline (P1), not a bespoke
+  build. Re-file the AI Assistant out of "help."
+- **F3 — Split:** **XP + Daily Streak → Go** (fix the timezone bug up front; retention
+  backbone). **Bit League leaderboard → Conditional Go** — ships with opt-out / cohort-banding
+  and validates the demotivation tail before scaling; not first. **AI recap → Conditional Go
+  (P1)** — re-file under learning-effectiveness; gate behind the shared AI pipeline, don't
+  fund a second bespoke AI surface.
+- **Sequencing:** **P0** — XP ledger/event-stream + F1 sandbox model (decide before splitting
+  teams). **P1** — F1 exercise UI, authored hints, XP/streak (cheap wins on the ledger).
+  **P2** — leaderboard (banded/opt-out). **P3** — AI tier (Tutor, Assistant, recap) on one
+  shared grounding pipeline, behind cost/eval/safety gates.
+- **Overall verdict:** one core product (F1) plus cheap high-leverage wrappers (hints, XP,
+  streak) on a shared backbone, and a separate, expensive, under-observed AI tier to treat as
+  funded experiments — not commitments. **Single most important next step: lock the XP
+  ledger/event-stream architecture and the F1 sandbox model as the two P0 decisions.**
+
+### Consolidated verdict
+
+| Feature | PM | Tech Lead | Head of Product |
+|---|---|---|---|
+| **F1 — Exercise player** | Sound | High (sandbox) | **Go** |
+| **F2 — Hint ladder** | Sound (split out) | Low | **Go** |
+| **F2 — AI Tutor / Assistant** | Needs refinement (unobserved) | High | **Conditional Go** (observe + shared AI pipeline) |
+| **F3 — XP + streak** | Sound (split out) | Low–Med | **Go** |
+| **F3 — Bit League leaderboard** | Needs refinement | Medium | **Conditional Go** (opt-out/banding, validate first) |
+| **F3 — AI recap** | Needs refinement (mis-filed) | High | **Conditional Go** (re-file, shared AI pipeline) |
+
+### Legend
+
+**PM — soundness:** **Sound** = right feature for the user goal, well-scoped and coherent →
+ship/validate as-is · **Needs refinement** = valuable but has scope, framing, or evidence gaps
+to resolve before committing · **Reject** = not the right feature for the goal, or not worth
+pursuing.
+
+**Tech Lead — build effort:** **Low** = authored content/config or standard components; no
+novel infra or ML · **Medium** = non-trivial but well-trodden engineering (state, scheduling,
+aggregation); no major new risk surface · **High** = a major workstream — novel infra, a
+security surface, or recurring ML/inference cost plus eval.
+
+**Head of Product — call:** **Go** = build it; clear impact and fit · **Conditional Go** =
+pursue only once a stated condition is met (condition named inline) · **No-Go** = do not build
+now.
+
+**Flagged as high-risk / gated:** every AI surface (Tutor, Assistant, recap) — high recurring
+cost, and the Tutor was never actually observed; and F1's untrusted-code sandbox is the biggest
+hidden build cost. Nothing was rated No-Go.
