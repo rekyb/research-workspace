@@ -66,8 +66,11 @@ on dashboard (`01-dashboard-learning-hub.png`).
   **progressive** and **priced**: learners get unstuck without leaving the flow,
   but the XP economy nudges them to try first. Each hint also asks "Was this
   helpful? Yes/No" (feedback loop for hint quality).
-- Separately, an **AI Tutor** (top nav) and **AI Assistant** chat (OpenAI-powered)
-  offer contextual Q&A / "suggest a track" / "help me find something to learn".
+- Separately, an **AI Tutor** (top nav, screenshot `07-ai-tutor-intro.png`) is
+  positioned as *"your personal AI tutor — uniquely yours, always hands-on, built
+  around the work you actually do."* An **AI Assistant** chat popup (OpenAI-powered)
+  also offers "Suggest a track based on my career goals" / "Help me find something
+  to learn" / course Q&A.
 
 Why it stands out: removes the #1 reason self-learners quit (getting stuck) while
 protecting the productive struggle that makes learning stick.
@@ -90,17 +93,24 @@ Evidence: `01-dashboard-learning-hub.png` (+ in-player "Daily XP" counter).
 
 - **XP** per exercise/lesson; **Daily Streak** counter (habit loop); **Total XP**.
 - **Leaderboard / weekly "Bit League"** — a time-boxed XP competition ("Gain 250XP
-  to enter this week's Bit League", "3 days left to join") = social + urgency.
+  to enter this week's Bit League", "3 days left to join") = social + urgency. Once
+  entered, it shows a ranked table with your position among peers (screenshot
+  `08-leaderboard-bit-league.png`: rank 20, surrounded by peers on equal XP —
+  other learners' names blurred per guardrails). Completing one exercise moved
+  Total XP 200 → 270 and course progress 10% → 14%, all reflected live.
 
 Why it stands out: converts diffuse "I should learn" intent into a daily habit and
 a visible, competitive progress signal.
 
 ---
 
-## Provisional top 3 (to confirm)
-1. **Interactive learn-by-doing exercise player with instant feedback** (A).
-2. **In-context, progressive help** — scaffolded hints + AI Tutor (B).
+## Confirmed top 3
+1. **Interactive learn-by-doing exercise player with instant feedback** (A) — the
+   single most valuable feature; it is where actual learning happens.
+2. **In-context, progressive help** — scaffolded hints (XP-priced) + AI Tutor (B).
 3. **Motivation & retention system** — XP / streak / Bit League leaderboard (D),
-   reinforced by the personalised recap (C).
+   reinforced by the AI personalised recap (C).
 
-Still to capture for confidence: AI Tutor interior, leaderboard/Bit League detail.
+Evidence base: `flow.gif` + screenshots `01`–`08`, sources logged. All captures
+redacted; no paid features purchased (Basic account; paywalled depth noted where
+hit, e.g. upgrade prompts on tracks/DataLab).
