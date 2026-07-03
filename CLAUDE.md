@@ -97,12 +97,33 @@ because captures can contain personal data and the remote may be public.
 
 When benchmarking a platform (use the Claude-in-Chrome browser tools):
 
+0. **Redact BEFORE you capture** (required whenever a logged-in session is used).
+   Never save a frame showing personal data. *Before* taking a screenshot or
+   starting a `gif_creator` recording, inject CSS/JS to hide PII **by role /
+   position, not by known strings**:
+   - blur avatars / profile photos, and mask the account holder's name and email;
+   - **critically, blur third-party PII** on social surfaces — leaderboards,
+     comments, community, "others learning this" — where other people's names
+     appear. You can't predict those from a hard-coded value, so target the name
+     *slots* (the list/row cells) themselves.
+   - keep non-sensitive mechanics visible (XP, streaks, progress bars) as evidence.
+
+   Re-apply after every navigation/re-render, and **verify the redaction in the
+   captured image** before saving. Reuse a `window.__redact()` helper that blurs
+   avatar images, name/email nodes, and social-list name cells. See **Guardrails**.
 1. **Screenshots** — capture each key screen of the relevant flow. Save to
    `platforms/<platform>/screenshots/` with descriptive, numbered names
    (`01-onboarding.png`, `02-empty-state.png`, …).
-2. **Flow recording** — record the core user flow as a GIF (`flow.gif`) using
-   the `gif_creator` tool. Capture a few extra frames before/after each action
-   for smooth playback.
+   *Getting stills onto disk:* the Claude-in-Chrome screenshot tool does **not**
+   persist a committable file, so record the flow as a GIF (step 2), export it
+   with `download: true`, and extract the key frames to PNG with **Pillow**. For
+   clean stills, export with overlays off (`showClickIndicators:false`,
+   `showWatermark:false`); keep overlays on for the flow GIF itself.
+2. **Flow recording** — record the core user flow as a GIF (`flow.gif`) using the
+   `gif_creator` tool. Capture a few extra frames before/after each action for
+   smooth playback. **Optimize before publishing:** if `flow.gif` exceeds ~3 MB,
+   downscale it to ~1280px wide and/or reduce its palette with **Pillow**
+   (no `ffmpeg` / ImageMagick / gifsicle is installed) so the repo stays light.
 3. **Notes** — in `platforms/<platform>/notes.md`, log the step-by-step user
    flow, what stood out, and the source URL(s).
 4. **Sources** — append every URL you visit to the research-level `sources.md`
@@ -130,7 +151,11 @@ source) it draws from.
 
 - **Browsing & capture:** Claude-in-Chrome MCP tools (`navigate`, `computer`,
   `read_page`, `gif_creator`, …). Chrome is installed at `/usr/bin/google-chrome`.
+- **Image handling:** `Pillow` (PIL) is available for extracting PNG stills from
+  flow GIFs and for downscaling/optimizing GIFs. `ffmpeg`, ImageMagick, and
+  gifsicle are NOT installed — use Pillow.
 - **Word export:** `pandoc` is NOT installed. `.docx` is generated via
-  `python-docx` using `.claude/scripts/md_to_docx.py`.
+  `python-docx` using `.claude/scripts/md_to_docx.py`. (Note: that script renders
+  text/lists/tables but does not embed images.)
 - Save any temporary/working files to the session scratchpad, never into a
   research folder unless it is real evidence.
