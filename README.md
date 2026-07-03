@@ -105,6 +105,7 @@ run `/close-research` before starting the next, or `/new-research` will warn you
 |---|---|
 | `/new-research <topic>` | Creates a new dated research folder, scaffolds it, and marks it active. |
 | `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` (add `--docx` for a Word copy). |
+| `/review-research` | Reviews `SYNTHESIS.md` through three stakeholder personas (PM, Tech Lead, Head of Product) and — on approval — records an `## Agent Review` section. |
 | `/close-research` | Verifies synthesis exists, marks the research closed, and clears the active pointer. |
 | `/publish-research [-m "msg"]` | Safety-checks captures for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
 
