@@ -37,11 +37,32 @@ Steps:
    Be analytical and opinionated, as a Senior UI/UX Designer. Do not invent findings
    or sources — everything must trace back to captured evidence.
 
-4. **Optional docx.** If `$ARGUMENTS` contains `--docx`, run:
+4. **Principal Researcher QA pass (quality gate — before `/review-research`).**
+   Dispatch the Principal Researcher as a subagent (Agent tool, `general-purpose`) in
+   synthesis-QA mode, handing it the persona spec at
+   `.claude/personas/principal-researcher.md` (Mode B), the freshly written
+   `SYNTHESIS.md`, the `README.md` (goal/scope), and every `platforms/*/notes.md`.
+   It will:
+   - **review** each feature for the five required fields, evidence grounding (no
+     fabrication), testable validation steps, and gaps/overlaps;
+   - **auto-fix prose** directly in `SYNTHESIS.md` and every `platforms/*/notes.md` —
+     rewrite AI-slop sentences and remove em-dashes, changing no findings, numbers, or
+     citations (style only; meaning preserved);
+   - **flag content problems as inline `> [Principal Researcher] …` annotations**
+     (never silently editing substance) and append a dated
+     `## Principal Researcher QA — <date>` record to `SYNTHESIS.md`.
+
+   Do this **before** the docx export so the cleaned, annotated version is what gets
+   exported. Relay the agent's readiness verdict and flagged items to the user — those
+   are what they resolve before running `/review-research`.
+
+5. **Optional docx.** If `$ARGUMENTS` contains `--docx`, run:
    `python3 .claude/scripts/md_to_docx.py "<research-folder>/SYNTHESIS.md"`
    and confirm the `.docx` path to the user.
 
-5. **Update the log** in the research `README.md` with a dated "synthesis written" entry.
+6. **Update the log** in the research `README.md` with a dated "synthesis written" entry
+   (note that the Principal Researcher QA pass ran, with the flagged-item count).
 
-6. **Report** to the user: how many features were synthesized, the file path(s), and
-   any gaps you noticed (platforms with thin evidence).
+7. **Report** to the user: how many features were synthesized, the file path(s), the
+   Principal Researcher's readiness verdict, the content items it flagged for
+   resolution, and any gaps you noticed (platforms with thin evidence).

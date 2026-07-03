@@ -46,6 +46,7 @@ Each research topic lives in its own folder:
 ```
 research/YYYY-MM-DD-<slug>/
 ├── README.md              # brief: goal, scope, platforms, status
+├── PLAN.md                # research plan (reviewed & approved before capture)
 ├── sources.md             # running log of every URL visited (with date)
 ├── platforms/
 │   └── <platform-name>/
@@ -58,6 +59,28 @@ research/YYYY-MM-DD-<slug>/
 The **currently active** research is tracked in `.claude/.active-research`
 (a pointer file holding the folder path). The workflow commands read/write it
 so you rarely need to name the folder explicitly.
+
+### Principal Researcher (quality gate)
+
+A senior review persona (`.claude/personas/principal-researcher.md`), dispatched
+as a subagent at two points, guards research quality. It never browses; it judges
+what is on disk against the stated goal:
+
+- **In `/new-research`** — it reviews the drafted `PLAN.md` before any capture
+  begins, so fieldwork only starts against a sound, goal-aligned plan the user has
+  approved.
+- **In `/synth-findings`** — after `SYNTHESIS.md` is written it runs a QA pass:
+  auto-cleans the prose (rewrites AI-slop, removes em-dashes in the research
+  outputs only), flags content/evidence problems as inline annotations for the
+  human to resolve, and records a readiness verdict. It never silently changes a
+  finding — substance is flagged, not edited. This readies the synthesis before
+  `/review-research`.
+
+The three `/review-research` stakeholder personas live in the same directory —
+`.claude/personas/product-manager.md`, `tech-lead.md`, and `head-of-product.md`.
+Each spec is the single source of a persona's remit, verdict scale, and
+guardrails; the command dispatches them (chained, so they cross-talk) rather than
+inlining their instructions.
 
 ## Workflow commands
 

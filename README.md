@@ -56,7 +56,7 @@ produces its artifacts:
 
 | Tool | Used for | Notes |
 |---|---|---|
-| **Claude Code** | Runs the workflow commands (`/new-research`, `/synth-findings`, `/close-research`) and drives the research. | The workspace is designed to be operated through it; see `CLAUDE.md`. |
+| **Claude Code** | Runs the workflow commands (`/new-research`, `/synth-findings`, `/review-research`, `/close-research`, `/publish-research`) and drives the research. | The workspace is designed to be operated through it; see `CLAUDE.md`. |
 | **Google Chrome** + **Claude-in-Chrome** tools | Browsing benchmarked platforms and capturing evidence (screenshots, recorded flows). | Chrome installed at `/usr/bin/google-chrome`. |
 | **Python 3** | Runs the helper scripts below. | Standard CPython 3. |
 | ├─ **python-docx** | Markdown → `.docx` export via `.claude/scripts/md_to_docx.py` (used by `/synth-findings --docx`). | `pip install python-docx`. **`pandoc` is *not* used.** |
@@ -77,12 +77,14 @@ research-workspace/
 ├── CLAUDE.md                       # authoritative project brief & working rules
 ├── .claude/
 │   ├── .active-research            # pointer to the currently active research folder
-│   ├── commands/                   # workflow commands (new / synth / close)
+│   ├── commands/                   # workflow commands (new / synth / review / close / publish)
+│   ├── personas/                   # reviewer subagent specs (principal-researcher, PM, tech-lead, head-of-product)
 │   └── scripts/
 │       └── md_to_docx.py           # Markdown → .docx export (python-docx)
 └── research/
     └── YYYY-MM-DD-<slug>/
         ├── README.md               # brief: goal, scope, platforms, status
+        ├── PLAN.md                 # research plan (reviewed & approved before capture)
         ├── sources.md              # running log of every URL visited (with date)
         ├── platforms/
         │   └── <platform-name>/
@@ -111,6 +113,14 @@ warn you.
 | `/review-research` | Reviews `SYNTHESIS.md` through three stakeholder personas (PM, Tech Lead, Head of Product) and — on approval — records an `## Agent Review` section. |
 | `/close-research` | Verifies synthesis exists, marks the research closed, and clears the active pointer. |
 | `/publish-research [-m "msg"]` | Safety-checks captures for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
+
+A **Principal Researcher** review persona
+(`.claude/personas/principal-researcher.md`) runs as a subagent quality gate at
+two points: it reviews the research `PLAN.md` before capture begins (inside
+`/new-research`), and it QA-checks the finished `SYNTHESIS.md` (inside
+`/synth-findings`) — auto-cleaning the prose (AI-slop and em-dashes in the
+research outputs), flagging content problems as inline annotations for you to
+resolve, and never silently changing a finding.
 
 ## Capture standards
 
@@ -145,7 +155,7 @@ draws from.
 
 | Research | Started | Status |
 |---|---|---|
-| [DataCamp — 3 most valuable learning-experience features](research/2026-07-03-datacamp-learning-experience/) | 2026-07-03 | Active (in progress) |
+| [DataCamp — 3 most valuable learning-experience features](research/2026-07-03-datacamp-learning-experience/) | 2026-07-03 | Closed |
 
 ## Tooling notes
 

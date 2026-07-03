@@ -39,30 +39,27 @@ already in the research folder — **do not invent evidence, metrics, or finding
    reviewing — the review is only meaningful against an explicit goal.
 
 3. **Run the three personas as separate subagents, chained so they can cross-talk.**
-   Dispatch them **sequentially** with the Agent tool (`general-purpose`), passing each
-   later persona the full text of the earlier personas' reviews so they can agree with,
-   build on, or challenge each other. Order and remit:
+   Each persona is defined in its own spec under `.claude/personas/` — dispatch it
+   with the Agent tool (`general-purpose`), handing it its spec file plus the ground
+   truth from step 2. Run them **sequentially**, passing each later persona the full
+   text of the earlier personas' reviews so they can agree with, build on, or
+   challenge each other. Order and specs:
 
-   1. **Product Manager (PM) — product-side soundness.** Are these the right features
-      for the stated user goal? Is each feature well-scoped, coherent, and framed around
-      a real user problem? Flag gaps, overlaps, weak problem statements, missing user
-      segments, and whether the "how to validate" step for each feature is actually
-      testable. Verdict per feature: **Sound / Needs refinement / Reject**, with reasons.
+   1. **Product Manager (PM)** — `.claude/personas/product-manager.md`. Product-side
+      soundness. Verdict per feature: **Sound / Needs refinement / Reject**.
 
-   2. **Tech Lead — implementation feasibility.** Given each feature as described, how
-      hard is it to build? Call out technical complexity, dependencies, data/ML needs
-      (e.g. an AI tutor implies models + eval), platform/infra assumptions, and risks.
-      This persona has read the PM's review and may agree or push back on it. Verdict per
-      feature: **Low / Medium / High build effort**, plus the top feasibility risk.
+   2. **Tech Lead** — `.claude/personas/tech-lead.md`. Implementation feasibility;
+      has read the PM's review. Verdict per feature: **Low / Medium / High build
+      effort**, plus the top feasibility risk.
 
-   3. **Head of Product — high-level business judgment (decides last).** Having read
-      both the PM and Tech Lead reviews, give the executive take: business impact,
-      strategic fit, priority/sequencing, and a clear **Go / Conditional Go / No-Go**
-      call per feature (state the condition when Conditional). Close with a one-paragraph
-      overall verdict and the single most important next step.
+   3. **Head of Product** — `.claude/personas/head-of-product.md`. High-level business
+      judgment, decides last, having read both prior reviews. Verdict per feature:
+      **Go / Conditional Go / No-Go** (or, for a benchmark-only goal, a benchmark
+      solid / has gaps / redo call — see step 2).
 
-   Each persona must be **opinionated and specific**, cite the feature by name, and
-   ground claims in the synthesis/evidence — no fabricated numbers.
+   Each spec carries that persona's full remit, verdict scale, and guardrails; the
+   personas must be **opinionated and specific**, cite each feature by name, and
+   ground every claim in the synthesis/evidence — no fabricated numbers.
 
 4. **Assemble the review block** as a single markdown section titled `## Agent Review`,
    with a dated subheading and one `###` subsection per persona (PM, Tech Lead, Head of
@@ -70,7 +67,9 @@ already in the research folder — **do not invent evidence, metrics, or finding
    Lead | Head of Product call). Keep it tight and skimmable.
 
    **Always include a `### Legend` (verdict key)** right after the consolidated table so
-   a reader never has to guess what a rating means. Define every scale used:
+   a reader never has to guess what a rating means. This legend is the canonical,
+   reader-facing definition of each scale; the persona specs in `.claude/personas/`
+   mirror it, so keep the two in sync if either changes. Define every scale used:
    - **PM soundness** — *Sound* (right feature for the goal, well-scoped and coherent —
      ship/validate as-is) · *Needs refinement* (valuable but has scope, framing, or
      evidence gaps to resolve before committing) · *Reject* (not the right feature for

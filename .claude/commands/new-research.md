@@ -42,13 +42,31 @@ Follow these steps exactly:
    - `research/<...>/sources.md` — header `# Sources — <topic>` and a table with
      columns: Platform | URL | Accessed | Notes.
    - `research/<...>/README.md` — the research brief (see template below).
+   - `research/<...>/PLAN.md` — the research plan (see template below). Leave the
+     platform-specific sections as a skeleton if the platforms are not named yet.
 
 5. **Set the active pointer.** Write the folder path (no trailing slash) into
    `.claude/.active-research`.
 
-6. **Confirm** to the user: folder created, the confirmed goal, what to do next (name
-   the platforms to benchmark), and remind them capture happens via the Claude-in-Chrome
-   tools.
+6. **Draft and review the research plan (quality gate — before any capture).**
+   The plan is what the Principal Researcher signs off on before fieldwork starts,
+   so no browsing/capture happens until this gate passes.
+   - **You need the platforms first.** If the topic already names them, draft the
+     plan now. If not, ask the user which platforms to benchmark, and run this step
+     as soon as they answer — do not draft a plan against unknown platforms.
+   - **Draft `PLAN.md`:** derive key research questions from the `## Goal`, list the
+     platforms, and for each name the specific flows/screens to capture, the success
+     criteria (what "done" looks like), and known risks (paywalls, login/PII).
+   - **Dispatch the Principal Researcher in plan-review mode.** Use the Agent tool
+     (`general-purpose`) and hand it the persona spec at
+     `.claude/personas/principal-researcher.md` (Mode A) plus the drafted `PLAN.md`
+     and the `README.md`. It returns a critique with must-fixes.
+   - **Revise `PLAN.md`** to address the must-fixes (plan revisions may be applied
+     directly — this is pre-capture), then **present the plan to the user for
+     approval.** Only once they approve does capture begin.
+
+7. **Confirm** to the user: folder created, the confirmed goal, the approved plan,
+   and that capture happens next via the Claude-in-Chrome tools.
 
 README.md template (fill in what you know from the topic; the `## Goal` is required —
 it must hold the confirmed goal from step 2, never `TBD`; leave other fields TBD only
@@ -77,5 +95,32 @@ synthesis against this.>
 - <YYYY-MM-DD> — research created.
 ```
 
-After creating everything, do NOT start browsing yet — wait for the user to tell you
-which platforms to benchmark, unless they already named them in the topic.
+PLAN.md template (fill from the goal; leave the per-platform block as a skeleton if
+platforms are not named yet — it gets completed in step 6 before the plan review):
+
+```
+# Research Plan: <Topic>
+
+- **Status:** Draft (pending Principal Researcher review + user approval)
+- **Goal it serves:** <one line — the confirmed goal from the README>
+
+## Key research questions
+- <question 1 derived from the goal>
+- <question 2 …>
+
+## Per-platform capture plan
+### <platform 1>
+- **Flows/screens to capture:** <the specific flows and key screens>
+- **What we're looking for:** <the patterns/answers tied to the questions above>
+- **Risks:** <paywalls, login/PII, capture blockers>
+
+## Success criteria (what "done" looks like)
+- <concrete, checkable — e.g. "core learning flow recorded end-to-end on each platform">
+
+## Principal Researcher review
+<filled in during step 6: critique summary + verdict, then user approval>
+```
+
+After creating everything, do NOT start browsing yet. First complete the plan gate
+(step 6): once the platforms are known, draft `PLAN.md`, have the Principal Researcher
+review it, revise, and get the user's approval. Capture begins only after that.
