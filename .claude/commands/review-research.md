@@ -24,6 +24,20 @@ already in the research folder — **do not invent evidence, metrics, or finding
    If the user passed a focus in `$ARGUMENTS`, weight the review toward it but still
    cover the whole synthesis.
 
+   **Anchor every persona to the research's stated `## Goal` (from its README).** The
+   goal sets what "good" means and how the personas judge:
+   - If the goal is **observation / benchmark only** (no build intent), the personas
+     judge the synthesis on *soundness, completeness, and decision-usefulness of the
+     benchmark* — is it accurate, well-evidenced, and does it surface the right
+     patterns? A build **Go/No-Go is out of scope**; instead the Head of Product gives
+     a "benchmark is solid / has gaps / redo" style call. Say so explicitly rather than
+     forcing a build verdict.
+   - If the goal is **input to a build decision** (what should *we* build), apply the
+     full lens: PM soundness, Tech Lead feasibility, Head of Product Go / Conditional
+     Go / No-Go.
+   If the README `## Goal` is vague or missing, STOP and ask the user to state it before
+   reviewing — the review is only meaningful against an explicit goal.
+
 3. **Run the three personas as separate subagents, chained so they can cross-talk.**
    Dispatch them **sequentially** with the Agent tool (`general-purpose`), passing each
    later persona the full text of the earlier personas' reviews so they can agree with,
@@ -54,6 +68,20 @@ already in the research folder — **do not invent evidence, metrics, or finding
    with a dated subheading and one `###` subsection per persona (PM, Tech Lead, Head of
    Product), followed by a short `### Consolidated verdict` table (Feature | PM | Tech
    Lead | Head of Product call). Keep it tight and skimmable.
+
+   **Always include a `### Legend` (verdict key)** right after the consolidated table so
+   a reader never has to guess what a rating means. Define every scale used:
+   - **PM soundness** — *Sound* (right feature for the goal, well-scoped and coherent —
+     ship/validate as-is) · *Needs refinement* (valuable but has scope, framing, or
+     evidence gaps to resolve before committing) · *Reject* (not the right feature for
+     the goal, or not worth pursuing).
+   - **Tech Lead build effort** — *Low* (authored content/config or standard components;
+     no novel infra or ML) · *Medium* (non-trivial but well-trodden engineering — state,
+     scheduling, aggregation; no major new risk surface) · *High* (a major workstream:
+     novel infra, a security surface, or recurring ML/inference cost plus eval).
+   - **Head of Product call** — *Go* (build it; clear impact and fit) · *Conditional Go*
+     (pursue only once a stated condition is met — state the condition) · *No-Go* (do
+     not build now).
 
 5. **Checkpoint — do NOT write yet.** Present the assembled `## Agent Review` block to
    the user in chat and ask for explicit approval to save it. If they want changes,
