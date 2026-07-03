@@ -24,3 +24,6 @@ why it works, so the findings can inform our own learning-product design.
 
 ## Log
 - 2026-07-03 — research created.
+- 2026-07-03 — DataCamp benchmarked (logged-in Basic account); captured core
+  learning flow (`flow.gif` + screenshots `01`–`08`), notes, and sources.
+- 2026-07-03 — synthesis written (`SYNTHESIS.md`): 3 features identified.
