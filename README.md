@@ -98,8 +98,11 @@ and write it, so the folder rarely needs to be named explicitly.
 
 ## Workflow
 
-Research moves through three commands. **Only one research is active at a time** —
-run `/close-research` before starting the next, or `/new-research` will warn you.
+Research moves through a sequence of commands — capture with `/new-research`,
+distill with `/synth-findings`, stress-test with `/review-research`, then
+`/close-research` and `/publish-research`. **Only one research is active at a
+time** — run `/close-research` before starting the next, or `/new-research` will
+warn you.
 
 | Command | What it does |
 |---|---|
