@@ -1,7 +1,8 @@
 # Research: Benchmark DataCamp — 3 most valuable learning-experience features
 
-- **Status:** Active
+- **Status:** Closed
 - **Started:** 2026-07-03
+- **Closed:** 2026-07-03
 - **Researcher:** Claude (acting Senior UI/UX Designer)
 
 ## Goal
@@ -29,3 +30,4 @@ why it works, so the findings can inform our own learning-product design.
 - 2026-07-03 — synthesis written (`SYNTHESIS.md`): 3 features identified.
 - 2026-07-03 — agent review recorded (`SYNTHESIS.md` › Agent Review): PM / Tech Lead /
   Head of Product, build-decision lens.
+- 2026-07-03 — research closed.
