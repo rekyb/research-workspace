@@ -1,0 +1,26 @@
+# Research: Benchmark DataCamp — 3 most valuable learning-experience features
+
+- **Status:** Active
+- **Started:** 2026-07-03
+- **Researcher:** Claude (acting Senior UI/UX Designer)
+
+## Goal
+Study how DataCamp designs its learning experience and identify the **three most
+valuable features** that most improve how users learn. For each, capture evidence
+(screenshots + a recorded core flow) and articulate the UX/product reasoning behind
+why it works, so the findings can inform our own learning-product design.
+
+## Scope
+- **In scope:** DataCamp's publicly observable learning surfaces — course/lesson
+  player, in-browser coding exercises, practice/challenge modes, feedback & hints,
+  progress/streak/XP systems, onboarding and skill assessments, and any social or
+  motivational mechanics that shape the learning experience.
+- **Out of scope:** Pricing/business model, marketing funnel, B2B admin tooling,
+  and anything behind a hard paywall we cannot observe. Desk research only — we
+  observe and document; we do not build.
+
+## Platforms to benchmark
+- [ ] DataCamp (datacamp.com)
+
+## Log
+- 2026-07-03 — research created.
