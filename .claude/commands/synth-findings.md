@@ -24,11 +24,15 @@ Steps:
 
    1. **Feature name**
    2. **Short description** — 1–2 sentences.
-   3. **Key findings** — what we learned observing it (bullet points; cite the
-      platform(s) and evidence: screenshot filename, `flow.gif`, or source URL).
+   3. **Key findings** — what we learned observing it (bullet points). Cite the
+      platform(s) and evidence. **CRITICAL:** When citing a screenshot or GIF, embed
+      it directly using relative markdown syntax (e.g., `![description](../platforms/<platform>/screenshots/filename.png)` or `![flow](../platforms/<platform>/flow.gif)`).
    4. **Why this feature works (rationale)** — the UX/product reasoning.
    5. **How to validate this feature in the future** — concrete next steps
       (usability test, prototype, metric, experiment…).
+
+   After all features, end the document with a final `## Gaps & caveats` section detailing
+   methodological limitations, paywalls encountered, or unanswered questions.
 
    Be analytical and opinionated, as a Senior UI/UX Designer. Do not invent findings
    or sources — everything must trace back to captured evidence.
