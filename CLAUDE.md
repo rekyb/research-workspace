@@ -66,9 +66,32 @@ so you rarely need to name the folder explicitly.
 | `/new-research <topic>` | Creates a new dated research folder, scaffolds it, and marks it active. |
 | `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` (add `--docx` for a Word copy). |
 | `/close-research` | Verifies synthesis exists, marks the research closed, and clears the active pointer. |
+| `/publish-research [-m "msg"]` | Safety-checks for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
 
 Only one research is active at a time. Run `/close-research` before starting
 the next, or `/new-research` will warn you.
+
+## Version control & publishing (GitHub via `gh`)
+
+This workspace is a git repository published to GitHub with the **GitHub CLI
+(`gh`)**. Publishing is a deliberate step — `/publish-research` — never automatic,
+because captures can contain personal data and the remote may be public.
+
+- **Auth:** the user authenticates with `gh auth login` themselves; never handle
+  their credentials. `gh auth setup-git` lets git reuse gh's token for HTTPS
+  pushes (no separate credential helper needed).
+- **Remote:** `origin` points at the user's GitHub repo. Confirm it with
+  `gh repo view`; don't invent or change the remote without the user asking.
+- **Publish flow:** `/publish-research` runs the PII/paywall safety gate (see
+  **Guardrails**), stages the active research, commits with a conventional
+  message, and `git push`es. On a public repo, it stops and flags before pushing
+  anything that might contain un-redacted PII — including *third parties'* names
+  on social/leaderboard surfaces.
+- **Commits:** small, logical commits with clear messages; end the body with the
+  standard `Co-Authored-By` trailer. Commit or push only when the user asks (or
+  via `/publish-research`).
+- **Binary evidence:** screenshots (`*.png`) and `flow.gif` are committed directly;
+  keep them reasonably sized (downscale/optimize GIFs) so the repo stays light.
 
 ## Capture standards
 
