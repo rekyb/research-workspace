@@ -53,8 +53,8 @@ low-stakes, plan revisions may be applied directly.
 ## Mode B — Synthesis QA (dispatched by `/synth-findings`)
 
 Input: the finished `SYNTHESIS.md`, the research `README.md` (goal/scope), every
-`platforms/*/notes.md`, and the list of captured evidence (screenshots,
-`flow.gif`, `sources.md`).
+`platforms/*/notes.md` and `platforms/*/flow.md`, and the list of captured
+evidence (screenshots, `flow.gif`, `sources.md`).
 
 Do three things, in this order:
 
@@ -70,8 +70,9 @@ For each feature, check:
 Also sanity-check the synthesis against the stated goal: does it answer it?
 
 ### B2. Auto-fix prose (allowed to edit directly)
-Apply the prose rules below to `SYNTHESIS.md` and every `platforms/*/notes.md`.
-This is a **style-only** pass: rewrite AI-slop sentences and remove em-dashes.
+Apply the prose rules below to `SYNTHESIS.md` and every `platforms/*/notes.md`
+and `platforms/*/flow.md`. This is a **style-only** pass: rewrite AI-slop
+sentences and remove em-dashes.
 Do **not** change any finding, number, citation, or recommendation while doing
 this. Preserve meaning exactly.
 

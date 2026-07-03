@@ -52,7 +52,8 @@ research/YYYY-MM-DD-<slug>/
 │   └── <platform-name>/
 │       ├── screenshots/    # key-screen captures (numbered, described)
 │       ├── flow.gif        # recording of the core user flow
-│       └── notes.md        # observations, flow steps, source links
+│       ├── flow.md         # written step-by-step of that same flow
+│       └── notes.md        # observations & patterns, source links
 └── SYNTHESIS.md           # cross-platform synthesis (created at synth time)
 ```
 
@@ -148,9 +149,19 @@ When benchmarking a platform (use the Claude-in-Chrome browser tools):
    smooth playback. **Optimize before publishing:** if `flow.gif` exceeds ~3 MB,
    downscale it to ~1280px wide and/or reduce its palette with **Pillow**
    (no `ffmpeg` / ImageMagick / gifsicle is installed) so the repo stays light.
-3. **Notes** — in `platforms/<platform>/notes.md`, log the step-by-step user
-   flow, what stood out, and the source URL(s).
-4. **Sources** — append every URL you visit to the research-level `sources.md`
+3. **Written flow (required)** — alongside `flow.gif`, write the same core flow in
+   prose as `platforms/<platform>/flow.md`. This is the readable companion to the
+   GIF: a **numbered step-by-step**, one step per meaningful user action, each step
+   stating *what the user does* and *what the screen shows in response*, and citing
+   the evidence for that step (the matching screenshot `NN-….png` and/or the point
+   in `flow.gif`). Lead with a one-line summary of the flow (entry point → goal) and
+   note where friction, delight, or dead-ends appear. It must stand on its own, so a
+   reader who never opens the GIF can still follow the flow.
+4. **Notes** — in `platforms/<platform>/notes.md`, log the *observations*: what
+   stood out, the patterns worth synthesizing, and the source URL(s). (The blow-by-
+   blow of the flow itself lives in `flow.md`; keep notes.md for analysis, not a
+   step replay.)
+5. **Sources** — append every URL you visit to the research-level `sources.md`
    with the date it was accessed.
 
 Stay focused on the research goal. If a browser task fails 2–3 times or leads

@@ -13,9 +13,9 @@ Steps:
    missing or empty, STOP and tell the user to run `/new-research` first.
 
 2. **Gather the evidence.** Read the folder's `README.md`, `sources.md`, and every
-   `platforms/*/notes.md`. Note which platforms have screenshots and a `flow.gif`.
-   If there are no platform notes yet, STOP and tell the user there's nothing to
-   synthesize — capture some platforms first.
+   `platforms/*/notes.md` and `platforms/*/flow.md`. Note which platforms have
+   screenshots and a `flow.gif`. If there are no platform notes yet, STOP and tell
+   the user there's nothing to synthesize — capture some platforms first.
 
 3. **Write `SYNTHESIS.md`** in the research folder. Structure it as a list of
    **features** distilled across the benchmarked platforms. Lead with a short
@@ -41,13 +41,13 @@ Steps:
    Dispatch the Principal Researcher as a subagent (Agent tool, `general-purpose`) in
    synthesis-QA mode, handing it the persona spec at
    `.claude/personas/principal-researcher.md` (Mode B), the freshly written
-   `SYNTHESIS.md`, the `README.md` (goal/scope), and every `platforms/*/notes.md`.
-   It will:
+   `SYNTHESIS.md`, the `README.md` (goal/scope), and every `platforms/*/notes.md`
+   and `platforms/*/flow.md`. It will:
    - **review** each feature for the five required fields, evidence grounding (no
      fabrication), testable validation steps, and gaps/overlaps;
-   - **auto-fix prose** directly in `SYNTHESIS.md` and every `platforms/*/notes.md` —
-     rewrite AI-slop sentences and remove em-dashes, changing no findings, numbers, or
-     citations (style only; meaning preserved);
+   - **auto-fix prose** directly in `SYNTHESIS.md` and every `platforms/*/notes.md`
+     and `platforms/*/flow.md` — rewrite AI-slop sentences and remove em-dashes,
+     changing no findings, numbers, or citations (style only; meaning preserved);
    - **flag content problems as inline `> [Principal Researcher] …` annotations**
      (never silently editing substance) and append a dated
      `## Principal Researcher QA — <date>` record to `SYNTHESIS.md`.

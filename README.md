@@ -90,7 +90,8 @@ research-workspace/
         │   └── <platform-name>/
         │       ├── screenshots/    # key-screen captures (numbered, described)
         │       ├── flow.gif        # recording of the core user flow
-        │       └── notes.md        # observations, flow steps, source links
+        │       ├── flow.md         # written step-by-step of that same flow
+        │       └── notes.md        # observations & patterns, source links
         └── SYNTHESIS.md            # cross-platform synthesis (created at synth time)
 ```
 
@@ -131,8 +132,12 @@ When benchmarking a platform, capture evidence as you observe it:
   (`01-onboarding.png`, `02-empty-state.png`, …).
 - **Flow recording** — the core user flow captured as `flow.gif`, with a few
   extra frames before and after each action for smooth playback.
-- **Notes** — `platforms/<platform>/notes.md` logs the step-by-step user flow,
-  what stood out, and the source URL(s).
+- **Written flow** — the same flow written up as `platforms/<platform>/flow.md`:
+  a numbered step-by-step (each step = the user action + the screen's response,
+  with the matching screenshot/GIF cited), so the flow is readable without
+  opening the GIF.
+- **Notes** — `platforms/<platform>/notes.md` logs the observations and patterns
+  worth synthesizing, plus the source URL(s).
 - **Sources** — every URL visited is appended to the research-level
   `sources.md` with the date it was accessed.
 
