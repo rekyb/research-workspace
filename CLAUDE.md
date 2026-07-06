@@ -64,8 +64,10 @@ so you rarely need to name the folder explicitly.
 ### Principal Researcher (quality gate)
 
 A senior review persona (`.claude/personas/principal-researcher.md`), dispatched
-as a subagent at two points, guards research quality. It never browses; it judges
-what is on disk against the stated goal:
+as a subagent at two points, guards research quality. It never browses the
+benchmarked platforms; it judges what is on disk against the stated goal. (One
+scoped exception: in `/synth-findings` it may web-search *scholarly/authoritative
+sources* to validate findings, never the product under study.):
 
 - **In `/new-research`** — it reviews the drafted `PLAN.md` before any capture
   begins, so fieldwork only starts against a sound, goal-aligned plan the user has
@@ -73,9 +75,11 @@ what is on disk against the stated goal:
 - **In `/synth-findings`** — after `SYNTHESIS.md` is written it runs a QA pass:
   auto-cleans the prose (rewrites AI-slop, removes em-dashes in the research
   outputs only), flags content/evidence problems as inline annotations for the
-  human to resolve, and records a readiness verdict. It never silently changes a
-  finding — substance is flagged, not edited. This readies the synthesis before
-  `/review-research`.
+  human to resolve, **validates each finding's rationale against external cited
+  research** (peer-reviewed papers / reputable sources, logged in `references.md`;
+  contradictions are flagged), and records a readiness verdict. It never silently
+  changes a finding — substance is flagged, not edited. This readies the synthesis
+  before `/review-research`.
 
 The three `/review-research` stakeholder personas live in the same directory —
 `.claude/personas/product-manager.md`, `tech-lead.md`, and `head-of-product.md`.
