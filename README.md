@@ -161,6 +161,8 @@ draws from.
 | Research | Started | Status |
 |---|---|---|
 | [DataCamp — 3 most valuable learning-experience features](research/2026-07-03-datacamp-learning-experience/) | 2026-07-03 | Closed |
+| [Busuu — 3 most valuable learning-experience features](research/2026-07-03-busuu-learning-experience/) | 2026-07-03 | Closed |
+| [Learning loop, engagement loop & measuring real upskilling (Khan Academy)](research/2026-07-06-benchmark-learning-effectiveness-loops/) | 2026-07-06 | Closed |
 
 ## Tooling notes
 

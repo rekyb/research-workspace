@@ -1,7 +1,8 @@
 # Research: Learning loop, engagement loop & measuring real upskilling
 
-- **Status:** Active
+- **Status:** Closed
 - **Started:** 2026-07-06
+- **Closed:** 2026-07-06
 - **Researcher:** Claude (acting Senior UI/UX Designer)
 
 ## Goal
@@ -53,6 +54,8 @@ may be added in later rounds.
   Conditional Go. Sequenced bet: phase 1 = F2 + cheap-F1 + Low-F5 on one mastery-state
   spine; F3 + full F1 estimator deferred behind real cost; F7 (the efficacy differentiator)
   gated on a cheap onboarding-friction test first. Flagged research risk: single platform.
+- 2026-07-06 — research published to GitHub (`origin/main`, commit `f613480`).
+- 2026-07-06 — research closed.
 - 2026-07-06 — PLAN.md drafted and reviewed by Principal Researcher (Mode A):
   verdict "needs revision", 6 must-fixes applied (mastery state-change capture,
   engagement tagging rule, baseline as primary finding, named skill + fallback,
