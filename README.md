@@ -56,8 +56,8 @@ produces its artifacts:
 
 | Tool | Used for | Notes |
 |---|---|---|
-| **Claude Code** | Runs the workflow commands (`/new-research`, `/synth-findings`, `/review-research`, `/close-research`, `/publish-research`) and drives the research. | The workspace is designed to be operated through it; see `CLAUDE.md`. |
-| **Google Chrome** + **Claude-in-Chrome** tools | Browsing benchmarked platforms and capturing evidence (screenshots, recorded flows). | Chrome installed at `/usr/bin/google-chrome`. |
+| **Claude Code** / **Google Antigravity (`agy`)** | Runs the workflow commands (`/new-research`, `/synth-findings`, `/review-research`, `/close-research`, `/publish-research`) and drives the research. | The workspace is designed to be operated through Claude or Antigravity; see `CLAUDE.md` and `GEMINI.md`. |
+| **Google Chrome** + **Antigravity Browser Extension** or **Claude-in-Chrome** | Browsing benchmarked platforms and capturing evidence (screenshots, recorded flows). | Chrome extension ID: `eeijfnjmjelapkebgockoeaadonbchdd` (or MCP tools like `BrowserMCP`/`WebMCP` for Antigravity). |
 | **Python 3** | Runs the helper scripts below. | Standard CPython 3. |
 | ├─ **python-docx** | Markdown → `.docx` export via `.claude/scripts/md_to_docx.py` (used by `/synth-findings --docx`). | `pip install python-docx`. **`pandoc` is *not* used.** |
 | └─ **Pillow (PIL)** | Extracting PNG stills from recorded flow GIFs into `screenshots/`. | `pip install Pillow`. |
@@ -166,9 +166,7 @@ draws from.
 
 ## Tooling notes
 
-- **Browsing & capture:** the Claude-in-Chrome MCP tools (`navigate`,
-  `computer`, `read_page`, `gif_creator`, …). Chrome is installed at
-  `/usr/bin/google-chrome`.
+- **Browsing & capture:** The Claude-in-Chrome MCP tools or the Antigravity Browser Extension (ID: `eeijfnjmjelapkebgockoeaadonbchdd`) and associated MCP tools (like BrowserMCP/WebMCP). Chrome is used as the browser runtime.
 - **Screenshots:** the core flow is recorded as a GIF and downloaded, then key
   frames are extracted to numbered PNGs via **Pillow (PIL)** — redaction is
   applied in-page before capture, so saved frames carry no PII.
