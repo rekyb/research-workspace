@@ -24,7 +24,8 @@ When the user asks to start a new research topic:
 When asked to synthesize the active research:
 - Read the active folder path from `.claude/.active-research`.
 - Read the evidence in `platforms/*/notes.md` and `sources.md`.
-- Generate `SYNTHESIS.md` following the strict 5-part structure: Feature Name, Short Description, Key Findings, Rationale, Validation. 
+- Generate `SYNTHESIS.md` following the strict 5-part structure: Feature Name, Short Description, Key Findings, Rationale, Validation.
+  - **Key Findings Structure Requirement:** Ensure the key findings section follows the flow: **what the user sees**, **what the user does**, and **what the system does** (in paragraphs, not a table).
 - Ensure you embed Markdown images for evidence directly in the document (e.g., `![flow](../platforms/app/flow.gif)`).
 - End with a `## Gaps & caveats` section.
 

@@ -1,0 +1,189 @@
+"Main objective: Map what world-class learning apps do best (top 2-3 eatures each, with visual proof and rationale) so we can adapt the UX patterns that strengthen solve.education's learn-to-hire loop.",,,,,,,,
+No,Platform,Feature,Description,Key Findings,Why this feature work?,What would validate this feature?,Screenshots,Artifacts
+1,Brilliant,Smart Search,"A natural-language input box (""Reply here…"" placeholder, magnifier icon, ""Ask"" button) that takes a free-text goal and returns a conversational recommendation powered by AI.","This feature anchors the learner before eliciting the constraint that should shape the answer, so a Python-focused learner is already pointed at a non-Python lesson and the chips risk looking decorative.
+
+Mixed metaphor: search vs. chat. A magnifier icon, an ""Ask"" button, and a ""Reply here…"" field blend three mental models. Full sentences work, but users may not know whether to type keywords or prose.
+
+Chips mix different axes. ""Just the fundamentals"" and ""I want to learn Python"" are depth/language choices; ""How AI works"" is a topic. Combining axes in one row muddies the choice.
+
+Strength: transparent recommendations. The card explains its reasoning in plain language and names the destination. Telling the learner why, not just what, builds real trust.
+
+Personalisation may over-promise. If every cold-start learner lands on ""Taking the First Steps,"" the ""smart/personalised"" framing doesn't hold up.
+
+Unclear handoff. Deep-linking into the first activity vs. dropping the learner on a course landing page (an extra click) materially changes the activation payoff.","Loop targeted: the activation front of the loop (trigger → first action), not the return trigger.
+
+Mechanism: self-directed STEM's biggest early drop-off is ""I don't know where to start."" Converting a vague goal into one concrete next lesson collapses that paralysis and shortens time-to-first-lesson. External reviews echo the problem — Brilliant is self-driven, and subscriptions ""go unused"" without structure.
+
+Category caution: this is an acquisition/activation lever, not a retention lever. Crediting it with retention gains would be a misassignment — it helps people enter the loop, not return to it.
+
+Counter-risk: surfacing many tempting options can drive course-hopping, which reviews call the enemy of completion. More choice ≠ more learning.","First-lesson funnel: % of recommender users who start the recommended lesson in-session vs. the persona-picker baseline.
+
+5–8 moderated first-run sessions with true novices: does “recommend-then-ask” cause anchoring? Do users read the box as conversational?
+
+Recommendation-diversity check: feed varied goals; log whether outputs meaningfully differ.
+","https://drive.google.com/file/d/12xSOoMqIJBhZRTqwAu2BxiBpgJvuEapJ/view?usp=drive_link 
+
+https://drive.google.com/file/d/1Oq9eDL-gw5U1LU-2avxQdkhxkoiykd2Y/view?usp=drive_link 
+
+https://drive.google.com/file/d/1JfqZO1edoX_RYXWl3JIbwCk7k9LF-Y-c/view?usp=drive_link ",https://drive.google.com/drive/u/2/folders/1FK41t-IcskKqWh217JkUSGudNOp5J84X
+2,Brilliant,"Koji, the AI Learning Companion ","Koji is Brilliant's in-course AI tutor, the app's attempt to sit a patient teacher next to the user while you work through a lesson. It appears as a small green character rendered in speech bubbles beside the lesson content, paired with a ""How can I help?"" input that takes both typed questions and voice (there's a visible mic, and the spoken layer reportedly runs on ElevenLabs).","""Ask, don't tell"" and ""fade as mastery grows"" are the right instincts, preserving the generation effect and avoiding the assistance and expertise-reversal traps. But none of it matters unless the fade is calibrated to the learner in front of it: too much help too early builds dependence and inflates in-lesson success while wrecking retention; too little just annoys.
+
+The accuracy guarantee covers math; coding is a question mark. The ""won't make a math mistake"" claim leans on Koji reading Brilliant's structured math components. The captured lesson is coding, and there's no telling whether it's fenced the same way or more exposed to LLM error.
+
+Screen contention on smaller viewports. In the captured frame Koji fills a large panel and pushes the lesson off-screen to the right. A companion competing with the task for space adds split-attention load during problem-solving though this may be a capture-crop artifact rather than the actual responsive layout.
+Low-contrast past bubbles may fall below WCAG thresholds, though this is unverified against actual contrast values.
+
+What works: 
+(a) a proactive first line lowers the barrier to asking and sound reasoning, since the learners who most need help are the least likely to ask for it; 
+(b) an in-context tutor that acts on the lesson surface, rather than a detached chatbot, is a genuine differentiator; 
+(c) voice and multilingual input lower friction and widen access.","Loop targeted: the mastery loop (attempt → feedback → correction → retrieval), working during practice and at the moment of failure, not just at activation.
+
+Mechanism: the biggest churn moment in self-paced learning is getting stuck with nowhere to turn. An in-place tutor that unblocks you without handing over the answer keeps you inside the loop, and the fading behaviour returns the thinking to you as competence grows, building durable retrieval instead of momentary success.
+
+Tradeoff: the loop and the paywall are the same lever. Koji is the main Premium upsell, and free users hit a wall after a short preview. So Koji ""drives the loop"" in full only for paying users; free users get it deliberately interrupted to push conversion. The strategic crux is whether the companion is a learning feature that happens to convert or a conversion feature dressed as pedagogy. The honest answer is both, and where you draw that line should be a deliberate product decision rather than an inherited assumption.
+
+Counter-risk: if the tuning is even slightly too generous, Koji manufactures a feeling of progress (lessons cleared with heavy help) that doesn't survive to unaided retrieval, a loop that spins without compounding. Only outcome data can separate real mastery from assisted completion.","Assisted vs. unaided retrieval: delayed re-test for heavy vs. light Koji users on the same material (the core mastery question).
+
+Stuck-point recovery: instrument wrong-answer events; measure whether a Koji interaction restores forward progress vs. abandonment, and how hint depth escalates.
+
+Free→Premium timing: where the Koji wall lands in the loop, and its effect on both conversion and free-user retention (they can trade off).
+
+Coding-accuracy audit: expert review of Koji's coding hints, separate from the math claim.
+","https://drive.google.com/file/d/1ErgAo3Woqn0jU4lSiVKYaNTQ6rskExaz/view?usp=drive_link 
+
+https://drive.google.com/file/d/1jtIw_72VejWwR4ff7nTpZSP5DWEdgHfX/view?usp=drive_link",https://drive.google.com/drive/u/2/folders/1FK41t-IcskKqWh217JkUSGudNOp5J84X
+3,Brilliant,Interactive Non-MCQ Learning Experience,"A drag-to-sequence coding exercise (Scratch/Blockly lineage) where you fill two program slots with command blocks to drive a truck and deliver a package, then hit ""Check"" — Brilliant's ""learn by doing"" logic-before-syntax approach.","Weakness: the value rides on failure feedback, which is invisible here. A non-MCQ beats a good MCQ only if it uses the richer answer space on a wrong answer, e.g. running the truck to show where it failed, not just ""incorrect."" The frame is pre-submission, so what ""Check"" does on a wrong sequence is unknown, and it's the most important thing to test. A non-MCQ that only says ""wrong"" is worse than an MCQ with explanations.
+
+Weakness: the transfer gap. Block sequencing teaches control flow and decomposition, not syntax, and the jump to real code is a known weak point of block-based pedagogy. Brilliant knows this (blocks are a pre-syntax stage), but whether it transfers is still open.
+
+Drag discoverability for first-timers can't be judged from a static frame; often needs a first-run cue.
+
+Minor labelling: ""Solitary ST"" and ""1 left"" aren't self-evident out of context. Low stakes.
+
+What works: 
+(a) direct manipulation, a visible world state, and a cheap, prominent ""Start over"" is textbook active learning and low-cost experimentation.
+(b) Dashed drop-zones signal affordance; disabling ""Check"" until filled is sensible error prevention. 
+(c) The tradeoff is transfer: ""more interactive"" doesn't mean ""more learning.""","Loop targeted: this feature is the mastery loop, not a feeder: build → Check → observe world-state feedback → correct → retry. The loop is directly legible in the UI (slots, Check, Start over).
+
+Reps mechanism: a visible, low-cost reset lowers the cost of failure, which raises willingness to experiment and lifts attempts-per-session. Brilliant wraps this practice loop in a separate retention layer visible elsewhere in the screenshots: daily ""keys"" (the ""2-keys"" counter; free = 2 lessons/day), leagues (""HYDROGEN LEAGUE""), and streak/energy counters, a Duolingo-style return trigger the recommender lacks.
+
+Tradeoff: the loop compounds only if failure feedback is rich (see 4.2) and difficulty ramps beyond trivial warm-ups (this frame is a 2-block warm-up by design). A tight loop around shallow feedback produces engagement without learning.","Feedback-quality teardown: capture the wrong-answer state — does it localise the failure in the world, or just gate?
+
+First-attempt success + retry behaviour: instrument attempts-to-correct and Start-over usage; productive struggle vs. flailing look different in the data.
+
+Transfer probe: for learners who finish the block track, measure performance on a first typed-syntax task.
+","https://drive.google.com/file/d/1jVs6vJPtrTOxUV71rEtXmVYFGycjoU1O/view?usp=drive_link 
+
+https://drive.google.com/file/d/1fe433wHEi3UgBDHMCtx5Uqnah5zWVoDt/view?usp=drive_link",https://drive.google.com/drive/u/2/folders/1FK41t-IcskKqWh217JkUSGudNOp5J84X
+4,Datacamp,"Interactive ""learn-by-doing"" environtment","A split-screen player pairing step-by-step instructions with a real, zero-setup in-browser code editor and live shell, so learners write and run actual code the moment a concept is introduced — and are graded on it instantly.","The exercise screen is a two-pane layout: left = exercise brief + numbered Instructions (tagged with an XP reward, e.g. ""100 XP""); right = a script.py code editor pre-seeded with scaffolded code and blanks (____), plus Run Code / Submit Answer and a working IPython Shell. 
+
+No environment setup — real Python runs in the browser immediately. The brief explicitly removes friction (""Entering your own API key is not necessary…"").
+
+On Submit, feedback is immediate and multi-layered: a green ✓, +70 XP awarded, the top-bar ""Daily XP"" counter incrementing live (0 → 70), the code's actual output printed in the shell, an encouraging + forward-looking message (""Nicely done!… in the next exercise you'll practice…""), and a single press-Enter Continue to keep momentum. 
+
+Completing the exercise updated the dashboard (Total XP 200 → 270, course 10% → 14%) in real time. ","Active recall + immediate feedback is the best-evidenced pair in learning science, and this player operationalises both in a loop that takes seconds: read → do → run → be judged → be rewarded → continue. Removing environment setup eliminates the highest-friction, highest- dropout step in technical learning. Scaffolded code (fill-the-blank rather than blank-page) keeps the difficulty in the ""productive struggle"" zone instead of the ""blank-page paralysis"" zone. The instant, specific, encouraging feedback closes the loop while motivation is still high.","Prototype A/B: compare a fill-the-blank scaffolded exercise vs. a blank-editor version of the same task; measure completion rate and time-to-first-run.
+
+Metric: track exercise completion rate and median time-to-submit; watch for drop-off at the first exercise that requires local-like setup.
+
+Usability test (5–8 first-time users): observe where they hesitate between reading instructions and writing code; is the pane relationship obvious?
+
+Learning-outcome check: delayed (48h) retrieval quiz comparing learn-by-doing vs. video-only cohorts on the same concept.","https://drive.google.com/file/d/1Y8jVu_BLU0TOmflhq7H-ClIVEsTNh8QR/view?usp=drive_link 
+
+https://drive.google.com/file/d/1_TWy80wi3fkdyqieah6TcJFH_dH9vPfv/view?usp=drive_link",https://drive.google.com/drive/u/2/folders/1I5a2lqoXGrW7MSv22SKxxOzwUaprxLRU 
+5,Datacamp,Progressive AI tutor and helper,"Tiered assistance that lets a stuck learner get unstuck without leaving the exercise and a specific hint first, the full answer only as a last resort, plus a conversational AI Tutor  with an XP cost that preserves effort.","Each exercise has a Take Hint (−30 XP) control. Using it reveals targeted, concrete guidance (""Use OpenAI() to create the client…"", ""Call .create() on client.chat.completions"") and lowers the exercise's XP reward (100 → 70).
+
+A second tier, Show Answer (−70 XP), forfeits the remaining XP — so help is progressive (hint before answer) and priced (spending effort-currency to reveal). Each hint asks ""Was this helpful? Yes/No"" (quality feedback loop).
+
+A dedicated AI Tutor is positioned as ""your personal AI tutor uniquely yours, always hands-on, built around the work you actually do."" Evidence: 07-ai-tutor-intro.png. A separate OpenAI-powered AI Assistant chat offers ""Suggest a track based on my career goals"" / ""Help me find something to learn"" / course Q&A. ","Getting stuck with no way forward is the number-one reason self-directed learners abandon a course. Progressive hints keep them in flow and self-efficacious rather than rage-quitting or tab-switching to Google (and losing the session). Crucially, the XP price is a behavioural nudge: it protects the ""desirable difficulty"" that makes learning stick and help is available but not free, so learners attempt first. The AI Tutor extends this from canned hints to open-ended, personalised support, scaling 1:1 tutoring long known to be one of the largest effects in education to every learner.","Instrument the hint funnel: % exercises where a hint is taken, hint→answer escalation rate, and abandonment with vs. without a hint taken.
+
+Experiment on the XP price: vary hint cost (free / −30 / −50 XP) and measure attempt-before-hint behaviour and downstream retention of the concept.
+
+AI Tutor quality: rate a sample of tutor conversations for correctness and pedagogy (does it guide vs. just give answers?); track thumbs-up rate.
+
+Usability test: do learners understand the XP trade-off before clicking, or does it feel punitive? Test copy/affordance variants.",https://drive.google.com/file/d/1Bi98zxMKHF1raKZGmxRwk49k9xJDZ92Z/view?usp=drive_link ,https://drive.google.com/drive/u/2/folders/1I5a2lqoXGrW7MSv22SKxxOzwUaprxLRU 
+6,Datacamp,Motivation and retention system powered by AI learning recap,"A layered motivation loop of points for every action, a daily streak, a time-boxed peer leaderboard, and an AI-generated recap on return and that turns ""I should learn data skills"" into a daily habit and lowers the cost of coming back.","XP is earned per exercise; a Daily Streak counter and Total XP sit on the dashboard's ""My Activity"" card.
+
+A weekly Bit League leaderboard frames a time-boxed competition (""Gain 250XP to enter this week's Bit League"", ""3 days left to join""); once entered it shows a ranked table with the learner's position among peers on comparable XP.
+
+On re-entering a course, a modal offers ""Review what you learned to go faster today"", opening ""Your recent learnings"" — an AI-generated personalised summary (""When you left 15 hours ago, you worked on… here's what you covered"") with key points, a code example, and a ""Was this useful? Yes/No"" prompt. ","Learning fails on consistency, not comprehension. Most people understand the material but stop showing up. Streaks exploit loss-aversion (don't break the chain); XP gives frequent, tangible progress signals that the slow payoff of getting skilled lacks; the weekly league adds social proof and a deadline that manufactures urgency without being permanently punishing, since it resets. The AI recap attacks the other half of the problem, the forgetting curve and the re-entry cost of multi-session learning, by rebuilding context and forcing light retrieval before the learner continues. Together they answer ""why open the app today?"" and ""why is it worth resuming?""","Retention cohort analysis: D1/D7/D30 return rates and sessions/week for users who form a streak vs. those who don't; isolate the streak's marginal effect.
+
+Leaderboard opt-in test: measure whether league participation raises weekly active learning minutes — and watch for a demotivation tail among bottom-ranked users (segment by rank).
+
+Recap experiment: A/B the ""Your recent learnings"" recap on vs. off at session resume; measure resume-completion rate and next-exercise performance (a proxy for retrieval benefit).
+
+Qualitative: interview lapsed users — did XP/streaks feel motivating or hollow? Guard against gaming XP without real learning (correlate XP with assessment gains).","https://drive.google.com/file/d/1OFXQmG2asEs1U6sDpGZt4mILKvpP_mwc/view?usp=drive_link 
+
+https://drive.google.com/file/d/1gHAbZrii_emoK38nGz_M9pAKcP4JqPXP/view?usp=drive_link ",https://drive.google.com/drive/u/2/folders/1I5a2lqoXGrW7MSv22SKxxOzwUaprxLRU 
+7,Busuu,Bite-sized learn-by-doing lesson with instant instructional feedback,"One-minute lessons that alternate modelled input (a native speaker on video with replayable audio and a speed control, observed at 1×) with active practice (fill-the-blank, matching), where every answer, right or wrong, returns the correct form, its audio, and a plain-language grammar rule in one consistent panel.","Lessons are explicitly time-boxed and typed before you start: a preview tooltip reads ""VOCABULARY · 1 MIN · Let's go!"", setting a one-minute expectation. New language is introduced as real people speaking on video, with an audio scrubber and a 1× speed control and a save-word bookmark, not text alone. 
+
+Practice is scaffolded and fast: fill-the-blank sentences with word tiles that each carry a keyboard shortcut number for mouse-free answering, plus a format switch to ""Match the pairs"" so a short lesson still feels varied. 
+
+Feedback teaches instead of just scoring. A wrong tile turns red and slides up a panel with the correct sentence, replayable audio, and the rule (""We use 'What's your name?' to ask someone for their name""). A correct tile turns green and shows the same panel shape with varied praise (""Great job!"", ""Well done"", ""You did it"", ""Amazing work"") and, on some, a confetti burst. Right and wrong are taught identically. ","In my assessment as researcher, the highest-leverage pattern here is the pairing of active recall (the learner produces the answer) with immediate feedback, and Busuu operationalises both in a loop that takes seconds: see modelled speech → attempt → be corrected with the rule and the audio → continue. 
+
+Two choices stand out. First, front-loading real spoken input (video + replayable audio) trains listening and pronunciation from the very first vocabulary step, which matters more for language than for most subjects. 
+
+Second, and most important, the feedback panel is a teaching surface, not a scoreboard: because a wrong answer returns the correct form, its audio, and a one-line rule, the moment of being graded becomes the moment of learning, and the ""punished for guessing"" feeling that makes learners cautious disappears. The one-minute framing and keyboard shortcuts keep the friction low enough to fit the ""ten minutes a day"" promise.","Prototype A/B: compare the rich instructional-feedback panel (correct form + audio + rule) against a bare red/green correctness marker on the same exercises; measure a delayed (48h) retrieval-quiz score and next-exercise accuracy.
+
+Metric: track lesson completion rate and median time-to-complete; confirm the ""1 MIN"" lessons actually land near one minute and that drop-off inside a lesson is low.
+
+Usability test (5–8 first-time learners): do they notice and use the audio replay and speed control? Do they read the rule on a wrong answer or just click Continue?
+
+Input-modality test: compare video-modelled vocabulary vs. text+audio only on early-lesson listening comprehension.","https://drive.google.com/file/d/105jAza7WVPPuQ7Rf_rfHqZalCUsrmW5V/view?usp=sharing
+
+https://drive.google.com/file/d/1_m341OzfXi4i3F9Y3Teio51jw39LvNk3/view?usp=sharing
+
+ 
+
+",https://drive.google.com/drive/u/2/folders/1ILtCpvaqKjZ1ORRnSt_FuIvZgLUO1jzB
+8,Busuu,Community / Conversations: human correction by native speakers,"A social layer where learners submit short writing and speaking exercises and get them corrected by other members of the community (Busuu frames these correctors as native speakers), and in turn correct others' submissions. It is the part of Busuu an automated app cannot easily copy.","The Community hub frames the value plainly: ""Connect with other learners and exchange feedback with native speakers,"" organised into Discover / Friends / Community corrections tabs.
+
+Discover is a feed of other learners' real submissions, each tagged with a ""Speaks / Learns"" language pair and a ""Give correction"" button, so correcting others is a first-class, one-tap action, not a buried feature. 
+
+Opening a submission shows the prompt, the author, their attempt (e.g. an English learner's ""Hep are you""), and a ""Give feedback"" action to correct it. The reciprocal design (you correct others, and your own work is corrected in return) is what scales human feedback socially. 
+
+The lesson path also surfaces AI-assisted variants of this job (""AI CONVERSATIONS"", ""SPEAKING PRACTICE"" lesson tags), showing Busuu is extending the correction job with AI alongside the human community.
+
+Conversations receiving side unobserved. Native-speaker corrections arriving on your own submissions are asynchronous and were not seen in-session; the submission and correcting-others sides were captured, and the receiving side is described from its entry points.","The hardest, most-avoided part of learning a language is producing real output and finding out where it is wrong. Automated grammar exercises rarely tell you whether what you actually wrote or said sounds natural. Busuu answers this by routing your production to other community members (whom it frames as native speakers), which approximates the kind of one-to-one, individualised feedback we consider hardest to scale in a self-serve product, delivered here at community scale and near-zero marginal cost.
+
+The reciprocity loop (correct others to earn corrections) does double duty: it supplies the correction labour and it builds a social obligation that pulls learners back. Because corrections arrive asynchronously, the feature is also a re-engagement engine: ""someone corrected your work"" is a concrete reason to return tomorrow, not a generic nudge.","Supply/demand instrumentation: measure submission→first-correction time and the correction:submission ratio; a human-correction network fails if corrections are slow or scarce, so this is the make-or-break metric.
+
+Quality audit: sample corrections for accuracy and helpfulness (do native speakers actually fix the error and explain, or just rewrite?); compare human vs. AI-generated corrections on the same submissions.
+
+Retention experiment: does receiving a correction raise D1/D7 return rate versus a matched cohort that never submitted? Isolate the ""you've been corrected"" re-entry effect.
+
+Usability test: do beginners feel safe submitting imperfect output publicly, or does exposure anxiety suppress participation? Test anonymity/audience controls.","https://drive.google.com/file/d/1QKxc2ld4wZWDqRV7mAmR1od_HZK1HEFd/view?usp=drive_link 
+
+https://drive.google.com/file/d/1lxp_Is0jHi_zx_Mj8o0rtnc-kmh6WyRO/view?usp=sharing 
+
+https://drive.google.com/file/d/1wCeWFaRc6x9gs_Uhatc4XhwA1uTQcruG/view?usp=sharing ",https://drive.google.com/drive/u/2/folders/1ILtCpvaqKjZ1ORRnSt_FuIvZgLUO1jzB
+9,Khan Academy,Mastery-state model (levels + points + colour grid),"Every skill carries a discrete mastery level (Not started → Attempted → Familiar → Proficient → Mastered) shown as a colour in a unit grid and rolled up into ""mastery points"" and a course-mastery %. It is simultaneously the system's estimate of what you know and the progress UI you chase.","The course page states the model up front: a legend, ""possible mastery points"", and a course-mastery %, over a per-skill grid.
+
+Completing one 7-problem set moved the traced skill from Not started to Familiar 71%, visible both in the skill row and as the first Unit 1 grid cell turning orange.
+
+Levels behave like a latent-mastery estimate (accuracy-driven), not a completion counter. Feature 2 (the two-mistake gate) is the enforcement mechanism that demonstrates this, so read F1 and F2 as one dependent pair, not two independent findings. Khan's internal algorithm was not inspectable; the ""accuracy-driven"" reading is inferred from observed behaviour, and its public mastery system may be closer to a rules/points model than a formal knowledge-tracing model.","Collapsing ""what you've learned"" and ""your progress bar"" into one object removes the usual tension where engagement metrics drift away from learning. The learner optimises the right thing because the reward is the proficiency state. It also gives the learner an honest self-assessment surface (where am I, what's left) rather than a vanity total. This maps to mastery-learning theory (reach a real proficiency bar before moving on) and to knowledge-tracing, which estimates per-skill mastery from the correct/incorrect stream.","Hold-out test: run cohorts with and without streaks/points; primary metric = learning gain and long-run retention, not DAU, to confirm the wrapper isn't inflating hollow engagement.
+
+Fix-and-test the two-scale mismatch: unify the engagement meter with the mastery scale and measure comprehension (""do you know how far you got?"") and demotivation signals.","https://drive.google.com/file/d/1-YoueRGPDzPLq813oiJ7AGvyNgt0LpcI/view?usp=sharing 
+
+https://drive.google.com/file/d/187FIBT9O_9GvPcKMYwwfgfip9R_1r_re/view?usp=drive_link 
+
+https://drive.google.com/file/d/1UA0F41LZuXOkDS8IbvHYpwrDF93dl3aw/view?usp=drive_link ",https://drive.google.com/drive/u/1/folders/1eEoa7phR8kLyiyQDg1ATXMhD78vcJDZi
+10,Khan Academy,"Accuracy-gated leveling (the ""two-mistake"" gate)","The mastery level you can earn in an attempt is capped by your error count. After two mistakes in a set, the platform tells you Proficient is no longer reachable this attempt and offers to keep going or start over.","A modal fired on the second wrong answer: ""You can no longer reach 'Proficient' on this attempt… Start over is available after two mistakes.""
+
+Consistent with the gate, finishing 5/7 awarded Familiar, not Proficient (Feature 1 evidence). Accuracy, not completion, set the level.","This is the mechanism that makes the mastery signal trustworthy and stops ""grinding to Proficient"". It enforces that a high level reflects low-error performance, which is what a proficiency claim should mean, and it nudges the learner to restart and consolidate rather than limp to a hollow badge. It is the single clearest example of engagement being subordinated to real learning. ","Experiment: compare an accuracy-gated level vs an ungated one on a delayed transfer test; hypothesis = gated cohort shows higher retention/transfer per ""Proficient"" awarded.
+Instrument ""start over"" vs ""keep going"" choice rates and whether a restart after the gate improves the next-attempt accuracy (a productive-persistence signal).",https://drive.google.com/file/d/1NA8mU13RTTKRHvEmzhcbRMmKK6knfwGJ/view?usp=sharing ,https://drive.google.com/drive/u/1/folders/1eEoa7phR8kLyiyQDg1ATXMhD78vcJDZi
+11,Khan Academy,Productive-struggle remediation (graduated hints + embedded video),"On a wrong answer the platform withholds the correct answer and instead offers a step-by-step worked solution revealed one step at a time, plus the relevant teaching video embedded in the problem.","A miss produces ""Not quite yet… give it another try"" with a ""Show a step"" affordance, not the answer; Check becomes ""Try again"".
+
+""Show a step"" reveals a 4-step worked solution progressively (""1 / 4 — Let's substitute 14 for p"", then ""+ Get another hint""), and a ""Related content"" 2:00 video sits right there as a fallback.
+
+Correct-answer feedback distinguishes effort: a corrected answer reads ""You improved your answer"", a first-try solve reads ""Nice work! You got it. Onward!"" with a green-check dot.
+
+Then, the full loop is recorded end to end.","Withholding the answer preserves the retrieval attempt (the part that actually builds memory), while graduated hints keep cognitive load manageable for a struggling learner and the video offers a re-teach without leaving the task. It is also the main anti-quit mechanic: a stuck learner is kept moving inside the session instead of bouncing. One caveat inside this same feature: the correct-answer copy (""Nice work! You got it. Onward!"") is person-level praise, which Hattie & Timperley rate as one of the least effective feedback types, so the citation below backs the hints and the ""where to next"" remediation, not the praise line. The praise copy is a mild anti-pattern to improve on (make the positive feedback point at the process or the mastery gained), not a strength to copy. ","A/B graduated hints vs immediate answer-reveal; primary metric = delayed retention and next-problem accuracy, guardrail metric = quit/abandon rate within the set.
+
+Moderated usability sessions: watch whether learners use hints as scaffolding or as an answer-shortcut (over-reliance is the failure mode to catch).","https://drive.google.com/file/d/1SMQ34w5dTJIM09xzvMDWoycwaHNuk2Uv/view?usp=sharing 
+
+https://drive.google.com/file/d/1ISknp8IlfSrx11talD7gFaB45lPK5osB/view?usp=drive_link ",https://drive.google.com/drive/u/1/folders/1eEoa7phR8kLyiyQDg1ATXMhD78vcJDZi
+12,Khan Academy,End-of-set mastery summary + reward loop,"Finishing a skill's set produces a summary that reports the mastery result, celebrates the gain, awards energy points, and routes to the next step, all on one screen.","The summary shows the new level (""Familiar • 71%""), ""5/7 correct • 475 energy pts"", a ""🔥 Awesome! You improved your skills! 🔥"" banner, the updated grid, and ""Up next: Lesson 3"".
+
+","The summary places the reward beat immediately after real effort and ties the affect (""you improved your skills"") to a concrete, earned result (the mastery level and the correct-count), and the ""Up next"" nudge uses goal-gradient momentum to pull the learner into the next rep. This is not a free win, though: energy points are an expected, activity-contingent tangible reward, exactly the kind of reward the motivation literature shows can crowd out intrinsic interest. Anchoring the celebration to a competence signal (the mastery level rather than the point total) is a mitigation, not a guarantee, so the design risk to manage is that the energy-point number becomes the headline instead of the level.","Multivariate test of the summary: does leading with the mastery level vs the points change what learners say they achieved (comprehension check) and their next-session return rate?
+
+Track whether the ""Up next"" nudge lifts same-session continuation without inflating low-quality rushed attempts.",https://drive.google.com/file/d/187FIBT9O_9GvPcKMYwwfgfip9R_1r_re/view?usp=drive_link ,https://drive.google.com/drive/u/1/folders/1eEoa7phR8kLyiyQDg1ATXMhD78vcJDZi

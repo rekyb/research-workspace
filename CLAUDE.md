@@ -178,7 +178,11 @@ contain these five fields, in this order:
 
 1. **Feature name** — e.g. "AI Companion"
 2. **Short description** — one or two sentences on what it is.
-3. **Key findings** — what we learned from observing it across platforms.
+3. **Key findings** — what we learned from observing it. The analysis under key findings must follow the logic:
+   - **What the user sees:** The visual interface, cues, layout, and cues shown.
+   - **What the user does:** The actions, inputs, and interactions performed.
+   - **What the system does:** How the system processes inputs, validates code, transitions state, and triggers loops.
+   *(This should be written as natural paragraphs/text flowing in this order, rather than a table, citing the platforms and evidence. Embed screenshots or GIFs directly using relative markdown syntax).*
 4. **Why this feature works (rationale)** — the UX / product reasoning.
 5. **How to validate this feature in the future** — concrete next steps to
    test the idea (usability test, prototype, metric, experiment, etc.).
