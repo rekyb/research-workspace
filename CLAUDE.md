@@ -2,13 +2,20 @@
 
 ## What this project is
 
-A **secondary desk-research / benchmarking** workspace. We study how existing
-platforms solve product problems, capture evidence (screenshots + user-flow
-recordings), and synthesize the findings into design-ready feature write-ups.
+A **UX-research** workspace. It does two kinds of research and turns both into
+design-ready write-ups:
 
-This is *desk research only* — we observe and document publicly available
-products. We do not build features here; we produce the research that informs
-what to build.
+- **Desk research / benchmarking** — study how existing platforms solve product
+  problems, capture evidence (screenshots + user-flow recordings), and synthesize
+  the findings into feature write-ups.
+- **Primary-research design & synthesis** — plan research instruments (usability
+  tests today; surveys and A/B tests are planned) and synthesize the results the
+  user brings back.
+
+We *plan and synthesize* research and *observe* publicly available products. We do
+**not** field research ourselves (no live participant recruiting or running from
+here) and we do **not** build features — we produce the research that informs what
+to build. See **Research types** below for how the workspace scaffolds each kind.
 
 ## Your role
 
@@ -37,7 +44,10 @@ These are non-negotiable. They override any convenience or research goal.
   photos, email addresses, and any other PII. Feature mechanics that are not
   sensitive (e.g. XP totals, streak counts, progress bars) may stay visible as
   evidence. Verify the redaction in the captured image before saving it into a
-  research folder. When in doubt, blur it.
+  research folder. When in doubt, blur it. The same rule covers **research-
+  participant data** (names, faces, voices, emails, or identifying quotes in
+  usability `sessions/` or survey responses): pseudonymize participants (P01,
+  P02…) and redact PII before any capture or commit, exactly as for account data.
 
 ## How research is organized
 
@@ -56,6 +66,12 @@ research/YYYY-MM-DD-<slug>/
 │       └── notes.md        # observations & patterns, source links
 └── SYNTHESIS.md           # cross-platform synthesis (created at synth time)
 ```
+
+That tree is the **benchmark** layout. A **usability** study (`--type usability`)
+keeps `README.md`, `PLAN.md`, `sources.md`, and `SYNTHESIS.md`, but the middle
+differs: instead of `platforms/` it holds `test-plan.md` (the instrument, built by
+`/plan-usability`) and `sessions/session-NN.md` (one per participant, PII-redacted).
+See **Research types** below.
 
 The **currently active** research is tracked in `.claude/.active-research`
 (a pointer file holding the folder path). The workflow commands read/write it
@@ -87,14 +103,43 @@ Each spec is the single source of a persona's remit, verdict scale, and
 guardrails; the command dispatches them (chained, so they cross-talk) rather than
 inlining their instructions.
 
+### Principal Designer (pattern-library owner)
+
+A second senior persona (`.claude/personas/principal-designer.md`) owns
+`research/PATTERNS.md`, the cross-study catalogue of reusable UX patterns. On
+`/close-research` it is dispatched to extract the closing study's reusable patterns
+and merge them into the library (deduping against, and flagging contradictions with,
+what is already there). Like the Principal Researcher it never browses the
+benchmarked platforms; it judges the synthesis on disk. It will also review
+design-facing deliverables (e.g. future `/brief-feature` decks) before export.
+
+## Research types (the type-aware spine)
+
+The workflow is **one shared lifecycle** — create → design/capture → synthesize →
+review → close → publish — that adapts to the *type* of research. `/new-research`
+takes a `--type` flag and writes a `Type:` line into the folder's `README.md`; every
+downstream command reads it and branches its template. One spine, several behaviours.
+
+| Type | Instrument / fieldwork | Middle of the folder | Synthesis template |
+|---|---|---|---|
+| `benchmark` (default) | Observe public products; capture screenshots + flows | `platforms/` | Feature write-ups (5 fields) |
+| `usability` | `test-plan.md` (tasks, script, metrics); moderated sessions fielded externally | `test-plan.md`, `sessions/` | Findings, severity-ranked |
+| `survey` | *(planned)* questionnaire + response synthesis | — | *(planned)* |
+| `abtest` | *(planned)* experiment design + read-out | — | *(planned)* |
+
+The instrument-design step is the only method-specific command (`/plan-usability`
+for usability). Everything else on the spine — `/synth-findings`, `/review-research`,
+`/close-research`, `/publish-research` — is shared and type-aware.
+
 ## Workflow commands
 
 | Command | What it does |
 |---|---|
-| `/new-research <topic>` | Creates a new dated research folder, scaffolds it, and marks it active. |
-| `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` (add `--docx` for a Word copy). |
+| `/new-research <topic> [--type benchmark\|usability]` | Creates a new dated research folder, scaffolds it **for the chosen type** (default `benchmark`), and marks it active. |
+| `/plan-usability` | *(usability studies)* Designs the `test-plan.md` instrument — tasks, moderator script, metrics — then runs a Principal Researcher methodology review before fielding. |
+| `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` using the template for its `Type` (feature write-ups for benchmark, severity-ranked findings for usability); add `--docx` for a Word copy. |
 | `/review-research` | Reviews `SYNTHESIS.md` through three stakeholder personas (PM, Tech Lead, Head of Product) and — on approval — records an `## Agent Review` section. |
-| `/close-research` | Verifies synthesis exists, marks the research closed, and clears the active pointer. |
+| `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` library via the Principal Designer, marks the research closed, and clears the active pointer. |
 | `/publish-research [-m "msg"]` | Safety-checks for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
 
 Only one research is active at a time. Run `/close-research` before starting
@@ -173,8 +218,9 @@ into unrelated territory, stop and check in.
 
 ## Synthesis format (required)
 
-`SYNTHESIS.md` is organized as a list of **features**. Every feature entry MUST
-contain these five fields, in this order:
+`SYNTHESIS.md` is **type-aware** (see **Research types**). For a **benchmark** study
+it is organized as a list of **features**; every feature entry MUST contain these
+five fields, in this order:
 
 1. **Feature name** — e.g. "AI Companion"
 2. **Short description** — one or two sentences on what it is.
@@ -189,6 +235,22 @@ contain these five fields, in this order:
 
 Each feature should cite the platform(s) and evidence (screenshot / flow /
 source) it draws from.
+
+For a **usability** study, `SYNTHESIS.md` is organized as **findings** instead of
+features. Lead with an `## Overview` (goal, method, participant count, headline
+findings) and a `## Metrics summary` (task success rates, SEQ/SUS, time-on-task),
+then one section per finding, ordered by **severity, highest first**. Every finding
+entry MUST contain, in order:
+
+1. **Finding** — the observed problem or insight.
+2. **Evidence** — which sessions/participants (by pseudonym P01…), task
+   success/failure, and redacted quotes support it (embed relevant captures with
+   relative markdown).
+3. **Severity (0–4)** and the **affected task / usability heuristic**.
+4. **Recommendation** — the concrete design change it implies.
+
+End with a `## What worked` section (positive findings worth preserving) and the same
+`## Gaps & caveats` section benchmark uses.
 
 ## Tooling notes
 

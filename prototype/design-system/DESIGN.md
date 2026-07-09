@@ -1,6 +1,6 @@
-# Solve Education! — Design (core)
+# The Design (core)
 
-> **Source of truth for all Solve Education! UI work, read by AI agents before any UI task.** Solve Education!
+> **Source of truth for all UI work, read by AI agents before any UI task.**
 > Read this core in full, then **LAZY-LOAD only the module(s) your task needs** (Module Map). Don't load modules you won't use.
 >
 > This doc is a **reference / rules** doc (convergent). A separate divergent design *process* may be owned by a

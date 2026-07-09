@@ -20,11 +20,15 @@ Steps:
 
 3. **PII / paywall safety gate (required).** Before staging, verify the guardrails
    in `CLAUDE.md` are satisfied for what you're about to publish:
-   - Skim the new/changed captures in `platforms/*/screenshots/` and `flow.gif`
-     for un-redacted personal data — the account holder's **and third parties'**
-     names, avatars, emails (e.g. leaderboard/comment/social surfaces).
+   - **Benchmark captures:** skim the new/changed files in `platforms/*/screenshots/`
+     and `flow.gif` for un-redacted personal data — the account holder's **and third
+     parties'** names, avatars, emails (e.g. leaderboard/comment/social surfaces).
+   - **Usability sessions:** skim every new/changed `sessions/session-*.md` for
+     participant PII — real names, emails, or identifying quotes. Participants must be
+     pseudonymized (P01, P02…); if a real identity is present, STOP and flag it.
    - If the remote repo is **public** (`gh repo view --json visibility`), and any
-     capture may contain PII, STOP and flag it to the user before pushing.
+     capture or session note may contain PII, STOP and flag it to the user before
+     pushing.
    - Confirm no paid-feature transaction happened.
    Only continue once this is clean.
 
