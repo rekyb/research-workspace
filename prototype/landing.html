@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Solve Education! · Get started</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:light;
+    --background:#FFFFFF; --foreground:#261F10; --card:#FFFFFF;
+    --muted:#F5F3EF; --muted-foreground:#6B6152;
+    --primary:#FFCB1D; --primary-foreground:#261F10; --primary-700:#C99700;
+    --secondary:#2193C8; --secondary-100:#E9F5FB;
+    --accent:#EC1A64; --accent-foreground:#FFFFFF; --accent-100:#FDE7EF;
+    --purple:#8E279B; --purple-100:#F5E9F7;
+    --border:#ECE9E3; --line:#F0EDE7; --ring:#FFCB1D;
+    --font-heading:'Plus Jakarta Sans',system-ui,sans-serif;
+    --font-body:'Open Sans',system-ui,sans-serif;
+    --elev-1:0 1px 3px rgba(38,31,16,.05); --elev-2:0 10px 34px rgba(38,31,16,.10);
+    --fast:150ms; --base:200ms; --slow:300ms;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html,body{margin:0;min-height:100%}
+  body{
+    background:var(--background); color:var(--foreground);
+    font-family:var(--font-body); font-size:16px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100dvh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:40px 22px;
+  }
+  h1,h2{font-family:var(--font-heading);margin:0;letter-spacing:-.01em}
+  :focus-visible{outline:3px solid var(--ring);outline-offset:2px;border-radius:10px}
+  svg{stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;fill:none}
+
+  .shell{width:100%;max-width:560px;display:flex;flex-direction:column}
+
+  .brand{display:flex;align-items:center;gap:9px;font-family:var(--font-heading);font-weight:800;font-size:16px;margin-bottom:44px}
+  .brand .logo{width:30px;height:30px;border-radius:9px;background:var(--primary);display:grid;place-items:center;color:var(--primary-foreground)}
+  .brand .logo svg{stroke-width:2.6;width:18px;height:18px}
+
+  .head{font-size:clamp(28px,7vw,36px);line-height:1.15;font-weight:700;margin-bottom:12px}
+  .lede{color:var(--muted-foreground);font-size:16.5px;line-height:1.55;margin-bottom:34px;max-width:44ch}
+
+  .roles{display:flex;flex-direction:column;gap:14px}
+  .role{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:20px;cursor:pointer;color:var(--foreground);font-family:var(--font-body);text-decoration:none;transition:border-color var(--fast),background var(--fast),transform var(--base),box-shadow var(--fast)}
+  .role:hover{border-color:var(--primary-700);box-shadow:var(--elev-1)}
+  .role:active{transform:scale(.99)}
+  .role .ricon{flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center}
+  .role .ricon svg{width:26px;height:26px}
+  .role.learner .ricon{background:var(--secondary-100);color:var(--secondary)}
+  .role.seeker .ricon{background:var(--purple-100);color:var(--purple)}
+  .role .rbody{flex:1;min-width:0}
+  .role .rtitle{display:block;font-family:var(--font-heading);font-weight:700;font-size:18px;margin-bottom:3px}
+  .role .rdesc{display:block;font-size:13.5px;color:var(--muted-foreground);line-height:1.45}
+  .role .rchev{flex:none;color:var(--muted-foreground);transition:transform var(--fast),color var(--fast)}
+  .role:hover .rchev{color:var(--foreground);transform:translateX(2px)}
+  .role .rchev svg{width:22px;height:22px}
+  .role .soon{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--purple);background:var(--purple-100);border-radius:999px;padding:3px 9px;margin-top:6px}
+
+  .note{display:none;align-items:flex-start;gap:9px;margin-top:14px;background:var(--muted);border-radius:14px;padding:13px 15px;color:var(--muted-foreground);font-size:13.5px;line-height:1.5}
+  .note.show{display:flex}
+  .note svg{flex:none;width:17px;height:17px;color:var(--purple);margin-top:1px}
+
+  .foot{margin-top:32px;color:var(--muted-foreground);font-size:13px}
+  .foot a{color:var(--secondary);font-weight:600;text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+  <div class="shell">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+      Solve Education!
+    </div>
+
+    <h1 class="head">What brings you here?</h1>
+    <p class="lede">Pick how you'll use Solve Education! so we can set you up the right way. You can switch later.</p>
+
+    <div class="roles">
+      <!-- Learner → the activation onboarding we built -->
+      <a class="role learner" href="s1-activation-onboarding.html" data-testid="role-learner">
+        <span class="ricon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg>
+        </span>
+        <span class="rbody">
+          <span class="rtitle">I'm a learner</span>
+          <span class="rdesc">Build real skills with short daily tasks and a coach named Ed.</span>
+        </span>
+        <span class="rchev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+
+      <!-- Job seeker → flow not built yet -->
+      <button class="role seeker" id="seekerBtn" data-testid="role-seeker">
+        <span class="ricon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect width="18" height="13" x="3" y="7" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg>
+        </span>
+        <span class="rbody">
+          <span class="rtitle">I'm a job seeker</span>
+          <span class="rdesc">Prove what you can do and get matched to real opportunities.</span>
+          <span class="soon">Coming soon</span>
+        </span>
+        <span class="rchev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>
+      </button>
+
+      <div class="note" id="seekerNote" role="status">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>The job seeker experience is on the way. For now, start as a learner to build the skills employers look for.</span>
+      </div>
+    </div>
+
+    <p class="foot">Already have an account? <a href="s1-activation-onboarding.html">Log in</a></p>
+  </div>
+
+<script>
+  // Job seeker path isn't built yet — surface an honest inline note instead of a dead link
+  const btn=document.getElementById('seekerBtn'), note=document.getElementById('seekerNote');
+  btn.addEventListener('click',()=>{ note.classList.add('show'); note.scrollIntoView({block:'nearest',behavior:'smooth'}); });
+</script>
+</body>
+</html>

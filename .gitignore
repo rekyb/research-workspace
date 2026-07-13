@@ -1,6 +1,9 @@
 # Local Claude Code config (machine-specific permissions)
 .claude/settings.local.json
 
+# Raw / working research data (not committed)
+raw-data/
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db
