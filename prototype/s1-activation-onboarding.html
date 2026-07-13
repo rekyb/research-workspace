@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Get started · Solve Education!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:light;
+    --background:#FFFFFF; --foreground:#261F10; --card:#FFFFFF;
+    --muted:#F5F3EF; --muted-foreground:#6B6152;
+    --primary:#FFCB1D; --primary-foreground:#261F10; --primary-700:#C99700;
+    --secondary:#2193C8; --info-bg:#E9F5FB;
+    --accent:#EC1A64; --accent-foreground:#FFFFFF; --accent-100:#FDE7EF;
+    --destructive:#EA4134; --destructive-100:#FCE8E6;
+    --success:#2D8B55; --success-100:#E4F5EB; --success-700:#1F633C;
+    --border:#ECE9E3; --line:#F0EDE7; --ring:#FFCB1D;
+    --font-heading:'Plus Jakarta Sans',system-ui,sans-serif;
+    --font-body:'Open Sans',system-ui,sans-serif;
+    --elev-1:0 1px 3px rgba(38,31,16,.05); --elev-2:0 10px 34px rgba(38,31,16,.10);
+    --fast:150ms; --base:200ms; --slow:300ms;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--background); color:var(--foreground);
+    font-family:var(--font-body); font-size:16px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100dvh; display:flex; justify-content:center;
+  }
+  h1,h2{font-family:var(--font-heading);margin:0;letter-spacing:-.01em}
+  :focus-visible{outline:3px solid var(--ring);outline-offset:2px;border-radius:8px}
+  svg{stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;fill:none}
+
+  /* ── app shell: full-width top nav · scrollable content · full-width bottom nav ── */
+  .shell{width:100%;max-width:none;height:100dvh;display:flex;flex-direction:column;background:var(--card)}
+
+  /* top & bottom nav stay full-width; only the main content wraps to 60% */
+  .wrap{width:60%;margin-inline:auto}
+
+  .topnav{flex:none;display:flex;align-items:center;gap:16px;padding:16px 20px 15px}
+  .iconbtn{flex:none;width:40px;height:40px;border-radius:999px;background:transparent;border:none;color:var(--muted-foreground);display:grid;place-items:center;cursor:pointer;transition:background var(--fast),color var(--fast)}
+  .iconbtn:hover{background:var(--muted);color:var(--foreground)}
+  .iconbtn svg{width:22px;height:22px}
+  .back.hide{visibility:hidden;pointer-events:none}
+
+  .progress{flex:1;display:flex;gap:6px}
+  .progress .seg{height:6px;flex:1;border-radius:999px;background:var(--line);transition:background var(--base) ease}
+  .progress .seg.active{background:var(--primary)}
+  .progress .seg.done{background:var(--success)}
+
+  .scrollarea{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column}
+  .scrollarea .wrap{flex:1;display:flex;flex-direction:column;padding:22px 0}
+
+  .screen{display:none;flex:1;flex-direction:column}
+  .screen.show{display:flex;animation:rise var(--slow) ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  h1.head{font-size:clamp(27px,7vw,34px);line-height:1.18;font-weight:700;margin-bottom:12px}
+  .lede{color:var(--muted-foreground);font-size:16.5px;line-height:1.55;margin-bottom:32px;max-width:42ch}
+
+  .field{position:relative;margin-bottom:20px}
+  .field input{width:100%;background:var(--card);color:var(--foreground);border:1.5px solid var(--border);border-radius:999px;padding:15px 22px;font-family:var(--font-body);font-size:16px;transition:border-color var(--fast),box-shadow var(--fast);outline:none}
+  .field input::placeholder{color:var(--muted-foreground);opacity:.9}
+  .field input:hover{border-color:var(--primary-700)}
+  .field input:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(255,203,29,.26)}
+  .field input:read-only{background:var(--muted);color:var(--muted-foreground)}
+  .field input.err{border-color:var(--destructive)}
+  .field input.err:focus{box-shadow:0 0 0 4px rgba(234,65,52,.20)}
+
+  .flabel{display:block;font-weight:600;font-size:14px;margin-bottom:8px}
+  .help{font-size:12.5px;color:var(--muted-foreground);margin:10px 2px 4px;line-height:1.5}
+
+  .or{display:flex;align-items:center;gap:12px;color:var(--muted-foreground);font-size:13px;margin:16px 0}
+  .or::before,.or::after{content:"";height:1px;flex:1;background:var(--line)}
+
+  .tiles{display:flex;flex-direction:column;gap:12px}
+  .tile{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:18px;min-height:44px;cursor:pointer;font-family:var(--font-body);color:var(--foreground);transition:border-color var(--fast),background var(--fast),transform var(--base)}
+  .tile:hover{border-color:var(--primary-700)}
+  .tile:active{transform:scale(.99)}
+  .tile.sel{border-color:var(--accent);background:var(--accent-100)}
+  .tile .tbody{flex:1;min-width:0}
+  .tile .tlabel{display:block;font-weight:600;font-size:15px}
+  .tile .tdesc{display:block;font-size:12.5px;color:var(--muted-foreground);line-height:1.4;margin-top:2px}
+  .radio{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;transition:border-color var(--fast),background var(--fast)}
+  .tile.sel .radio{border-color:var(--accent);background:var(--accent)}
+  .radio svg{width:13px;height:13px;color:var(--accent-foreground);opacity:0;transition:opacity var(--fast)}
+  .tile.sel .radio svg{opacity:1}
+
+  .fielderr{display:none;align-items:center;gap:7px;color:var(--destructive);font-size:13px;font-weight:600;margin-bottom:14px}
+  .fielderr svg{width:16px;height:16px}
+  .fielderr.show{display:flex}
+
+  /* ── bottom nav (the onboarding controller) ── */
+  .bottomnav{flex:none;padding:14px 20px calc(16px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--card)}
+  .ctrl{display:none;flex-direction:row;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:12px}
+  .ctrl.show{display:flex}
+  .bottomnav .btn.full{width:auto;min-width:170px}
+  .bottomnav .btn.ghost.full{min-width:auto}
+  .ctrl .btn.primary{order:2}
+  .ctrl .btn.outline,.ctrl .btn.ghost{order:1}
+
+  .btn{font-family:var(--font-body);font-weight:600;font-size:16px;border:1.5px solid transparent;border-radius:999px;padding:14px 24px;min-height:52px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:background var(--base),border-color var(--base),transform var(--base),opacity var(--base)}
+  .btn svg{width:19px;height:19px}
+  .btn:active{transform:scale(.98)}
+  .btn.primary{background:var(--primary);color:var(--primary-foreground)}
+  .btn.primary:hover{background:var(--primary-700)}
+  .btn.primary:disabled{opacity:.45;cursor:not-allowed}
+  .btn.primary:disabled:hover{background:var(--primary)}
+  .btn.outline{background:transparent;color:var(--foreground);border-color:var(--border)}
+  .btn.outline:hover{border-color:var(--foreground)}
+  .btn.ghost{background:transparent;color:var(--muted-foreground);border-color:transparent;min-height:44px}
+  .btn.ghost:hover{color:var(--foreground)}
+  .btn.full{width:100%}
+
+  /* centered screens (meet Ed + finish) */
+  .center{align-items:center;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center}
+  .center .lede{text-align:center;margin-left:auto;margin-right:auto;margin-bottom:0}
+  .avatar-lg{width:84px;height:84px;border-radius:26px;display:grid;place-items:center;margin:0 auto 22px;animation:pop var(--slow) ease both}
+  .avatar-lg svg{width:44px;height:44px}
+  .avatar-lg.ed{background:var(--accent);color:var(--accent-foreground)}
+  .avatar-lg.ok{background:var(--success-100);color:var(--success)}
+  @keyframes pop{from{transform:scale(.72);opacity:0}to{transform:scale(1);opacity:1}}
+
+  /* recommendation */
+  .thinking{display:flex;align-items:center;gap:10px;color:var(--muted-foreground);font-size:15px;padding:6px 0}
+  .spinner{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--accent);animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .reco{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:22px;margin-bottom:2px}
+  .reco .rname{font-family:var(--font-heading);font-weight:700;font-size:20px;margin-bottom:8px}
+  .reco .rreason{color:var(--muted-foreground);font-size:15px;line-height:1.55}
+
+  /* first-task exercise (MCQ / drag-to-sort) */
+  .task-kicker{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted-foreground);margin-bottom:10px}
+  .ctable{width:100%;border-collapse:collapse;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:22px;font-size:15px}
+  .ctable td{padding:12px 16px;border-bottom:1px solid var(--line)}
+  .ctable tr:last-child td{border-bottom:none}
+  .ctable td:first-child{font-weight:600}
+  .ctable td:last-child{text-align:right;font-family:ui-monospace,Consolas,monospace;color:var(--muted-foreground)}
+
+  .mcq{display:flex;flex-direction:column;gap:12px}
+  .tile.wrong{border-color:var(--destructive);background:var(--destructive-100)}
+  .tile.wrong .radio{border-color:var(--destructive);background:var(--destructive)}
+  .tile.wrong .radio svg{opacity:1}
+
+  .sortlist{display:flex;flex-direction:column;gap:10px}
+  .sortitem{position:relative;display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:15px 16px;font-size:15px;font-weight:600;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;transition:border-color var(--fast)}
+  .sortitem:hover{border-color:var(--primary-700)}
+  .sortitem.dragging{cursor:grabbing;z-index:5;box-shadow:var(--elev-2);border-color:var(--accent)}
+  .sortitem .grip{flex:none;color:var(--muted-foreground);display:grid;place-items:center}
+  .sortitem .grip svg{width:20px;height:20px;fill:currentColor;stroke:none}
+  .sorttxt{flex:1}
+
+  .taskok{display:flex;align-items:center;gap:8px;color:var(--success-700);font-size:14px;font-weight:600;margin-top:16px}
+  .taskok svg{width:18px;height:18px;color:var(--success)}
+  .chip.neutral{background:var(--muted);color:var(--muted-foreground)}
+  .chip.neutral svg{color:var(--muted-foreground)}
+  .avatar-lg.neutral{background:var(--muted);color:var(--muted-foreground)}
+
+  .chip{display:inline-flex;align-items:center;gap:7px;background:var(--success-100);color:var(--success-700);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;margin:2px auto 4px}
+  .chip svg{width:15px;height:15px;color:var(--success)}
+
+  /* ── create-profile page ── */
+  /* Google button — provider-branded, intentional exception to CMP-09 */
+  .gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#3c4043;border:1px solid #dadce0;border-radius:999px;padding:14px 24px;min-height:52px;font-family:var(--font-body);font-weight:600;font-size:16px;cursor:pointer;transition:box-shadow var(--fast),background var(--fast),opacity var(--fast)}
+  .gbtn:hover{background:#f8f9fa;box-shadow:0 1px 3px rgba(60,64,67,.2)}
+  .gbtn:disabled{opacity:.85;cursor:default}
+  .gbtn svg{width:20px;height:20px}
+  .gbtn svg path{stroke:none}
+
+  .connected{display:none;align-items:center;gap:10px;font-size:13.5px;color:var(--success-700);background:var(--success-100);border-radius:12px;padding:10px 13px;margin:12px 0 4px}
+  .connected.show{display:flex}
+  .connected>svg{flex:none;width:16px;height:16px;color:var(--success)}
+  .con-txt{flex:1;min-width:0;font-weight:600}
+  .con-txt b{font-weight:700}
+  .unlink{flex:none;background:transparent;border:none;color:var(--success-700);font-weight:700;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:8px;text-decoration:underline;text-underline-offset:2px}
+  .unlink:hover{background:rgba(45,139,85,.12)}
+
+  /* searchable country combobox */
+  .combo-wrap{position:relative}
+  .combo-list{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;max-height:238px;overflow-y:auto;margin:0;padding:6px;list-style:none;background:var(--card);border:1.5px solid var(--border);border-radius:16px;box-shadow:var(--elev-2);display:none}
+  .combo-list.show{display:block}
+  .combo-opt{padding:11px 14px;border-radius:10px;font-size:15px;cursor:pointer}
+  .combo-opt:hover,.combo-opt.active{background:var(--muted)}
+  .combo-opt[aria-selected="true"]{color:var(--accent);font-weight:600}
+  .combo-empty{padding:11px 14px;font-size:14px;color:var(--muted-foreground)}
+
+  /* Learning Code checkbox */
+  .check{display:flex;align-items:flex-start;gap:12px;padding:2px 0;margin-bottom:18px;cursor:pointer;font-size:15px}
+  .check-txt{display:flex;flex-direction:column;line-height:1.35}
+  .check .opt{font-size:12.5px;font-weight:400;color:var(--muted-foreground);margin-top:3px}
+  .check input{appearance:none;-webkit-appearance:none;width:24px;height:24px;flex:none;border:2px solid var(--border);border-radius:8px;cursor:pointer;position:relative;transition:border-color var(--fast),background var(--fast)}
+  .check input:hover{border-color:var(--primary-700)}
+  .check input:checked{background:var(--primary);border-color:var(--primary)}
+  .check input:checked::after{content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;border:solid var(--primary-foreground);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+
+  .note{color:var(--muted-foreground);font-size:12px;line-height:1.5;margin-top:6px}
+
+  /* Learning Code: in-field loading / success / failed indicator */
+  .code-wrap{position:relative}
+  .code-wrap input{padding-right:48px;text-transform:uppercase;letter-spacing:.06em}
+  .code-ind{position:absolute;top:50%;right:16px;transform:translateY(-50%);width:20px;height:20px;display:grid;place-items:center;pointer-events:none}
+  .code-ind svg{width:20px;height:20px;stroke-width:2.4}
+  .code-ind .spinner{width:18px;height:18px;border-top-color:var(--secondary)}
+  .field input.ok{border-color:var(--success)}
+  .field input.ok:focus{box-shadow:0 0 0 4px rgba(45,139,85,.20)}
+  .help.ok{color:var(--success-700);font-weight:600}
+  .help.bad{color:var(--destructive);font-weight:600}
+
+  /* roomier spacing between components on the Create-profile page */
+  .signup .gbtn{margin-bottom:8px}
+  .signup .connected{margin:18px 0 10px}
+  .signup .or{margin:26px 0}
+  .signup .field{margin-bottom:24px}
+  .signup .check{margin:10px 0 24px}
+  .signup .note{margin-top:18px}
+
+  /* on phones the 70% content column would be too cramped, so it fills with gutters */
+  @media (max-width:720px){
+    .wrap{width:100%}
+    .scrollarea .wrap{padding-left:20px;padding-right:20px}
+  }
+
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ── TOP NAV: back + stepper ── -->
+  <nav class="topnav" aria-label="Onboarding progress">
+    <button class="iconbtn back hide" id="back" aria-label="Go back" data-testid="back">
+      <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <div class="progress" id="progress" aria-hidden="true">
+      <span class="seg active"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span>
+    </div>
+  </nav>
+
+  <!-- ── SCROLLABLE CONTENT ── -->
+  <main class="scrollarea" id="scrollarea">
+    <div class="wrap">
+
+    <!-- 0 · MEET ED -->
+    <section class="screen show">
+      <div class="center">
+        <div class="avatar-lg ed" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="3"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div>
+        <h1 class="head">Hi, I'm Ed</h1>
+        <p class="lede">I'll help you learn by doing. Short tasks, no long videos.</p>
+      </div>
+    </section>
+
+    <!-- 1 · GOAL -->
+    <section class="screen">
+      <h1 class="head">What do you want to work on?</h1>
+      <p class="lede">Pick one to get a first task. You can change it anytime.</p>
+
+      <div class="tiles" id="tiles" role="radiogroup" aria-label="What you want to work on">
+        <button class="tile" role="radio" aria-checked="false" data-key="data" data-testid="tile-data">
+          <span class="tbody"><span class="tlabel">Data &amp; numbers</span><span class="tdesc">Make sense of data and find the story in it</span></span>
+          <span class="radio" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+        </button>
+        <button class="tile" role="radio" aria-checked="false" data-key="ops" data-testid="tile-ops">
+          <span class="tbody"><span class="tlabel">Business operations</span><span class="tdesc">Spot what's slowing a process down</span></span>
+          <span class="radio" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+        </button>
+        <button class="tile" role="radio" aria-checked="false" data-key="logic" data-testid="tile-logic">
+          <span class="tbody"><span class="tlabel">Problem solving</span><span class="tdesc">Work through tricky problems step by step</span></span>
+          <span class="radio" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+        </button>
+        <button class="tile" role="radio" aria-checked="false" data-key="comm" data-testid="tile-comm">
+          <span class="tbody"><span class="tlabel">Writing at work</span><span class="tdesc">Write clear messages that land</span></span>
+          <span class="radio" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2 · LEVEL-CHECK INTRO -->
+    <section class="screen">
+      <div class="thinking" id="thinking" data-testid="reco-loading"><span class="spinner" aria-hidden="true"></span> Setting up a few quick questions…</div>
+      <div id="reveal" style="display:none">
+        <h1 class="head">Let's find your level</h1>
+        <p class="lede">Answer a few short questions. There are no wrong answers, this just helps me pitch your tasks at the right level.</p>
+        <div class="reco">
+          <div class="rname" id="rTask">—</div>
+          <div class="rreason" id="rReason">—</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · LEVEL CHECK (3 questions) -->
+    <section class="screen">
+      <span class="task-kicker" id="qCounter">Question 1 of 3</span>
+      <h1 class="head" style="font-size:24px" id="taskTitle">—</h1>
+      <p class="lede" id="taskPrompt" style="margin-bottom:22px">—</p>
+      <div id="taskContext" hidden></div>
+      <div class="mcq" id="mcqBox" role="radiogroup" aria-label="Choose your answer" hidden></div>
+      <div class="sortlist" id="sortBox" aria-label="Drag the items to reorder them" hidden></div>
+      <div class="fielderr" id="taskErr" role="alert" style="margin-top:18px;margin-bottom:0">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        <span id="taskErrText">Pick an answer first.</span>
+      </div>
+      <div class="taskok" id="taskOk" hidden>
+        <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+        Nice, that's right.
+      </div>
+    </section>
+
+    <!-- 4 · DONE -->
+    <section class="screen">
+      <div class="center">
+        <div class="avatar-lg ok" id="doneAvatar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h1 class="head" id="doneHead">Nice work</h1>
+        <p class="chip" id="doneChipWrap"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span id="doneChip">First task done</span></p>
+        <p class="lede" id="doneLede">Create a free profile to save it and get your next task.</p>
+      </div>
+    </section>
+
+    <!-- 5 · CREATE PROFILE -->
+    <section class="screen signup">
+      <h1 class="head">Create your free profile</h1>
+      <p class="lede">Save your progress and pick up where you left off.</p>
+
+      <button class="gbtn" id="googleBtn" data-testid="google-signin">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#4285F4" d="M23.06 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h6.19a5.29 5.29 0 0 1-2.3 3.47v2.88h3.72c2.18-2 3.45-4.96 3.45-8.36Z"/>
+          <path fill="#34A853" d="M12 24c3.12 0 5.73-1.04 7.64-2.81l-3.72-2.88c-1.03.69-2.35 1.1-3.92 1.1-3.01 0-5.56-2.03-6.47-4.77H1.68v2.97A11.99 11.99 0 0 0 12 24Z"/>
+          <path fill="#FBBC05" d="M5.53 14.64a7.2 7.2 0 0 1 0-4.61V7.06H1.68a12 12 0 0 0 0 10.55l3.85-2.97Z"/>
+          <path fill="#EA4335" d="M12 4.75c1.7 0 3.22.59 4.42 1.73l3.3-3.3C17.73 1.2 15.12 0 12 0 7.7 0 3.99 2.47 1.68 6.06l3.85 2.97C6.44 6.28 8.99 4.75 12 4.75Z"/>
+        </svg>
+        <span id="googleLabel">Continue with Google</span>
+      </button>
+
+      <div class="connected" id="connected">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        <span class="con-txt">Connected as <b id="conEmail">learner@gmail.com</b></span>
+        <button class="unlink" id="unlinkBtn" data-testid="unlink">Unlink</button>
+      </div>
+
+      <div id="emailSection">
+        <div class="or">or use your email</div>
+        <div class="field">
+          <label class="flabel" for="email">Email</label>
+          <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" data-testid="email-input">
+        </div>
+      </div>
+
+      <div id="moreFields" hidden>
+        <div class="field">
+          <label class="flabel" for="displayName">Display name</label>
+          <input id="displayName" type="text" autocomplete="nickname" placeholder="What should we call you?" data-testid="displayname-input">
+        </div>
+
+        <div class="field">
+          <label class="flabel" for="dob">Date of birth</label>
+          <input id="dob" type="date" data-testid="dob-input" aria-describedby="dobHelp">
+          <p class="help" id="dobHelp">You need to be 15 or older to join.</p>
+          <div class="fielderr" id="ageErr" role="alert">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            <span id="ageErrText">You need to be 15 or older to create a profile.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="flabel" for="countryInput">Country</label>
+          <div class="combo-wrap">
+            <input id="countryInput" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="countryList" autocomplete="off" placeholder="Search your country" data-testid="country-input">
+            <ul class="combo-list" id="countryList" role="listbox" aria-label="Country"></ul>
+          </div>
+        </div>
+
+        <label class="check" for="hasCode">
+          <input type="checkbox" id="hasCode" data-testid="has-code">
+          <span class="check-txt">I have a Learning Code
+            <span class="opt">Optional, only if a teacher or partner gave you one</span>
+          </span>
+        </label>
+        <div class="field" id="codeField" hidden>
+          <label class="flabel" for="code">Learning Code</label>
+          <div class="code-wrap">
+            <input id="code" type="text" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Enter your 6-character code" data-testid="code-input" aria-describedby="codeMsg">
+            <span class="code-ind" id="codeInd" aria-hidden="true"></span>
+          </div>
+          <p class="help" id="codeMsg" role="status" aria-live="polite">For this demo, try 123456.</p>
+        </div>
+      </div>
+
+      <p class="note">This is a demo. No real account is created and nothing is signed in.</p>
+    </section>
+
+    <!-- 6 · ALL SET -->
+    <section class="screen">
+      <div class="center">
+        <div class="avatar-lg ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h1 class="head">You're all set</h1>
+        <p class="lede">Your profile is saved. Ed will line up your next task.</p>
+      </div>
+    </section>
+
+    </div>
+  </main>
+
+  <!-- ── BOTTOM NAV: onboarding controller ── -->
+  <nav class="bottomnav" aria-label="Onboarding actions">
+    <div class="ctrl show" data-for="0">
+      <button class="btn primary full" id="meetNext" data-testid="start">Start <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+    </div>
+    <div class="ctrl" data-for="1">
+      <button class="btn primary full" id="goNext" disabled data-testid="goal-continue">Continue <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+    </div>
+    <div class="ctrl" data-for="2">
+      <button class="btn primary full" id="startTask" data-testid="start-check">Start <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+      <button class="btn outline full" id="chooseElse" data-testid="choose-else">Choose something else</button>
+    </div>
+    <div class="ctrl" data-for="3">
+      <button class="btn primary full" id="check" data-testid="quiz-next">Next</button>
+      <button class="btn ghost full" id="skipTask" data-testid="skip-task">Skip this check</button>
+    </div>
+    <div class="ctrl" data-for="4">
+      <button class="btn primary full" id="createProfile" data-testid="create-profile">Create a free profile <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+    </div>
+    <div class="ctrl" data-for="5">
+      <button class="btn primary full" id="submitProfile" disabled data-testid="submit-profile">Create profile</button>
+    </div>
+    <div class="ctrl" data-for="6">
+      <button class="btn primary full" id="goNextTask" data-testid="next-task">Go to my next task <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+    </div>
+  </nav>
+
+</div>
+
+<script>
+  const MAP={
+    data:{label:"Data & numbers", title:"Quick numbers check",
+      reason:"Three short questions with a small table. About a minute.",
+      questions:[
+        {type:"mcq", prompt:"Here are last month's sales by region. Which region sold the most?",
+          table:[["North","320"],["South","240"],["East","190"]], options:["North","South","East"], answer:0},
+        {type:"mcq", prompt:"Using the same table, which region sold the least?",
+          table:[["North","320"],["South","240"],["East","190"]], options:["North","South","East"], answer:2},
+        {type:"mcq", prompt:"Roughly, what were the total sales across all three regions?",
+          table:[["North","320"],["South","240"],["East","190"]], options:["750","560","830"], answer:0}
+      ]},
+    ops:{label:"Business operations", title:"Quick operations check",
+      reason:"Three short questions about a simple workflow. About a minute.",
+      questions:[
+        {type:"mcq", prompt:"Each step shows how many items it handles per hour. A lower number is slower. Which step is the slowest?",
+          table:[["Intake","120 / hr"],["Pack","70 / hr"],["Ship","110 / hr"]], options:["Intake","Pack","Ship"], answer:1},
+        {type:"mcq", prompt:"Using the same rates, which step is the fastest?",
+          table:[["Intake","120 / hr"],["Pack","70 / hr"],["Ship","110 / hr"]], options:["Intake","Pack","Ship"], answer:0},
+        {type:"sort", prompt:"Put the three steps in the order the work flows, from first to last.",
+          order:["Intake","Pack","Ship"]}
+      ]},
+    logic:{label:"Problem solving", title:"Quick problem-solving check",
+      reason:"Three short questions. No trick questions. About a minute.",
+      questions:[
+        {type:"sort", prompt:"Put these problem-solving steps in a sensible order, first step at the top.",
+          order:["Understand the problem","Make a plan","Try your plan","Check the result"]},
+        {type:"mcq", prompt:"Every cat is an animal. Milo is a cat. So Milo is…",
+          options:["An animal","A plant","We can't tell"], answer:0},
+        {type:"mcq", prompt:"What number comes next: 2, 4, 6, 8, …?",
+          options:["10","9","12"], answer:0}
+      ]},
+    comm:{label:"Writing at work", title:"Quick writing check",
+      reason:"Three short questions about clear messages. About a minute.",
+      questions:[
+        {type:"mcq", prompt:"You need a decision from your manager by Friday. Which subject line is clearest?",
+          options:["Quick question","Need your decision by Friday","Just checking in","Hi there"], answer:1},
+        {type:"mcq", prompt:"Which sentence is the clearest?",
+          options:["Per my last email, kindly revert.","Can you reply by 3pm today?","Following up on the thing."], answer:1},
+        {type:"sort", prompt:"Put this short message in a sensible order, first line at the top.",
+          order:["Hi Sam,","Can you approve the budget?","I need it by Friday.","Thanks."]}
+      ]}
+  };
+  const MIN_AGE=15;
+  const DEMO_ACCOUNT={name:"Learner",email:"learner@gmail.com"}; // simulated Google identity — not real PII
+  const COUNTRIES=["Indonesia","Malaysia","Singapore","Philippines","Thailand","Vietnam","Cambodia","Myanmar","Laos","Brunei","Timor-Leste","India","Bangladesh","Pakistan","Sri Lanka","Nepal","Nigeria","Kenya","Ghana","South Africa","Tanzania","Uganda","Ethiopia","Egypt","Morocco","Brazil","Mexico","Argentina","Colombia","United States","Canada","United Kingdom","Ireland","Australia","New Zealand","Germany","France","Spain","Italy","Netherlands","Portugal","Turkey","Saudi Arabia","United Arab Emirates","Qatar","Japan","South Korea","China","Hong Kong","Taiwan"];
+
+  const $=s=>document.querySelector(s);
+  const screens=[...document.querySelectorAll('.screen')];
+  const segs=[...document.querySelectorAll('#progress .seg')];
+  const ctrls=[...document.querySelectorAll('.ctrl')];
+  const tiles=$('#tiles'), goNext=$('#goNext');
+  const back=$('#back'), scrollarea=$('#scrollarea');
+  const mcqBox=$('#mcqBox'), sortBox=$('#sortBox');
+  let focus=null, level=null, current=null, idx=0, recoReady=false, taskPick=null, qIndex=0, correctCount=0;
+
+  function updateCtrl(){ ctrls.forEach(c=>{ const f=+c.dataset.for; c.classList.toggle('show', f===idx && (f!==2 || recoReady)); }); }
+
+  function show(n){
+    idx=n;
+    screens.forEach((s,i)=>s.classList.toggle('show',i===n));
+    segs.forEach((s,i)=>{s.classList.toggle('active',i===n);s.classList.toggle('done',i<n)});
+    back.classList.toggle('hide', !((n>=1 && n<=3) || n===5));
+    updateCtrl();
+    scrollarea.scrollTo({top:0,behavior:'smooth'});
+  }
+  function clear(group){ [...group.children].forEach(c=>{c.classList.remove('sel');c.setAttribute('aria-checked','false')}); }
+
+  back.addEventListener('click',()=>{ if(idx>0) show(idx-1); });
+
+  tiles.addEventListener('click',e=>{
+    const t=e.target.closest('.tile'); if(!t) return;
+    clear(tiles); t.classList.add('sel'); t.setAttribute('aria-checked','true');
+    focus=t.dataset.key; goNext.disabled=false;
+  });
+
+  $('#meetNext').addEventListener('click',()=>show(1));
+  goNext.addEventListener('click',()=>{ if(!focus) return; current=MAP[focus]; recoReady=false; show(2); recommend(); });
+
+  function recommend(){
+    $('#thinking').style.display='flex'; $('#reveal').style.display='none';
+    setTimeout(()=>{
+      $('#thinking').style.display='none'; $('#reveal').style.display='block';
+      $('#rTask').textContent=current.title;
+      $('#rReason').textContent=current.reason;
+      recoReady=true; updateCtrl();
+    },1100);
+  }
+
+  $('#startTask').addEventListener('click',()=>{ qIndex=0; correctCount=0; buildQuestion(); show(3); });
+  $('#chooseElse').addEventListener('click',()=>{ focus=null; goNext.disabled=true; clear(tiles); show(1); });
+
+  // build the current level-check question (MCQ or drag-to-sort)
+  function buildQuestion(){
+    const qs=current.questions, p=qs[qIndex];
+    $('#qCounter').textContent='Question '+(qIndex+1)+' of '+qs.length;
+    $('#taskTitle').textContent=current.title;
+    $('#taskPrompt').textContent=p.prompt;
+    const ctx=$('#taskContext'); ctx.innerHTML=''; ctx.hidden=!p.table;
+    if(p.table){
+      const t=document.createElement('table'); t.className='ctable';
+      p.table.forEach(row=>{ const tr=document.createElement('tr'); tr.innerHTML='<td>'+row[0]+'</td><td>'+row[1]+'</td>'; t.appendChild(tr); });
+      ctx.appendChild(t);
+    }
+    clearTaskFeedback(); taskPick=null;
+    if(p.type==='mcq'){
+      sortBox.hidden=true; mcqBox.hidden=false; mcqBox.innerHTML='';
+      p.options.forEach((o,i)=>{
+        const b=document.createElement('button');
+        b.className='tile'; b.setAttribute('role','radio'); b.setAttribute('aria-checked','false');
+        b.dataset.i=i; b.setAttribute('data-testid','mcq-'+i);
+        b.innerHTML='<span class="tbody"><span class="tlabel">'+o+'</span></span><span class="radio" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>';
+        mcqBox.appendChild(b);
+      });
+    } else {
+      mcqBox.hidden=true; sortBox.hidden=false; sortBox.innerHTML='';
+      shuffle(p.order).forEach(txt=>{
+        const it=document.createElement('div');
+        it.className='sortitem'; it.dataset.txt=txt; it.setAttribute('data-testid','sort-item');
+        it.innerHTML='<span class="grip" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="5" r="1.4"/><circle cx="9" cy="12" r="1.4"/><circle cx="9" cy="19" r="1.4"/><circle cx="15" cy="5" r="1.4"/><circle cx="15" cy="12" r="1.4"/><circle cx="15" cy="19" r="1.4"/></svg></span><span class="sorttxt">'+txt+'</span>';
+        sortBox.appendChild(it);
+      });
+      makeSortable(sortBox);
+    }
+    $('#check').textContent = (qIndex===qs.length-1) ? 'Finish' : 'Next';
+  }
+
+  function shuffle(a){ let r; do{ r=a.slice(); for(let i=r.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const tmp=r[i]; r[i]=r[j]; r[j]=tmp; } }while(r.join('|')===a.join('|')); return r; }
+
+  // pointer-based sortable — dragged item follows the pointer, neighbours slide out of the way,
+  // DOM reorders once on drop (works with mouse and touch)
+  function makeSortable(list){
+    let dragEl=null, startY=0, startIndex=0, rowH=0, items=[], newIndex=0;
+
+    function layout(){
+      items.forEach((o,i)=>{
+        if(o===dragEl) return;
+        let shift=0;
+        if(newIndex>startIndex && i>startIndex && i<=newIndex) shift=-rowH;
+        else if(newIndex<startIndex && i>=newIndex && i<startIndex) shift=rowH;
+        o.style.transform = shift ? 'translateY('+shift+'px)' : '';
+      });
+    }
+    function onDown(e){
+      dragEl=e.currentTarget;
+      items=[...list.querySelectorAll('.sortitem')];
+      startIndex=items.indexOf(dragEl); newIndex=startIndex;
+      startY=e.clientY;
+      rowH = items.length>1
+        ? items[1].getBoundingClientRect().top - items[0].getBoundingClientRect().top
+        : dragEl.getBoundingClientRect().height + 10;
+      dragEl.setPointerCapture(e.pointerId);
+      dragEl.classList.add('dragging');
+      dragEl.style.transition='none';
+      items.forEach(o=>{ if(o!==dragEl) o.style.transition='transform 170ms ease'; });
+    }
+    function onMove(e){
+      if(!dragEl) return;
+      const dy=e.clientY-startY;
+      dragEl.style.transform='translateY('+dy+'px) scale(1.02)';
+      const idx=Math.max(0,Math.min(items.length-1,startIndex+Math.round(dy/rowH)));
+      if(idx!==newIndex){ newIndex=idx; layout(); clearTaskFeedback(); }
+    }
+    function onUp(){
+      if(!dragEl) return;
+      const el=dragEl; dragEl=null;
+      el.classList.remove('dragging');
+      items.forEach(o=>{ o.style.transition=''; o.style.transform=''; });
+      if(newIndex!==startIndex){
+        if(newIndex>startIndex) list.insertBefore(el, items[newIndex].nextSibling);
+        else list.insertBefore(el, items[newIndex]);
+        clearTaskFeedback();
+      }
+    }
+
+    list.querySelectorAll('.sortitem').forEach(it=>{
+      it.addEventListener('pointerdown',onDown);
+      it.addEventListener('pointermove',onMove);
+      it.addEventListener('pointerup',onUp);
+      it.addEventListener('pointercancel',onUp);
+    });
+  }
+
+  mcqBox.addEventListener('click',e=>{
+    const b=e.target.closest('.tile'); if(!b) return;
+    [...mcqBox.children].forEach(c=>{c.classList.remove('sel','wrong');c.setAttribute('aria-checked','false')});
+    b.classList.add('sel'); b.setAttribute('aria-checked','true'); taskPick=+b.dataset.i;
+    clearTaskFeedback();
+  });
+
+  function clearTaskFeedback(){ $('#taskErr').classList.remove('show'); $('#taskOk').hidden=true; }
+  function showTaskErr(msg){ $('#taskErrText').textContent=msg; $('#taskErr').classList.add('show'); $('#taskOk').hidden=true; }
+
+  // level check: one question at a time, records the answer and moves on (never blocks) so it can gauge level
+  $('#check').addEventListener('click',()=>{
+    const q=current.questions[qIndex];
+    let correct;
+    if(q.type==='mcq'){
+      if(taskPick===null){ showTaskErr('Pick an answer to continue.'); return; }
+      correct = taskPick===q.answer;
+    } else {
+      const order=[...sortBox.children].map(c=>c.dataset.txt);
+      correct = order.join('|')===q.order.join('|');
+    }
+    if(correct) correctCount++;
+    if(qIndex < current.questions.length-1){ qIndex++; buildQuestion(); }
+    else finishQuiz();
+  });
+
+  function finishQuiz(){
+    const total=current.questions.length;
+    level = correctCount>=total ? 'conf' : (correctCount>=Math.ceil(total/2) ? 'some' : 'new');
+    console.log('[onboarding] level check', {focus:current.label, correct:correctCount, total, level});
+    setDone(false); show(4);
+  }
+
+  $('#skipTask').addEventListener('click',()=>{ level=null; setDone(true); show(4); });
+
+  function setDone(skipped){
+    $('#doneHead').textContent = skipped ? 'No problem' : 'Nice work';
+    $('#doneChip').textContent = skipped ? 'Check skipped' : 'Level check complete';
+    $('#doneChipWrap').classList.toggle('neutral',skipped);
+    $('#doneLede').textContent = skipped
+      ? 'You can take the check anytime. Create a free profile to get started.'
+      : 'Create a free profile to save your spot and get tasks at your level.';
+    const av=$('#doneAvatar'); av.classList.toggle('ok',!skipped); av.classList.toggle('neutral',skipped);
+  }
+
+  // Nice work → go to the Create profile page (screen 5)
+  $('#createProfile').addEventListener('click',()=>show(5));
+
+  // ── create-profile page ──
+  const googleBtn=$('#googleBtn'), googleLabel=$('#googleLabel'), connected=$('#connected');
+  const emailSection=$('#emailSection'), unlinkBtn=$('#unlinkBtn'), conEmail=$('#conEmail');
+  const emailInput=$('#email'), moreFields=$('#moreFields'), displayName=$('#displayName');
+  const dob=$('#dob'), ageErr=$('#ageErr'), ageErrText=$('#ageErrText');
+  const countryInput=$('#countryInput'), countryList=$('#countryList');
+  const hasCode=$('#hasCode'), codeField=$('#codeField'), code=$('#code');
+  const submitProfile=$('#submitProfile');
+  let signupMethod='email', country='', comboItems=[], activeIdx=-1;
+
+  // searchable country dropdown
+  function renderCountries(q){
+    q=(q||'').trim().toLowerCase();
+    const matches=COUNTRIES.filter(c=>c.toLowerCase().includes(q));
+    countryList.innerHTML=''; comboItems=[]; activeIdx=-1;
+    if(!matches.length){ const li=document.createElement('li'); li.className='combo-empty'; li.textContent='No matches'; countryList.appendChild(li); return; }
+    matches.forEach(c=>{
+      const li=document.createElement('li');
+      li.className='combo-opt'; li.setAttribute('role','option'); li.textContent=c;
+      li.setAttribute('aria-selected', c===country?'true':'false');
+      li.addEventListener('mousedown',e=>{ e.preventDefault(); selectCountry(c); });
+      countryList.appendChild(li); comboItems.push(li);
+    });
+  }
+  function openCombo(){ renderCountries(countryInput.value===country?'':countryInput.value); countryList.classList.add('show'); countryInput.setAttribute('aria-expanded','true'); }
+  function closeCombo(){ countryList.classList.remove('show'); countryInput.setAttribute('aria-expanded','false'); activeIdx=-1; }
+  function selectCountry(c){ country=c; countryInput.value=c; closeCombo(); syncSubmit(); }
+  function hi(){ comboItems.forEach((li,i)=>li.classList.toggle('active',i===activeIdx)); if(comboItems[activeIdx]) comboItems[activeIdx].scrollIntoView({block:'nearest'}); }
+
+  countryInput.addEventListener('focus',openCombo);
+  countryInput.addEventListener('input',()=>{ country=''; openCombo(); syncSubmit(); });
+  countryInput.addEventListener('blur',()=>setTimeout(closeCombo,120));
+  countryInput.addEventListener('keydown',e=>{
+    if(e.key==='ArrowDown'){ e.preventDefault(); if(!countryList.classList.contains('show')) openCombo(); activeIdx=Math.min(activeIdx+1,comboItems.length-1); hi(); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); activeIdx=Math.max(activeIdx-1,0); hi(); }
+    else if(e.key==='Enter'){ if(activeIdx>=0&&comboItems[activeIdx]){ e.preventDefault(); selectCountry(comboItems[activeIdx].textContent); } }
+    else if(e.key==='Escape'){ closeCombo(); }
+  });
+
+  // progressive reveal — typing an email opens the rest of the form
+  emailInput.addEventListener('input',()=>{ moreFields.hidden=emailInput.value.trim().length===0; syncSubmit(); });
+  displayName.addEventListener('input',syncSubmit);
+  dob.max=new Date().toISOString().slice(0,10);
+  dob.addEventListener('input',()=>{ ageErr.classList.remove('show'); dob.classList.remove('err'); syncSubmit(); });
+  // ── dummy Learning Code validation (max 6 chars, simulated async check) ──
+  const codeInd=$('#codeInd'), codeMsg=$('#codeMsg');
+  const CODE_RE=/^(?=.*[A-Z])(?=.*\d)[A-Z0-9]{6}$/;   // 6 alphanumerics, at least one letter + one digit
+  const ICON_OK='<svg viewBox="0 0 24 24" style="color:var(--success)"><path d="M20 6 9 17l-5-5"/></svg>';
+  const ICON_BAD='<svg viewBox="0 0 24 24" style="color:var(--destructive)"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+  let codeStatus='idle', codeTimer=null;
+
+  function setCodeStatus(s){
+    codeStatus=s; code.classList.remove('ok','err'); codeMsg.classList.remove('ok','bad');
+    if(s==='loading'){ codeInd.innerHTML='<span class="spinner" aria-hidden="true"></span>'; codeMsg.textContent='Checking your code…'; }
+    else if(s==='ok'){ codeInd.innerHTML=ICON_OK; code.classList.add('ok'); codeMsg.textContent="You'll be added to Teacher Ulfa's English A1 Classroom."; codeMsg.classList.add('ok'); }
+    else if(s==='bad'){ codeInd.innerHTML=ICON_BAD; code.classList.add('err'); codeMsg.textContent="That code didn't work. Check it and try again."; codeMsg.classList.add('bad'); }
+    else { codeInd.innerHTML=''; codeMsg.textContent='For this demo, try 123456.'; }
+    syncSubmit();
+  }
+
+  code.addEventListener('input',()=>{
+    code.value=code.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
+    if(codeTimer) clearTimeout(codeTimer);
+    if(code.value.length<6){ setCodeStatus('idle'); return; }
+    setCodeStatus('loading');
+    codeTimer=setTimeout(()=>setCodeStatus((code.value==='123456'||CODE_RE.test(code.value))?'ok':'bad'),900); // 123456 is the demo code
+  });
+
+  hasCode.addEventListener('change',()=>{
+    codeField.hidden=!hasCode.checked;
+    if(!hasCode.checked) code.value='';
+    setCodeStatus('idle');
+  });
+
+  function emailValid(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim()); }
+  function syncSubmit(){
+    const ok = emailValid(emailInput.value) &&
+               displayName.value.trim().length>0 &&
+               !!dob.value && !!country &&
+               (!hasCode.checked || codeStatus==='ok');
+    submitProfile.disabled=!ok;
+  }
+
+  // simulate Google sign-in (no real auth) — autofills identity, reveals the form
+  googleBtn.addEventListener('click',()=>{
+    if(googleBtn.disabled) return;
+    googleBtn.disabled=true;
+    googleLabel.innerHTML='<span class="spinner" style="border-top-color:#4285F4" aria-hidden="true"></span> Connecting to Google';
+    setTimeout(()=>{
+      signupMethod='google';
+      emailInput.value=DEMO_ACCOUNT.email; emailInput.readOnly=true;
+      displayName.value=DEMO_ACCOUNT.name;
+      conEmail.textContent=DEMO_ACCOUNT.email;
+      googleBtn.hidden=true;          // hide the Google button…
+      emailSection.hidden=true;       // …and the "or use your email" section
+      connected.classList.add('show');
+      moreFields.hidden=false;
+      googleLabel.textContent='Continue with Google';
+      syncSubmit();
+      setTimeout(()=>dob.focus(),60);
+    },1200);
+  });
+
+  // unlink the Google account — restore the two sign-in components, collapse the form
+  unlinkBtn.addEventListener('click',()=>{
+    signupMethod='email';
+    connected.classList.remove('show');
+    googleBtn.hidden=false; googleBtn.disabled=false; googleLabel.textContent='Continue with Google';
+    emailSection.hidden=false;
+    moreFields.hidden=true;
+    emailInput.readOnly=false; emailInput.value='';
+    displayName.value=''; dob.value=''; country=''; countryInput.value='';
+    hasCode.checked=false; code.value=''; codeField.hidden=true;
+    ageErr.classList.remove('show'); dob.classList.remove('err');
+    setCodeStatus('idle');
+    emailInput.focus();
+  });
+
+  // age from date of birth, computed at today's date
+  function ageFrom(str){
+    if(!str) return null;
+    const d=new Date(str+'T00:00:00'); if(isNaN(d)) return null;
+    const t=new Date(); let a=t.getFullYear()-d.getFullYear();
+    const m=t.getMonth()-d.getMonth();
+    if(m<0||(m===0 && t.getDate()<d.getDate())) a--;
+    return a;
+  }
+
+  submitProfile.addEventListener('click',()=>{
+    const age=ageFrom(dob.value);
+    if(age===null){ ageErrText.textContent='Enter your date of birth to continue.'; ageErr.classList.add('show'); dob.classList.add('err'); dob.focus(); return; }
+    if(age<MIN_AGE){
+      ageErrText.textContent='You need to be 15 or older to create a profile.';
+      ageErr.classList.add('show'); dob.classList.add('err'); dob.focus();
+      console.log('[onboarding] age gate blocked', {dob:dob.value, ageYears:age, minAge:MIN_AGE});
+      return;
+    }
+    const profile={
+      method:signupMethod,
+      email:emailInput.value.trim(), displayName:displayName.value.trim(),
+      dob:dob.value, ageYears:age, country,
+      learningCode: hasCode.checked ? code.value.trim() : null,
+      goal: current?current.label:null, level,
+      collectedAt:new Date().toISOString()
+    };
+    console.log('[onboarding] profile collected', profile);
+    submitProfile.disabled=true; submitProfile.textContent='Creating…';
+    setTimeout(()=>{ submitProfile.textContent='Create profile'; show(6); },700);
+  });
+
+  // ── reset (loops the demo from All set) ──
+  function reset(){
+    focus=null; level=null; current=null; recoReady=false; qIndex=0; correctCount=0;
+    goNext.disabled=true; clear(tiles);
+    $('#taskErr').classList.remove('show');
+    // create-profile form
+    signupMethod='email'; country='';
+    emailInput.value=''; emailInput.readOnly=false; displayName.value=''; dob.value=''; countryInput.value='';
+    hasCode.checked=false; code.value=''; codeField.hidden=true; moreFields.hidden=true; setCodeStatus('idle');
+    connected.classList.remove('show'); googleBtn.hidden=false; googleBtn.disabled=false; googleLabel.textContent='Continue with Google';
+    emailSection.hidden=false;
+    ageErr.classList.remove('show'); dob.classList.remove('err'); submitProfile.disabled=true;
+    show(0);
+  }
+  $('#goNextTask').addEventListener('click',reset);
+</script>
+</body>
+</html>

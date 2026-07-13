@@ -112,6 +112,7 @@ warn you.
 | `/new-research <topic>` | Creates a new dated research folder, scaffolds it, and marks it active. |
 | `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` (add `--docx` for a Word copy). |
 | `/review-research` | Reviews `SYNTHESIS.md` through three stakeholder personas (PM, Tech Lead, Head of Product) and — on approval — records an `## Agent Review` section. |
+| `/brief-feature [folder]` | Turns a synthesized study into a Canva stakeholder deck, gated by the Principal Designer before it's built in Canva. Defaults to the active research. |
 | `/close-research` | Verifies synthesis exists, marks the research closed, and clears the active pointer. |
 | `/publish-research [-m "msg"]` | Safety-checks captures for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
 
@@ -173,5 +174,7 @@ draws from.
   applied in-page before capture, so saved frames carry no PII.
 - **Word export:** `pandoc` is *not* installed. `.docx` files are generated
   from Markdown via `python-docx` using `.claude/scripts/md_to_docx.py`.
+- **Stakeholder decks:** built in **Canva** via the Canva MCP tools (used by
+  `/brief-feature`) — free tier only.
 - Temporary and working files stay in the session scratchpad — never inside a
   research folder unless they are real evidence.

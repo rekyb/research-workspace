@@ -111,7 +111,10 @@ A second senior persona (`.claude/personas/principal-designer.md`) owns
 and merge them into the library (deduping against, and flagging contradictions with,
 what is already there). Like the Principal Researcher it never browses the
 benchmarked platforms; it judges the synthesis on disk. It will also review
-design-facing deliverables (e.g. future `/brief-feature` decks) before export.
+design-facing deliverables — the `/brief-feature` Canva decks — before export
+(**Mode R**: it judges the drafted deck outline against the study's synthesis for
+story, evidence grounding, altitude, and PII-safety, returning ready / revise /
+reject; it never opens Canva or browses the platforms).
 
 ## Research types (the type-aware spine)
 
@@ -129,7 +132,10 @@ downstream command reads it and branches its template. One spine, several behavi
 
 The instrument-design step is the only method-specific command (`/plan-usability`
 for usability). Everything else on the spine — `/synth-findings`, `/review-research`,
-`/close-research`, `/publish-research` — is shared and type-aware.
+`/brief-feature`, `/close-research`, `/publish-research` — is shared and type-aware.
+`/brief-feature` is the optional design-output step: it turns a synthesized study
+into a Canva stakeholder deck (feature story for benchmark, severity-ranked findings
+for usability), gated by the Principal Designer before it is built in Canva.
 
 ## Workflow commands
 
@@ -139,6 +145,7 @@ for usability). Everything else on the spine — `/synth-findings`, `/review-res
 | `/plan-usability` | *(usability studies)* Designs the `test-plan.md` instrument — tasks, moderator script, metrics — then runs a Principal Researcher methodology review before fielding. |
 | `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` using the template for its `Type` (feature write-ups for benchmark, severity-ranked findings for usability); add `--docx` for a Word copy. |
 | `/review-research` | Reviews `SYNTHESIS.md` through three stakeholder personas (PM, Tech Lead, Head of Product) and — on approval — records an `## Agent Review` section. |
+| `/brief-feature [folder]` | Turns a synthesized study into a Canva stakeholder deck (type-aware). Drafts the slide story with you, gates it through the Principal Designer (Mode R), runs the PII check, then builds it in Canva on approval. Defaults to the active research. |
 | `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` library via the Principal Designer, marks the research closed, and clears the active pointer. |
 | `/publish-research [-m "msg"]` | Safety-checks for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
 
@@ -262,5 +269,9 @@ End with a `## What worked` section (positive findings worth preserving) and the
 - **Word export:** `pandoc` is NOT installed. `.docx` is generated via
   `python-docx` using `.claude/scripts/md_to_docx.py`. (Note: that script renders
   text/lists/tables but does not embed images.)
+- **Stakeholder decks:** built in **Canva** via the Canva MCP tools (load via
+  ToolSearch if deferred), used by `/brief-feature`. Free tier only — never pay for
+  or upgrade Canva. Local capture PNGs/GIFs may need manual placement in a slide if
+  the Canva tools can't ingest a local asset.
 - Save any temporary/working files to the session scratchpad, never into a
   research folder unless it is real evidence.

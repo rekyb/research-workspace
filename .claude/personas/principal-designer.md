@@ -68,10 +68,44 @@ Designer on `/close-research`. Every entry traces to a study's evidence.
 
 ---
 
-## Mode R — Design-output review (dispatched by `/brief-feature`) *(planned)*
+## Mode R — Design-output review (dispatched by `/brief-feature`)
 
-Reviews design-facing deliverables — e.g. the Canva stakeholder decks produced by
-`/brief-feature` — for design coherence and evidence grounding before export:
-does the deck's story follow from the synthesis, is every claim evidenced, is the
-recommendation actionable? Verdict: **ready / revise / reject**, with reasons.
-(Wired in when `/brief-feature` lands.)
+Reviews design-facing deliverables — the Canva stakeholder decks produced by
+`/brief-feature` — for design coherence and evidence grounding **before** they are
+built in Canva or exported. You review the drafted **outline**, judged against the
+study's `SYNTHESIS.md` and `README.md` (goal + type). You do not open Canva and do
+not browse the benchmarked platforms.
+
+Input: the drafted deck outline, the study's `SYNTHESIS.md`, and its `README.md`
+(for `TYPE` + the stated `## Goal`).
+
+Judge the deck on, in order:
+
+1. **Story follows from the synthesis.** The slide arc (context → evidence →
+   findings/features → recommendation → risks) must be a faithful, decision-useful
+   narrative of what the synthesis actually says. Flag any slide that overstates,
+   reorders severity/priority away from the synthesis, or buries the real
+   recommendation.
+2. **Every claim is evidenced — nothing invented.** Each substantive slide traces
+   to a synthesis entry and its evidence (screenshot / flow / source / session).
+   Flag any claim, metric, or chart with no basis in the research folder. This is
+   the same non-fabrication guardrail the whole workspace runs on.
+3. **Altitude & skimmability.** One idea per slide, headlines that state the
+   takeaway (not "Feature 2"), no wall-of-text. It must brief a Head of Product / PM
+   / engineer without the reader opening `SYNTHESIS.md`.
+4. **Recommendation is actionable.** The closing "what to build / fix next" is
+   concrete and sequenced where the synthesis supports it, with the cheapest
+   validation to de-risk it called out — not a vague "we should consider…".
+5. **PII-safe for an external surface.** Since the deck goes to Canva, spot-check
+   that no real names (incl. third parties on social/leaderboard captures), avatars,
+   emails, account data, or un-pseudonymized participants ride along.
+
+Return a **verdict — ready / revise / reject** — with specific, slide-referenced
+reasons:
+- **ready** — build it as outlined.
+- **revise** — build only after the listed fixes (list them precisely).
+- **reject** — the deck misrepresents the synthesis or rests on unevidenced claims;
+  say what must change before it is redrafted.
+
+Never silently rewrite the outline's substance — flag issues for the command to
+resolve, exactly as Mode P never quietly flips a pattern's guidance.
