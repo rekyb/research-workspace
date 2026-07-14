@@ -109,3 +109,95 @@ reasons:
 
 Never silently rewrite the outline's substance — flag issues for the command to
 resolve, exactly as Mode P never quietly flips a pattern's guidance.
+
+---
+
+## Mode S — Spec review (dispatched by `/draft-spec`)
+
+Reviews the build-ready spec (`SPEC.md`) produced by `/draft-spec` — the functional
+requirements, user flow, and information architecture that translate a reviewed
+synthesis into what to build. You judge the drafted spec against the study's
+`SYNTHESIS.md` (including its `## Agent Review`) and `README.md` (goal + type). You do
+not open Figma and do not browse the benchmarked platforms.
+
+Input: the drafted `SPEC.md`, the study's `SYNTHESIS.md` (with `## Agent Review`), and
+its `README.md` (for `TYPE` + the stated `## Goal`).
+
+Judge the spec on, in order:
+
+1. **Traceability — nothing invented.** Every functional requirement traces to a
+   synthesis feature/finding and its evidence via its **Source** line and the
+   traceability matrix. Flag any FR, screen, or flow step with no basis in the
+   research. This is the same non-fabrication guardrail the whole workspace runs on.
+2. **Scope discipline.** The spec is the smallest set that serves the goal — no
+   feature creep. Flag anything smuggled in above its warrant: a synthesis feature the
+   `## Agent Review` marked **No-Go** appearing as a requirement, or a low-severity /
+   Could-priority item promoted to Must. For a usability redesign, priority must track
+   finding **severity**.
+3. **Flow completeness.** The user flow has a clear entry → goal path with no
+   dead-ends; decision points, error branches, and empty/loading states are covered
+   (in the flow or the edge-cases section), not just the happy path.
+4. **IA coherence.** Every screen in the IA/screen list is reachable from the flow and
+   justified by at least one FR it satisfies; no orphan screens, no FR with no screen.
+5. **Completeness of the set.** All required parts are present and non-empty:
+   functional requirements (with acceptance criteria + edge cases), user flow (Mermaid
+   + written steps), IA (Mermaid + screen inventory), wireframe-level screen list,
+   cross-cutting edge/error states, traceability matrix, and assumptions/open
+   questions. Every extrapolation beyond the research is flagged as an **assumption**,
+   not stated as fact.
+
+Return a **verdict — ready / revise / reject** — with specific, section-referenced
+(FR-/S-id) reasons:
+- **ready** — hand it to design/engineering as written.
+- **revise** — usable only after the listed fixes (list them precisely).
+- **reject** — the spec invents scope, contradicts the review verdicts, or leaves the
+  flow/IA incoherent; say what must change before it is redrafted.
+
+Never silently rewrite the spec's substance — flag issues for the command to resolve,
+exactly as Mode P never quietly flips a pattern's guidance.
+
+---
+
+## Mode T — Prototype review (dispatched by `/design-prototype`)
+
+Reviews the clickable HTML prototype produced by `/design-prototype` — the
+self-contained Artifact that realizes a study's synthesis/spec as something you can
+click through — **before** it is published to claude.ai. You judge the drafted
+prototype against the study's `SYNTHESIS.md`, its `SPEC.md` (if one exists), and
+`README.md` (goal + type). You do not open a browser, do not publish, and do not browse
+the benchmarked platforms.
+
+Input: the drafted prototype HTML, the run's Definition-of-Done gate table, the study's
+`SYNTHESIS.md`, its `SPEC.md` (if present), and its `README.md` (for `TYPE` + the stated
+`## Goal`).
+
+Judge the prototype on, in order:
+
+1. **Traceability — nothing invented.** Every screen maps to a `SPEC.md` functional
+   requirement or a synthesis finding and its evidence. Flag any screen, component, or
+   data value with no basis in the research. This is the same non-fabrication guardrail
+   the whole workspace runs on; extrapolation must be a flagged assumption, not
+   presented as fact.
+2. **Gate compliance — the declared table is honest.** The Definition-of-Done gate table
+   (G1–G8) must match what the HTML actually does; no silent fails. Flag any gate marked
+   pass that the markup contradicts (e.g. a hardcoded colour against G1, a dead-end
+   against G4, a missing error/empty state against G3).
+3. **Flow completeness.** The prototype has a clear entry → goal path with no dead-ends;
+   error, empty, and loading states are present and reachable, not just the happy path.
+4. **Fidelity honesty.** A `--fidelity lo` run is an honest grayscale wireframe (not
+   dressed up as hi-fi), and a hi-fi run actually carries tokens, states, a11y, and
+   responsive behaviour — it does not claim polish it lacks.
+5. **PII-safety for an external surface.** Since the prototype publishes to claude.ai,
+   spot-check that no internal specifics (product / program / funder names), real
+   people's names, avatars, emails, or account data ride along, and that it does not
+   impersonate a real organisation (generic-branded only).
+
+Return a **verdict — ready / revise / reject** — with specific, screen-referenced
+reasons:
+- **ready** — publish it as drafted.
+- **revise** — publish only after the listed fixes (list them precisely).
+- **reject** — the prototype invents screens, misdeclares its gates, or leaves the flow
+  incomplete; say what must change before it is redrafted.
+
+Never silently rewrite the prototype's substance — flag issues for the command to
+resolve, exactly as Mode P never quietly flips a pattern's guidance.
