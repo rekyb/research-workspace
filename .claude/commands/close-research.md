@@ -29,7 +29,13 @@ Steps:
 
 5. **Clear the pointer.** Empty (or delete) `.claude/.active-research`.
 
-6. **Report** a short closeout summary: research topic and type, what was studied
+6. **Refresh the board.** Update `BOARD.md` so the just-closed study moves from
+   **Active** to **Closed & archived** and nothing shows as active — re-derive it
+   from the `research/` folders + the (now empty) active pointer exactly as
+   `/research-board` does (update both tables and the `_Last updated:_` date). Keep
+   the file in sync; no need to print the full board.
+
+7. **Report** a short closeout summary: research topic and type, what was studied
    (platforms benchmarked / participants tested), number of features or findings
    synthesized, the patterns contributed to `research/PATTERNS.md`, and the location
    of `SYNTHESIS.md` (+ `.docx` if present).

@@ -157,14 +157,27 @@ contains these five fields, in this order:
 Each feature cites the platform(s) and evidence (screenshot / flow / source) it
 draws from.
 
-## Current research
+## Research board
 
-| Research | Started | Status |
-|---|---|---|
-| [DataCamp — 3 most valuable learning-experience features](research/2026-07-03-datacamp-learning-experience/) | 2026-07-03 | Closed |
-| [Busuu — 3 most valuable learning-experience features](research/2026-07-03-busuu-learning-experience/) | 2026-07-03 | Closed |
-| [Learning loop, engagement loop & measuring real upskilling (Khan Academy)](research/2026-07-06-benchmark-learning-effectiveness-loops/) | 2026-07-06 | Closed |
-| [Benchmark Synthesis For The Learn-To-Hire Loop](research/2026-07-09-benchmark-synthesis-learn-to-hire-loop/) | 2026-07-09 | Closed |
+The active study and the full history of closed/archived research live on the
+**[Research Board](BOARD.md)**. Render it to the terminal any time with
+**`/research-board`** (it also refreshes `BOARD.md` from the research folders and
+the active pointer, so the board never drifts).
+
+## Benchmark analysis lenses (optional)
+
+Beyond the core spine, three optional lenses run *retrospective analysis* over a
+benchmark study's already-captured evidence (they never re-browse, so they work on
+closed studies via a `[folder]` argument). Each writes to the study's `lenses/`
+folder and stays grounded in the captures:
+
+- **`/heuristic-eval`** — expert evaluation against Nielsen's 10 heuristics
+  (violations *and* exemplary patterns), severity-ranked and evidence-cited.
+- **`/a11y-audit`** — a WCAG 2.2 pass on what stills can show (measured colour
+  contrast, target size, colour-only meaning, visible labels), explicitly flagging
+  the criteria that only live testing can confirm.
+- **`/extract-tokens`** — pixel-samples screenshots into an inferred design-token
+  set (colour / type / spacing), flagged for validation against the real CSS.
 
 ## Tooling notes
 

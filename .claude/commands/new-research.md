@@ -60,8 +60,12 @@ Follow these steps exactly:
      instrument (`test-plan.md`) is **not** created here — it is built by
      `/plan-usability` in step 7.
 
-6. **Set the active pointer.** Write the folder path (no trailing slash) into
-   `.claude/.active-research`.
+6. **Set the active pointer and refresh the board.** Write the folder path (no
+   trailing slash) into `.claude/.active-research`, then refresh `BOARD.md` so the
+   new study shows as **Active** — re-derive it from the `research/` folders + the
+   active pointer exactly as `/research-board` does (update the `## Active` and
+   `## Closed & archived` tables and the `_Last updated:_` date). Don't print the
+   full board here; just keep the file in sync.
 
 7. **Draft the plan and run the quality gate — by type.**
 
