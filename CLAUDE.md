@@ -115,7 +115,7 @@ A second senior persona (`.claude/personas/principal-designer.md`) owns
 and merge them into the library (deduping against, and flagging contradictions with,
 what is already there). Like the Principal Researcher it never browses the
 benchmarked platforms; it judges the synthesis on disk. It will also review
-design-facing deliverables at two points, each judged against the study's synthesis,
+design-facing deliverables at three points, each judged against the study's synthesis,
 never opening the tool or browsing the platforms:
 - **Mode R** (`/brief-feature`) — judges the drafted Canva deck outline for story,
   evidence grounding, altitude, and PII-safety.
@@ -124,8 +124,8 @@ never opening the tool or browsing the platforms:
   completeness of the required set.
 - **Mode T** (`/design-prototype`) — judges the drafted HTML prototype for
   traceability (no invented screens), gate compliance (the DoD table is honest), flow
-  completeness, fidelity honesty, and PII-safety. Returns ready / revise / reject.
-Both return ready / revise / reject.
+  completeness, fidelity honesty, and PII-safety.
+All three return ready / revise / reject.
 
 ## Research types (the type-aware spine)
 
@@ -144,7 +144,7 @@ downstream command reads it and branches its template. One spine, several behavi
 The instrument-design step is the only method-specific command (`/plan-usability`
 for usability). Everything else on the spine — `/synth-findings`, `/review-research`,
 `/brief-feature`, `/draft-spec`, `/close-research`, `/publish-research` — is shared
-and type-aware. Two **optional design-output steps** turn a synthesized study into a
+and type-aware. Three **optional design-output steps** turn a synthesized study into a
 deliverable, each gated by the Principal Designer:
 - `/brief-feature` — a Canva **stakeholder deck** (feature story for benchmark,
   severity-ranked findings for usability): the *narrative* — "should we build this".
