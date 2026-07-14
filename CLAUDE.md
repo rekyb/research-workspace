@@ -65,7 +65,8 @@ research/YYYY-MM-DD-<slug>/
 │       ├── flow.md         # written step-by-step of that same flow
 │       └── notes.md        # observations & patterns, source links
 ├── lenses/                # optional analysis passes (heuristic-eval, a11y-audit, tokens)
-└── SYNTHESIS.md           # cross-platform synthesis (created at synth time)
+├── SYNTHESIS.md           # cross-platform synthesis (created at synth time)
+└── SPEC.md                # optional build-ready spec (created by /draft-spec, post-review)
 ```
 
 That tree is the **benchmark** layout. The `lenses/` folder is optional — it appears
@@ -114,10 +115,17 @@ A second senior persona (`.claude/personas/principal-designer.md`) owns
 and merge them into the library (deduping against, and flagging contradictions with,
 what is already there). Like the Principal Researcher it never browses the
 benchmarked platforms; it judges the synthesis on disk. It will also review
-design-facing deliverables — the `/brief-feature` Canva decks — before export
-(**Mode R**: it judges the drafted deck outline against the study's synthesis for
-story, evidence grounding, altitude, and PII-safety, returning ready / revise /
-reject; it never opens Canva or browses the platforms).
+design-facing deliverables at two points, each judged against the study's synthesis,
+never opening the tool or browsing the platforms:
+- **Mode R** (`/brief-feature`) — judges the drafted Canva deck outline for story,
+  evidence grounding, altitude, and PII-safety.
+- **Mode S** (`/draft-spec`) — judges the drafted `SPEC.md` for traceability (no
+  invented scope), scope discipline, flow completeness, IA coherence, and
+  completeness of the required set.
+- **Mode T** (`/design-prototype`) — judges the drafted HTML prototype for
+  traceability (no invented screens), gate compliance (the DoD table is honest), flow
+  completeness, fidelity honesty, and PII-safety. Returns ready / revise / reject.
+Both return ready / revise / reject.
 
 ## Research types (the type-aware spine)
 
@@ -135,10 +143,19 @@ downstream command reads it and branches its template. One spine, several behavi
 
 The instrument-design step is the only method-specific command (`/plan-usability`
 for usability). Everything else on the spine — `/synth-findings`, `/review-research`,
-`/brief-feature`, `/close-research`, `/publish-research` — is shared and type-aware.
-`/brief-feature` is the optional design-output step: it turns a synthesized study
-into a Canva stakeholder deck (feature story for benchmark, severity-ranked findings
-for usability), gated by the Principal Designer before it is built in Canva.
+`/brief-feature`, `/draft-spec`, `/close-research`, `/publish-research` — is shared
+and type-aware. Two **optional design-output steps** turn a synthesized study into a
+deliverable, each gated by the Principal Designer:
+- `/brief-feature` — a Canva **stakeholder deck** (feature story for benchmark,
+  severity-ranked findings for usability): the *narrative* — "should we build this".
+- `/draft-spec` — a build-ready **`SPEC.md`** (functional requirements, user flow,
+  information architecture): the maker's *definition* — "here is what to build". It
+  requires a **reviewed** synthesis (`/review-research` must have run first).
+- `/design-prototype` — a clickable **HTML prototype** published as a claude.ai
+  Artifact (the *artifact*: "here is what it looks and feels like"). Generated and
+  audited against the design gates, gated by the Principal Designer (Mode T). Prefers a
+  `SPEC.md` but will run from a reviewed synthesis; supports `--fidelity lo|hi` and
+  à-la-carte `--gate` passes that update the same Artifact.
 
 ## Workflow commands
 
@@ -149,6 +166,8 @@ for usability), gated by the Principal Designer before it is built in Canva.
 | `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` using the template for its `Type` (feature write-ups for benchmark, severity-ranked findings for usability); add `--docx` for a Word copy. |
 | `/review-research` | Reviews `SYNTHESIS.md` through three stakeholder personas (PM, Tech Lead, Head of Product) and — on approval — records an `## Agent Review` section. |
 | `/brief-feature [folder]` | Turns a synthesized study into a Canva stakeholder deck (type-aware). Drafts the slide story with you, gates it through the Principal Designer (Mode R), runs the PII check, then builds it in Canva on approval. Defaults to the active research. |
+| `/draft-spec [folder]` | *(optional)* Turns a **reviewed** synthesis into a build-ready `SPEC.md` — functional requirements, user flow, and information architecture (plus acceptance criteria, edge cases, and a wireframe-level screen list). Type-aware, gated by the Principal Designer (Mode S). Requires `/review-research` to have run. Defaults to the active research. |
+| `/design-prototype [folder]` | *(optional)* Turns a synthesized study into a clickable **HTML prototype** published as a claude.ai Artifact, generated and audited against the design gates (`.claude/references/design-gates.md`). Type-aware, gated by the Principal Designer (Mode T). Prefers a `SPEC.md`; supports `--fidelity lo\|hi` and à-la-carte `--gate` passes. Defaults to the active research. |
 | `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` library via the Principal Designer, marks the research closed, and clears the active pointer. |
 | `/publish-research [-m "msg"]` | Safety-checks for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
 | `/research-board` | Shows the research board — the active study and all past/closed research — in the terminal, derived fresh from the research folders, and refreshes `BOARD.md`. Read-only except for `BOARD.md`. |
