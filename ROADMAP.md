@@ -34,8 +34,12 @@ testing something that exists), and **design outputs** (brief / spec / prototype
 
 The next chapter widens it to a **portable R&D Toolkit** covering the full arc —
 **discover → synthesize → design → validate** — that works from *your own data*, not
-only observed products, and installs into any project as a plugin. The three themes
-below (A–C) map the user's ideas; theme D is complementary leverage.
+only observed products, and installs into any project as a plugin. Themes A and B below
+map the active ideas; theme C is complementary leverage.
+
+> **Set aside:** a standalone user-flow / IA drafter (an earlier idea) is **not**
+> planned — `/draft-spec` already emits both a Mermaid user flow and an IA, so a
+> separate drafter would duplicate that source of truth.
 
 ## A. Portability & packaging *(user idea 1 — the enabler)*
 
@@ -80,17 +84,10 @@ Fill the *front half* of the arc. Surveys and A/B tests are already stubbed as p
 - **Persona / JTBD synthesis** *(new)* — derive personas and jobs-to-be-done from that
   primary data as a first-class synthesis output.
 
-## C. Design-output expansion *(user idea 2)*
+## C. Compounding knowledge & loop closure *(complementary leverage)*
 
-- **`/draft-flow`** + **`/draft-ia`** — extract the user-flow generator and IA drafter
-  as **composable primitives** that `/draft-spec` *calls* (it already emits both) and
-  that also run standalone for a quick artifact. Avoids two sources of truth. Gated by
-  the Principal Designer.
 - **Instrumentation planner** *(new candidate)* — turn each synthesis's "how to
   validate" field into a concrete event / funnel / metric measurement plan.
-
-## D. Compounding knowledge & loop closure *(complementary leverage)*
-
 - **Cross-study search / index** — semantic search over every `SYNTHESIS.md` +
   `PATTERNS.md`, so accumulated research compounds instead of scattering.
 - **Close the design→test loop** — run a **usability study on the `/design-prototype`
@@ -117,6 +114,5 @@ Fill the *front half* of the arc. Surveys and A/B tests are already stubbed as p
 2. Land **Theme A** (engine/content split + plugin packaging) — it de-risks and
    accelerates everything after it.
 3. Then pick a capability slice by demand: **`/synth-data`** (B) if you have real data
-   waiting, **`/plan-interview` + survey/abtest** (B) to open generative research, or
-   **`/draft-flow` + `/draft-ia`** (C) for the quick design-output win.
+   waiting, or **`/plan-interview` + survey/abtest** (B) to open generative research.
 4. Exercise it end-to-end on a real study (usability fielding, or data synthesis).
