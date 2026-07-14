@@ -7,8 +7,9 @@ Produce the **design/engineering spec** for a synthesized, reviewed research stu
 a single `SPEC.md` that turns *what we learned* into *what to build*. This is the
 bridge between research and design — where `/brief-feature` makes the stakeholder
 *narrative* ("should we build this"), `/draft-spec` makes the maker's *definition*
-("here is what to build"), for a designer picking up Figma or an engineer scoping
-work.
+("here is what to build"), and `/design-prototype` makes the clickable *artifact*
+("here is what it looks and feels like"), for a designer picking up Figma or an
+engineer scoping work.
 
 It is an **optional, additive** step (like the benchmark lenses), run only when the
 user asks — not part of the required spine. One `SPEC.md` per study, written at the

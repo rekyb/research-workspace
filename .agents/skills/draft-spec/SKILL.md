@@ -3,7 +3,7 @@ name: draft-spec
 description: Turn a reviewed synthesis into a build-ready SPEC.md — functional requirements, user flow, and information architecture (with acceptance criteria, edge cases, and a wireframe-level screen list). Gated by the Principal Designer (Mode S).
 ---
 
-Produce the **design/engineering spec** for a synthesized, reviewed research study: a single `SPEC.md` that turns *what we learned* into *what to build*. This is the bridge between research and design — where `brief-feature` makes the stakeholder *narrative* ("should we build this"), `draft-spec` makes the maker's *definition* ("here is what to build"), for a designer picking up Figma or an engineer scoping work.
+Produce the **design/engineering spec** for a synthesized, reviewed research study: a single `SPEC.md` that turns *what we learned* into *what to build*. This is the bridge between research and design — where `brief-feature` makes the stakeholder *narrative* ("should we build this"), `draft-spec` makes the maker's *definition* ("here is what to build"), and `design-prototype` makes the clickable *artifact* ("here is what it looks and feels like"), for a designer picking up Figma or an engineer scoping work.
 
 It is an **optional, additive** step (like the benchmark lenses), run only when the user asks — not part of the required spine. One `SPEC.md` per study, written at the study root next to `SYNTHESIS.md`.
 
