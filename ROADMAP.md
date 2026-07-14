@@ -1,72 +1,122 @@
 # Roadmap
 
-Next-step options for the research workspace. Last reconciled **2026-07-15**.
+Next-step options for the workspace. Last reconciled **2026-07-15**.
 
 - **Branch:** `feature/ux-research-expansion`, committed and pushed, **in sync with
-  origin** (working tree clean).
+  origin** (working tree clean apart from a new, unpublished study scaffold).
 - **PR:** open at **[#4](https://github.com/rekyb/research-workspace/pull/4)** —
   "Type-aware research spine + /design-prototype workflow + onboarding benchmark
   study". Awaiting review/merge into `main`.
 
-## Shipped since this file was written
-- **Pattern library** (2026-07-13) — `research/PATTERNS.md`, backfilled across the
-  closed studies by the Principal Designer (Mode P); grows on `/close-research`.
-- **Research board** (2026-07-13) — `BOARD.md` + `/research-board`, auto-refreshed by
-  `/new-research` and `/close-research`.
+## Shipped (the type-aware-spine chapter — done)
+- **Type-aware research spine** — one lifecycle (create → design/capture → synthesize
+  → review → close → publish) branching on `--type` (`benchmark`, `usability`).
+- **Pattern library** (2026-07-13) — `research/PATTERNS.md`, grown by the Principal
+  Designer (Mode P) on `/close-research`.
+- **Research board** (2026-07-13) — `BOARD.md` + `/research-board`.
 - **Benchmark analysis lenses** (2026-07-13) — `/heuristic-eval`, `/a11y-audit`,
-  `/extract-tokens`: retrospective, captures-grounded passes writing to `lenses/`.
-- **`/draft-spec`** (2026-07-14) — build-ready `SPEC.md` (functional requirements,
-  Mermaid user flow + IA, screen list, traceability) off a reviewed synthesis; gated
-  by the Principal Designer **Mode S**. Run once against the onboarding study.
-- **`/design-prototype`** (2026-07-14) — the formalized prototype step (see option 3,
-  formerly `/prototype-feature`): turns a synthesized study into a clickable,
-  self-contained HTML prototype published as a claude.ai Artifact, generated and
-  audited against the design gates (`.claude/references/design-gates.md`); gated by the
-  Principal Designer **Mode T**. Supports `--fidelity lo|hi` and à-la-carte `--gate`.
+  `/extract-tokens`.
+- **`/draft-spec`** (2026-07-14) — build-ready `SPEC.md` off a reviewed synthesis;
+  Principal Designer **Mode S**.
+- **`/design-prototype`** (2026-07-14) — clickable HTML prototype published as a
+  claude.ai Artifact, audited against the design gates; Principal Designer **Mode T**.
+  `--fidelity lo|hi` + à-la-carte `--gate`.
 - **Onboarding & activation benchmark study** (2026-07-15) — 5-platform benchmark
   published to GitHub (PII gate passed on all 38 captures).
 
-## 1. Open the PR (smallest step) — ✅ done
-PR **[#4](https://github.com/rekyb/research-workspace/pull/4)** is open against `main`,
-covering the type-aware spine, the usability workflow, the design-output steps
-(`/brief-feature`, `/draft-spec`, `/design-prototype`), the benchmark lenses, and the
-published onboarding study. Next: review and merge (or merge directly).
+---
 
-## 2. Run a *real* usability study
-Everything in the usability lifecycle is rehearsed **except fielding** — the one
-step that needs real human participants and never ran for real. A genuine first
-run:
+## North star — from "research workspace" to **R&D Toolkit**
 
-1. `/new-research "<flow> usability test" --type usability`
-2. `/plan-usability` — design the `test-plan.md` instrument, pass its Principal
-   Researcher methodology review
-3. Field the sessions externally, bring back results (pseudonymized P01, P02…)
-4. `/synth-findings` — severity-ranked findings
-5. `/review-research` → `/close-research`
+Today the toolkit is strong on the *back half* of the research arc: **secondary
+research** (benchmarking), **evaluative** primary-research planning (usability =
+testing something that exists), and **design outputs** (brief / spec / prototype).
 
-## 3. Build the next deferred slice
-Scoped during the expansion but not built:
+The next chapter widens it to a **portable R&D Toolkit** covering the full arc —
+**discover → synthesize → design → validate** — that works from *your own data*, not
+only observed products, and installs into any project as a plugin. The three themes
+below (A–C) map the user's ideas; theme D is complementary leverage.
 
-- ~~**`/brief-feature`** — the Canva stakeholder deck (Canva MCP is connected).~~
-  **Built** (2026-07-10), gated by the Principal Designer **Mode R**. Not yet run
-  against a real study.
-- ~~**Deeper benchmark lenses** — `heuristic-eval`, `a11y-audit`, `extract-tokens`.~~
-  **Built** (2026-07-13). Not yet run against a real study.
-- ~~**Principal Designer Mode R** — the design-output review half of the persona.~~
-  **Built** (2026-07-10) alongside `/brief-feature`.
-- ~~**`/draft-spec`** — build-ready `SPEC.md` off a reviewed synthesis.~~ **Built**
-  (2026-07-14), gated by the Principal Designer **Mode S**.
-- ~~**`/prototype-feature`** — turn a synthesis into an FR spec + interactive HTML
-  prototype, gated by the Principal Designer.~~ **Built** (2026-07-14) as
-  **`/design-prototype`**: a clickable, self-contained HTML prototype published as a
-  claude.ai Artifact and audited against the design gates, gated by **Mode T**. Closes
-  the loop research → testable design → usability test. Not yet run against a real study.
-- **`survey` / `abtest` research types** — the last unbuilt slice: wire them into the
-  spine the same way usability was (a `--type` value + a method-specific plan command
-  + a type-aware synthesis template). Turns the 2-type spine into 4.
+## A. Portability & packaging *(user idea 1 — the enabler)*
+
+Repackage the workspace as an installable **Claude Code plugin** ("R&D Toolkit").
+The real work is **separating the engine from the content**:
+
+- **Engine (ships in the plugin):** `.claude/commands/`, `.agents/skills/`,
+  `.claude/personas/`, `.claude/scripts/`, `.claude/references/`, and the CLAUDE.md /
+  GEMINI.md operating guides.
+- **Content (stays in the consuming project):** `research/`, `.active-research`,
+  `BOARD.md`, `research/PATTERNS.md` — per-project state, never bundled.
+- Add a plugin/marketplace **manifest**, semantic **versioning**, and per-`--type`
+  **scaffold templates** so `/new-research` works in a fresh project with no research
+  history.
+- Decide the **rename/scope**: "R&D Toolkit" only earns the name if it spans product /
+  market / technical R&D, not just UX. Keep the UX-designer voice as the default
+  persona, but make the guardrails and personas configurable per install.
+
+*Do this split first — every capability below then ships cleanly and installs anywhere.*
+
+## B. Primary-research expansion *(user idea 3 + the generative gap)*
+
+Fill the *front half* of the arc. Surveys and A/B tests are already stubbed as planned
+`--type`s; formalize them and add generative + data capabilities:
+
+- **`survey` type** — `/plan-survey` instrument (non-leading items, scale design,
+  screening/branching, target-n) + a survey-synthesis template. Principal Researcher
+  methodology gate, like `/plan-usability`.
+- **`abtest` type** — `/plan-abtest`: hypothesis, variants, **primary vs guardrail
+  metrics**, a real **power / sample-size / duration** calc, and a read-out template.
+- **`/plan-interview`** *(new — closes the biggest gap)* — a generative discovery
+  interview guide. The toolkit can plan *evaluative* research (usability) but nothing
+  *generative*; this is the missing front door.
+- **`/synth-data`** *(user idea 3c — highest-leverage new capability)* — synthesize
+  from *raw data the user brings*, not captures:
+  - **Quantitative** — ingest CSV / event logs / survey exports; via **pandas** compute
+    funnels, cohorts, drop-off, significance → an evidence-graded synthesis.
+  - **Qualitative** — interview / transcript synthesis: thematic coding, affinity
+    clustering, verbatim evidence (pseudonymized).
+  - Strong PII posture: pseudonymize participants (P01…), redact identifiers on ingest,
+    keep raw data in the gitignored working dir — same guardrail as capture PII.
+- **Persona / JTBD synthesis** *(new)* — derive personas and jobs-to-be-done from that
+  primary data as a first-class synthesis output.
+
+## C. Design-output expansion *(user idea 2)*
+
+- **`/draft-flow`** + **`/draft-ia`** — extract the user-flow generator and IA drafter
+  as **composable primitives** that `/draft-spec` *calls* (it already emits both) and
+  that also run standalone for a quick artifact. Avoids two sources of truth. Gated by
+  the Principal Designer.
+- **Instrumentation planner** *(new candidate)* — turn each synthesis's "how to
+  validate" field into a concrete event / funnel / metric measurement plan.
+
+## D. Compounding knowledge & loop closure *(complementary leverage)*
+
+- **Cross-study search / index** — semantic search over every `SYNTHESIS.md` +
+  `PATTERNS.md`, so accumulated research compounds instead of scattering.
+- **Close the design→test loop** — run a **usability study on the `/design-prototype`
+  output itself** (the generated prototype becomes the study stimulus): research →
+  design → test → iterate, entirely inside the toolkit.
+- **Competitive-matrix lens** *(candidate)* — a multi-competitor positioning / feature
+  matrix, broader than the current single-feature benchmark teardown.
+- **Unified report export** *(candidate)* — one deliverable combining synthesis +
+  lenses + spec for a stakeholder handoff.
+
+---
+
+## Near-term (independent of the big themes)
+- **Merge PR #4** into `main` (review or direct merge).
+- **Run a *real* usability study** — the one lifecycle step never exercised for real
+  (fielding needs live participants): `/new-research … --type usability` →
+  `/plan-usability` → field externally (P01…) → `/synth-findings` → `/review-research`
+  → `/close-research`.
+- **Run `/design-prototype`** against the onboarding study to close the
+  research → prototype loop for the first time.
 
 ## Recommended sequence
-PR #4 is open (option 1 done). Next: review/merge it, then choose fresh work — run
-`/design-prototype` against the onboarding study to close the research → prototype
-loop, ship a real usability study (2), or build the last slice (3 — the `survey` /
-`abtest` research types).
+1. Merge PR #4.
+2. Land **Theme A** (engine/content split + plugin packaging) — it de-risks and
+   accelerates everything after it.
+3. Then pick a capability slice by demand: **`/synth-data`** (B) if you have real data
+   waiting, **`/plan-interview` + survey/abtest** (B) to open generative research, or
+   **`/draft-flow` + `/draft-ia`** (C) for the quick design-output win.
+4. Exercise it end-to-end on a real study (usability fielding, or data synthesis).
