@@ -1,4 +1,4 @@
-<!-- Extracted verbatim from the Claude Design Prompt Pack for use by /design-prototype. Product-agnostic methodology; safe to commit. -->
+<!-- Extracted verbatim from the Claude Design Prompt Pack for use by /design-prototype. Product-agnostic methodology; safe to commit. Note: the workspace house standard is WCAG 2.2 AA (per /a11y-audit); the pack body below is preserved verbatim and refers to WCAG 2.1 in section 9 and gate G5 — reconcile to 2.2 when running the a11y gate. -->
 
 # Claude Design Prompt Pack — Production-Ready App Standard
 
