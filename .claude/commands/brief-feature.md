@@ -27,8 +27,9 @@ evidence, or sources** (same guardrail as the rest of the workspace).
    Confirm `<folder>/SYNTHESIS.md` exists — if not, STOP and tell the user to run
    `/synth-findings` first (there is nothing to brief yet).
 
-   **Prefer a reviewed synthesis.** If `SYNTHESIS.md` has no `## Agent Review`
-   section, warn the user that the deck will present findings that haven't passed
+   **Prefer a reviewed synthesis.** If `SYNTHESIS.md` has no `## Peer Review`
+   section (nor a legacy `## Agent Review`), warn the user that the deck will present
+   findings that haven't passed
    `/review-research`, and ask whether to proceed anyway. Only continue on their yes.
 
 2. **Read the ground truth & note the type.** Read `SYNTHESIS.md` in full, plus the

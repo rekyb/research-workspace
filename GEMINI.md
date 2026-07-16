@@ -46,11 +46,11 @@ When asked to synthesize the active research:
 - Embed relative Markdown images directly (`![flow](../platforms/app/flow.gif)`).
 - Gate through the Principal Researcher (`Mode B — synthesis QA`) to auto-fix prose and flag structural gaps via inline `> [Principal Researcher]...` annotations before any `.docx` export (`python3 .claude/scripts/md_to_docx.py`).
 
-### 5. Multi-Persona Stakeholder Review (`review-research`)
+### 5. Research Peer-Review Debate (`review-research`)
 When asked to review the active research synthesis:
-- Run three chained subagent personas (`Product Manager`, `Tech Lead`, `Head of Product`) from `.claude/personas/` against the stated `## Goal`.
-- Assemble their feedback into a clear `## Agent Review` block (with a `### Legend` defining PM soundness, Tech Lead build effort, and Head of Product Go/Conditional Go/No-Go calls).
-- Present the review block in chat for user approval before appending it to `SYNTHESIS.md`.
+- Run three chained panel personas (`research-skeptic`, `domain-expert`, `evidence-auditor`) from `.claude/personas/` against the stated `## Goal` + `Type`, debating the findings to strengthen them; the `domain-expert` may use scoped scholarly web-search.
+- Have the Principal Researcher (`Mode C — peer-review moderation`) synthesize a `## Peer Review` block: per-finding **Robust / Strengthen / Unsupported** verdicts with a `### Legend`, a `### Strengthened findings` table, and a `### Actions to apply` list (each with the original wording preserved).
+- Present the block and the strengthening actions in chat for user approval, then append `## Peer Review` to `SYNTHESIS.md` and apply the approved strengthenings into the findings. (The build decision now lives at `draft-spec`.)
 
 ### 6. Canva Feature & Stakeholder Briefs (`brief-feature`)
 When asked to create a Canva presentation deck for a reviewed study:
@@ -63,13 +63,13 @@ When asked to turn a reviewed study into a build-ready spec — optional, run on
 request, one `SPEC.md` per study at the study root:
 - Locate the study (named folder, else resolve per `.claude/references/active-research.md`);
   confirm `SYNTHESIS.md` exists, else tell the user to run `synth-findings` first.
-- **Hard gate:** require `SYNTHESIS.md` to already contain an `## Agent Review` section
-  (written by `review-research`). If absent, stop and tell the user to run
-  `review-research` first — proceed only on an explicit override.
-- Read `SYNTHESIS.md` (incl. its `## Agent Review` and any `## Gaps & caveats`) plus the
+- **Hard gate:** require `SYNTHESIS.md` to already contain a `## Peer Review` section
+  (written by `review-research`), or a legacy `## Agent Review`. If neither is present,
+  stop and tell the user to run `review-research` first — proceed only on an explicit override.
+- Read `SYNTHESIS.md` (incl. its `## Peer Review`, or legacy `## Agent Review`, and any `## Gaps & caveats`) plus the
   `README.md` `Type`/`Goal`/`Scope`. Branch on `Type`: **benchmark** → a forward spec
-  (features become requirements, prioritized by the synthesis's own sequencing and
-  review verdicts — no No-Go feature becomes a requirement); **usability** → a redesign
+  (features become requirements, prioritized by the synthesis's own sequencing; Go/No-Go
+  is decided at the stakeholder review below, not read from the synthesis); **usability** → a redesign
   spec (findings' recommendations become requirements, priority follows severity).
 - Draft `SPEC.md` with the user section by section: MoSCoW-prioritized **functional
   requirements** (each with a stable ID, a **Source** back-reference to its synthesis
@@ -79,6 +79,10 @@ request, one `SPEC.md` per study at the study root:
   states), cross-cutting **edge cases & error states**, a **traceability matrix** (FR ↔
   synthesis source ↔ screen), and flagged **assumptions & open questions**. Every
   requirement must trace to a synthesis entry — never invent scope.
+- After drafting, run a **stakeholder review** of the SPEC's functional requirements via
+  the chained `product-manager`, `tech-lead`, and `head-of-product` personas (PM soundness;
+  build effort; Go/Conditional Go/No-Go), recording a `## Stakeholder Review` section and
+  dropping any No-Go FR, before the Principal Designer Mode S gate.
 - Gate the draft through the Principal Designer (`Mode S — spec review`) for
   traceability, scope discipline, flow completeness, IA coherence, and completeness of
   the required set; revise on `revise`/`reject` and relay the verdict.
@@ -121,7 +125,7 @@ on request:
 
 ### 9. Closing Research & Pattern Extraction (`close-research`)
 When asked to close the active research:
-- Verify that `SYNTHESIS.md` exists and check whether `## Agent Review` is present.
+- Verify that `SYNTHESIS.md` exists and check whether `## Peer Review` (or legacy `## Agent Review`) is present.
 - **Pattern Extraction:** Dispatch the Principal Designer (`Mode P`) to extract reusable design patterns (`benchmark-observed` or `usability-validated`) and merge them into `research/PATTERNS.md`.
 - Mark the status in the research's `README.md` to `Closed`, remove the study's line from the `.claude/.active-research` registry (leaving other active studies), and prune any per-terminal binding in `.claude/.current-research/` that pointed at it.
 - Refresh `BOARD.md` so the study moves from **Active** to **Closed & archived**.

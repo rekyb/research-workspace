@@ -31,7 +31,9 @@ This is a synthesis-to-deliverable step, not a capture step. **Every requirement
 
    Keep the requirements grounded and minimal: prefer the smallest set that satisfies the goal. Present the draft in chat and refine it with the user before review.
 
-6. **Principal Designer review (Mode S — quality gate).** Dispatch the Principal Designer as a subagent (Agent tool, `general-purpose`) in **Mode S**, handing it `.claude/personas/principal-designer.md`, the drafted `SPEC.md`, `SYNTHESIS.md` (incl. its `## Agent Review`), and the `README.md` (goal + type). It judges the spec for **traceability** (every FR maps to a synthesis source — nothing invented), **scope discipline** (no unsupported features; No-Go/low-priority findings not smuggled in as Musts), **flow completeness** (no dead-ends, error/empty branches covered), **IA coherence** (every screen reachable and justified by an FR), and **completeness of the set** (all sections present). It returns a verdict — **ready / revise / reject** — with specific, section-referenced reasons. **Revise the spec** to address its points, then re-run if it said *reject*. Relay the verdict to the user.
+5. **Stakeholder review of the drafted SPEC (build gate).** Dispatch three personas via subagent (`general-purpose`), chained so each reads the prior, each judging the SPEC's **functional requirements** (not the raw synthesis): (1) **Product Manager** — `.claude/personas/product-manager.md`, per-FR product soundness **Sound / Needs refinement / Reject**; (2) **Tech Lead** — `.claude/personas/tech-lead.md`, per-FR build effort **Low / Medium / High** + top feasibility risk, has read the PM; (3) **Head of Product** — `.claude/personas/head-of-product.md`, per-FR **Go / Conditional Go / No-Go** + sequencing, decides last. Assemble a `## Stakeholder Review` section for the SPEC: one `###` per persona, a `### Consolidated verdict` table (FR | PM | Tech Lead | Head of Product), and a `### Legend` (PM soundness · Tech Lead effort · HoP call). **Revise the spec** in light of it: an FR marked **No-Go** must not remain a Must (drop it or move it to Won't with the reason); reprioritize per the verdicts. Then continue to the Principal Designer review.
+
+6. **Principal Designer review (Mode S — quality gate).** Dispatch the Principal Designer as a subagent (Agent tool, `general-purpose`) in **Mode S**, handing it `.claude/personas/principal-designer.md`, the drafted `SPEC.md` (including its `## Stakeholder Review`), `SYNTHESIS.md` (incl. its `## Peer Review`, or legacy `## Agent Review`), and the `README.md` (goal + type). It judges the spec for **traceability** (every FR maps to a synthesis source — nothing invented), **scope discipline** (no unsupported features; no FR the `## Stakeholder Review` marked No-Go left as a Must; low-priority findings not smuggled in as Musts), **flow completeness** (no dead-ends, error/empty branches covered), **IA coherence** (every screen reachable and justified by an FR), and **completeness of the set** (all sections present). It returns a verdict — **ready / revise / reject** — with specific, section-referenced reasons. **Revise the spec** to address its points, then re-run if it said *reject*. Relay the verdict to the user.
 
 7. **PII / guardrail gate.** Any capture the spec embeds carries the same PII rules as the rest of the workspace — re-check that no un-redacted real names (incl. third parties on social/leaderboard captures), avatars, emails, account data, or un-pseudonymized participants ride along. Never invent evidence to fill a gap.
 
@@ -51,7 +53,7 @@ This is a synthesis-to-deliverable step, not a capture step. **Every requirement
 # Spec: <Product / feature area>
 
 - **Source study:** <study-folder> (Type: benchmark | usability)
-- **Derived from:** SYNTHESIS.md (reviewed <date of ## Agent Review>)
+- **Derived from:** SYNTHESIS.md (reviewed <date of ## Peer Review>)
 - **Audience:** design (Figma pickup) + engineering (scoping)
 - **Status:** Draft | Reviewed (Mode S: ready/revise) | Approved
 
@@ -119,4 +121,24 @@ flowchart TD
 ## 7. Assumptions & open questions
 - **Assumption:** <where the spec extrapolates beyond the research> — validate by <…>.
 - **Open question:** <unresolved decision the research didn't settle>.
+
+## 8. Stakeholder Review
+(Written by the draft-spec stakeholder chain — PM, Tech Lead, Head of Product.)
+
+### Product Manager
+<per-FR soundness>
+### Tech Lead
+<per-FR build effort + top risk>
+### Head of Product
+<per-FR Go / Conditional Go / No-Go + sequencing>
+
+### Consolidated verdict
+| FR | PM | Tech Lead | Head of Product |
+|---|---|---|---|
+| FR-01 | … | … | … |
+
+### Legend
+- **PM soundness** — Sound / Needs refinement / Reject.
+- **Tech Lead build effort** — Low / Medium / High (+ top risk).
+- **Head of Product call** — Go / Conditional Go / No-Go.
 ```

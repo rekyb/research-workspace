@@ -113,10 +113,15 @@ sources* to validate findings, never the product under study.):
   changes a finding — substance is flagged, not edited. This readies the synthesis
   before `/review-research`.
 
-The three `/review-research` stakeholder personas live in the same directory —
-`.claude/personas/product-manager.md`, `tech-lead.md`, and `head-of-product.md`.
-Each spec is the single source of a persona's remit, verdict scale, and
-guardrails; the command dispatches them (chained, so they cross-talk) rather than
+`/review-research` runs a **research peer-review debate**, not a build committee: three
+panel personas (`.claude/personas/research-skeptic.md`, `domain-expert.md`,
+`evidence-auditor.md`), dispatched chained and moderated by the Principal Researcher
+(Mode C), pressure-test and *strengthen* the findings and record a `## Peer Review`
+section. The three build-stakeholder personas (`product-manager.md`, `tech-lead.md`,
+`head-of-product.md`) now serve `/draft-spec`, where they review the drafted SPEC's
+functional requirements (the build decision) and record a `## Stakeholder Review`
+section. Each spec is the single source of its persona's remit, verdict scale, and
+guardrails; the commands dispatch them (chained, so they cross-talk) rather than
 inlining their instructions.
 
 ### Principal Designer (pattern-library owner)
@@ -176,9 +181,9 @@ deliverable, each gated by the Principal Designer:
 | `/new-research <topic> [--type benchmark\|usability]` | Creates a new dated research folder, scaffolds it **for the chosen type** (default `benchmark`), and marks it active. |
 | `/plan-usability` | *(usability studies)* Designs the `test-plan.md` instrument — tasks, moderator script, metrics — then runs a Principal Researcher methodology review before fielding. |
 | `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` using the template for its `Type` (feature write-ups for benchmark, severity-ranked findings for usability); add `--docx` for a Word copy. |
-| `/review-research` | Reviews `SYNTHESIS.md` through three stakeholder personas (PM, Tech Lead, Head of Product) and — on approval — records an `## Agent Review` section. |
+| `/review-research` | Runs a research peer-review debate over `SYNTHESIS.md` (Skeptic, Domain Expert, Evidence Auditor, moderated by the Principal Researcher) that strengthens the findings and — on approval — records a `## Peer Review` section and applies the agreed strengthenings. |
 | `/brief-feature [folder]` | Turns a synthesized study into a Canva stakeholder deck (type-aware). Drafts the slide story with you, gates it through the Principal Designer (Mode R), runs the PII check, then builds it in Canva on approval. Defaults to the active research. |
-| `/draft-spec [folder]` | *(optional)* Turns a **reviewed** synthesis into a build-ready `SPEC.md` — functional requirements, user flow, and information architecture (plus acceptance criteria, edge cases, and a wireframe-level screen list). Type-aware, gated by the Principal Designer (Mode S). Requires `/review-research` to have run. Defaults to the active research. |
+| `/draft-spec [folder]` | *(optional)* Turns a **reviewed** synthesis into a build-ready `SPEC.md` — functional requirements, user flow, and information architecture (plus acceptance criteria, edge cases, and a wireframe-level screen list). A PM/Tech Lead/Head of Product stakeholder review vets the SPEC's requirements (the build call) and records a `## Stakeholder Review`, before the Principal Designer Mode S gate. Type-aware. Requires a `## Peer Review` (accepts legacy `## Agent Review`) to exist. Defaults to the active research. |
 | `/design-prototype [folder]` | *(optional)* Turns a synthesized study into a clickable **HTML prototype** published as a claude.ai Artifact, generated and audited against the design gates (`.claude/references/design-gates.md`). Type-aware, gated by the Principal Designer (Mode T). Prefers a `SPEC.md`; supports `--fidelity lo\|hi` and à-la-carte `--gate` passes. Defaults to the active research. |
 | `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` library via the Principal Designer, marks the research closed, and removes it from the active registry (other active studies stay). |
 | `/focus-research <folder>` | Points *this terminal* at one of the active studies, so unqualified workflow commands default to it. Used when several studies are active at once. |

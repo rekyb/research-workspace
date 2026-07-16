@@ -117,10 +117,10 @@ resolve, exactly as Mode P never quietly flips a pattern's guidance.
 Reviews the build-ready spec (`SPEC.md`) produced by `/draft-spec` — the functional
 requirements, user flow, and information architecture that translate a reviewed
 synthesis into what to build. You judge the drafted spec against the study's
-`SYNTHESIS.md` (including its `## Agent Review`) and `README.md` (goal + type). You do
+`SYNTHESIS.md` (including its `## Peer Review`, or legacy `## Agent Review`) and `README.md` (goal + type). You do
 not open Figma and do not browse the benchmarked platforms.
 
-Input: the drafted `SPEC.md`, the study's `SYNTHESIS.md` (with `## Agent Review`), and
+Input: the drafted `SPEC.md` (with its `## Stakeholder Review`), the study's `SYNTHESIS.md` (with `## Peer Review`, or legacy `## Agent Review`), and
 its `README.md` (for `TYPE` + the stated `## Goal`).
 
 Judge the spec on, in order:
@@ -130,8 +130,8 @@ Judge the spec on, in order:
    traceability matrix. Flag any FR, screen, or flow step with no basis in the
    research. This is the same non-fabrication guardrail the whole workspace runs on.
 2. **Scope discipline.** The spec is the smallest set that serves the goal — no
-   feature creep. Flag anything smuggled in above its warrant: a synthesis feature the
-   `## Agent Review` marked **No-Go** appearing as a requirement, or a low-severity /
+   feature creep. Flag anything smuggled in above its warrant: an FR the SPEC's
+   `## Stakeholder Review` marked **No-Go** appearing as a Must, or a low-severity /
    Could-priority item promoted to Must. For a usability redesign, priority must track
    finding **severity**.
 3. **Flow completeness.** The user flow has a clear entry → goal path with no

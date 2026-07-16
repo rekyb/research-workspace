@@ -134,7 +134,7 @@ template accordingly, so the same commands drive both kinds of research.
 
 Research moves through a sequence of commands — capture with `/new-research`
 (and, for usability, design the instrument with `/plan-usability`), distill with
-`/synth-findings`, stress-test with `/review-research`, optionally turn the
+`/synth-findings`, strengthen with `/review-research`, optionally turn the
 synthesis into a design deliverable, then `/close-research` and
 `/publish-research`. **Several studies can run in parallel** — `/new-research` appends
 to the registry and binds this terminal to the new study; use `/focus-research <folder>`
@@ -145,14 +145,14 @@ to switch a terminal's focus, and `/close-research` to retire one study from the
 | `/new-research <topic> [--type benchmark\|usability]` | Creates a new dated research folder, scaffolds it for the chosen type (default `benchmark`), and marks it active. |
 | `/plan-usability` | *(usability studies)* Designs the `test-plan.md` instrument — tasks, moderator script, metrics — then runs a Principal Researcher methodology review before fielding. |
 | `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` using the template for its type (add `--docx` for a Word copy). |
-| `/review-research` | Reviews `SYNTHESIS.md` through three stakeholder personas (PM, Tech Lead, Head of Product) and — on approval — records an `## Agent Review` section. |
+| `/review-research` | Runs a research peer-review debate over `SYNTHESIS.md` (Skeptic, Domain Expert, Evidence Auditor, moderated by the Principal Researcher) that strengthens the findings and — on approval — records a `## Peer Review` section. |
 | `/brief-feature [folder]` | Turns a synthesized study into a Canva stakeholder deck, gated by the Principal Designer before it's built in Canva. Defaults to the active research. |
 | `/draft-spec [folder]` | Turns a **reviewed** synthesis into a build-ready `SPEC.md` (functional requirements, user flow, information architecture), gated by the Principal Designer. Defaults to the active research. |
 | `/design-prototype [folder]` | Turns a synthesized study (ideally via its `SPEC.md`) into a clickable, self-contained HTML prototype published as a claude.ai Artifact, gated by the Principal Designer. Defaults to the active research. |
 | `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` pattern library via the Principal Designer, marks the research closed, and removes it from the active registry (other active studies stay). |
 | `/focus-research <folder>` | Points *this terminal* at one of the active studies, so unqualified workflow commands default to it. For working several studies in parallel. |
 | `/publish-research [-m "msg"]` | Safety-checks captures for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
-| `/research-board` | Shows the research board — the active study and all past/closed research — and refreshes `BOARD.md`. |
+| `/research-board` | Shows the research board — every active study and all past/closed research — and refreshes `BOARD.md`. |
 
 `/brief-feature`, `/draft-spec`, and `/design-prototype` are three **optional
 design-output steps**, run only when asked, each gated by the Principal
@@ -221,7 +221,7 @@ summary` (task success rates, SEQ/SUS, time-on-task).
 
 ## Research board
 
-The active study and the full history of closed/archived research live on the
+Every active study and the full history of closed/archived research live on the
 **[Research Board](BOARD.md)**. Render it to the terminal any time with
 **`/research-board`** (it also refreshes `BOARD.md` from the research folders and
 the active registry, so the board never drifts).

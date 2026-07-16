@@ -13,7 +13,7 @@ This is a synthesis-to-deliverable step, not a capture step. Every slide must tr
 
 1. **Locate the study & its synthesis.** If arguments name a study folder, use it; otherwise resolve it per `.claude/references/active-research.md` (this terminal's binding, else the sole active study, else ask). If nothing resolves, STOP and tell the user to pass a study folder or run `new-research`. Confirm `<folder>/SYNTHESIS.md` exists — if not, STOP and tell the user to run `synth-findings` first (there is nothing to brief yet).
 
-   **Prefer a reviewed synthesis.** If `SYNTHESIS.md` has no `## Agent Review` section, warn the user that the deck will present findings that haven't passed `review-research`, and ask whether to proceed anyway. Only continue on their yes.
+   **Prefer a reviewed synthesis.** If `SYNTHESIS.md` has no `## Peer Review` section (nor a legacy `## Agent Review`), warn the user that the deck will present findings that haven't passed `review-research`, and ask whether to proceed anyway. Only continue on their yes.
 
 2. **Read the ground truth & note the type.** Read `SYNTHESIS.md` in full, plus the research `README.md` (for `Type` + the stated `## Goal`). The deck structure branches on `Type`:
    - **benchmark** → a *feature story* (one section per synthesized feature);

@@ -1,12 +1,12 @@
 # Roadmap
 
-Next-step options for the workspace. Last reconciled **2026-07-16**.
+Next-step options for the workspace. Last reconciled **2026-07-17**.
 
-- **PR #4:** **Merged into `main`** (`b06a393`). The `feature/ux-research-expansion` branch changes are fully upstream in `main`.
+- **PRs #4 and #5:** Both **merged into `main`** (`#4` = `b06a393`, `#5` = `25be809`). The type-aware spine, the **multiple-active-studies** model, and the **peer-review debate** rework are all upstream in `main`.
 - **Current Workspace State:**
-  - **Unstaged cleanups:** 16 deleted legacy `prototype/...` files (old landing pages and design system drafts).
-  - **Active research studies:** Two untracked studies in `research/` (`2026-07-14-ai-literacy-upskilling-indonesian-teachers` and `2026-07-16-indonesian-teacher-onboarding-literature`) plus untracked `design/genggam-ai/` UX specs.
-  - **In-progress research type (`litreview`):** Approved design spec (`docs/superpowers/specs/2026-07-16-litreview-research-type-design.md`) and scaffolded study (`2026-07-16`), awaiting implementation of the `/gather-evidence` command.
+  - **Unstaged cleanups:** 15 deleted legacy `prototype/...` files (old landing pages and design-system drafts) still pending a stage/commit.
+  - **Active research studies:** Two untracked studies in `research/` (`2026-07-14-ai-literacy-upskilling-indonesian-teachers` and `2026-07-16-indonesian-teacher-onboarding-literature`) plus untracked `design/genggam-ai/` UX specs — none committed yet.
+  - **`litreview` research type — design-only:** The design spec (`docs/superpowers/specs/2026-07-16-litreview-research-type-design.md`) exists, but the type is **not implemented**: no `/gather-evidence` command/skill, no `litreview` branch in `CLAUDE.md` / `GEMINI.md` / `/synth-findings`, and the `2026-07-16` study is typed `benchmark` (not `litreview`, using `platforms/` folders as evidence pillars). Nothing is scaffolded against the type yet.
 
 ## Shipped (the type-aware-spine chapter — done)
 - **PR #4 Merged into `main`** — Full expansion of the UX-research workspace including the type-aware research spine, `/draft-spec`, `/design-prototype` workflow, benchmark analysis lenses, and published onboarding benchmark (`2026-07-13`).
@@ -24,6 +24,18 @@ Next-step options for the workspace. Last reconciled **2026-07-16**.
   `--fidelity lo|hi` + à-la-carte `--gate`.
 - **Onboarding & activation benchmark study** (2026-07-15) — 5-platform benchmark
   published to GitHub (PII gate passed on all 38 captures).
+
+### The engine chapter (PR #5, merged 2026-07-17)
+- **Multiple concurrent active studies** — two-layer model: a multi-line
+  `.claude/.active-research` registry + per-terminal
+  `.claude/.current-research/<session-id>` bindings, resolved by the shared rule in
+  `.claude/references/active-research.md`; new **`/focus-research`**. Retires the
+  `.active-research-2` stopgap and ends the BOARD/pointer drift.
+- **Peer-review debate** — `/review-research` becomes a moderated debate
+  (Skeptic / Domain Expert / Evidence Auditor, Principal Researcher **Mode C**) that
+  strengthens findings and records a `## Peer Review` section. The stakeholder review
+  (PM / Tech Lead / Head of Product) moves to `/draft-spec`, whose hard gate now accepts
+  `## Peer Review` (or legacy `## Agent Review`).
 
 ---
 
@@ -105,13 +117,13 @@ Fill the *front half* of the arc. Surveys and A/B tests are already stubbed as p
 
 From our workspace audit on 2026-07-16, four immediate technical debt and architectural stabilization items were identified:
 
-1. **Multiple-Active Study Support & `BOARD.md` Drift:** ✅ *Resolved 2026-07-16.*
+1. **Multiple-Active Study Support & `BOARD.md` Drift:** ✅ *Resolved 2026-07-16; merged to `main` via PR #5 (`25be809`) on 2026-07-17.*
    - The workspace now formally supports several active studies via a two-layer model — a multi-line `.claude/.active-research` **registry** plus per-terminal `.claude/.current-research/<session-id>` bindings, resolved by the shared rule in `.claude/references/active-research.md`. The stopgap `.claude/.active-research-2` pointer is retired and both studies are registered cleanly. See `docs/superpowers/specs/2026-07-16-multiple-active-research-design.md`.
-2. **Complete the `litreview` Research Type Implementation:**
-   - While the `litreview` design spec (`docs/superpowers/specs/2026-07-16-litreview-research-type-design.md`) is approved and a study has been scaffolded (`research/2026-07-16-indonesian-teacher-onboarding-literature`), the actual `/gather-evidence` command has not been implemented.
-   - **Recommendation:** Build `/gather-evidence` in `.claude/commands/gather-evidence.md` and `.agents/skills/gather-evidence/SKILL.md`, and add `litreview` branch logic to `CLAUDE.md`, `GEMINI.md`, and `/synth-findings`.
+2. **Complete the `litreview` Research Type Implementation:** *(design-only — nothing implemented)*
+   - The `litreview` design spec (`docs/superpowers/specs/2026-07-16-litreview-research-type-design.md`) exists, but the type is unbuilt end-to-end: no `/gather-evidence` command/skill, and `litreview` appears nowhere in `CLAUDE.md`, `GEMINI.md`, or `/synth-findings`. The `research/2026-07-16-indonesian-teacher-onboarding-literature` study that was meant to exercise it is typed **`benchmark`**, not `litreview` (it reuses `platforms/` folders as evidence pillars) — so no study is actually scaffolded against the type.
+   - **Recommendation:** Build `/gather-evidence` in `.claude/commands/gather-evidence.md` and `.agents/skills/gather-evidence/SKILL.md`, add `litreview` branch logic to `CLAUDE.md`, `GEMINI.md`, and `/synth-findings`, and re-type the `2026-07-16` study to `litreview` once the type exists.
 3. **Clean Up Working Tree & Stale Prototype Artifacts:**
-   - There are 16 unstaged deletions (`prototype/...` landing pages and design system drafts) and untracked `design/` experiment folders.
+   - There are 15 unstaged deletions (`prototype/...` landing pages and design-system drafts) and untracked `design/` experiment folders.
    - **Recommendation:** Cleanly stage the deletions and `.gitignore` or commit any experimental folders so `git status` remains pristine for research evidence commits.
 4. **Accelerate Theme A (Engine vs. Content Decoupling):**
    - As more study types and studies accumulate, the coupling between core tooling (`.claude/`, `.agents/`) and data (`research/`) creates friction.
