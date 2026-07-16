@@ -21,7 +21,8 @@ evidence, or sources** (same guardrail as the rest of the workspace).
 ## Steps
 
 1. **Locate the study & its synthesis.** If `$ARGUMENTS` names a study folder, use
-   it; otherwise read `.claude/.active-research` for the folder path. If neither
+   it; otherwise resolve it per `.claude/references/active-research.md` (this
+   terminal's binding, else the sole active study, else ask). If nothing
    resolves, STOP and tell the user to pass a study folder or run `/new-research`.
    Confirm `<folder>/SYNTHESIS.md` exists — if not, STOP and tell the user to run
    `/synth-findings` first (there is nothing to brief yet).

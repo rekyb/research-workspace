@@ -84,9 +84,10 @@ research-workspace/
 ├── ROADMAP.md                      # workspace roadmap
 ├── BOARD.md                        # research board (active + closed studies), rendered by /research-board
 ├── .claude/
-│   ├── .active-research            # pointer to the currently active research folder
+│   ├── .active-research            # registry of active research folders (one path per line)
+│   ├── .current-research/          # per-terminal focus (gitignored; one file per session id)
 │   ├── commands/                   # workflow commands (new / plan-usability / synth / review /
-│   │                                #   brief-feature / draft-spec / design-prototype / close / publish / board / lenses)
+│   │                                #   brief-feature / draft-spec / design-prototype / focus / close / publish / board / lenses)
 │   ├── references/
 │   │   └── design-gates.md         # design-gate definitions used by /draft-spec & /design-prototype
 │   ├── personas/                   # reviewer subagent specs: principal-researcher, principal-designer,
@@ -113,9 +114,13 @@ research-workspace/
         └── SPEC.md                 # optional build-ready spec (created by /draft-spec, post-review)
 ```
 
-The **currently active** research is tracked in `.claude/.active-research`, a
-small pointer file holding the active folder path. The workflow commands read
-and write it, so the folder rarely needs to be named explicitly. A study's
+**Several studies can be active at once**, worked in parallel across terminals.
+`.claude/.active-research` is a **registry** listing every active study (one folder
+path per line), and `.claude/.current-research/<session-id>` (gitignored) records which
+one *this* terminal is focused on. Commands resolve their target with a shared rule
+(explicit `[folder]` → this terminal's binding → the sole active study → ask); see
+`.claude/references/active-research.md`. The workflow commands read and write these, so
+the folder rarely needs to be named explicitly. A study's
 `platforms/` vs. `test-plan.md` + `sessions/` middle depends on its `Type`
 (benchmark vs. usability) — see **Workflow** below.
 
@@ -131,8 +136,9 @@ Research moves through a sequence of commands — capture with `/new-research`
 (and, for usability, design the instrument with `/plan-usability`), distill with
 `/synth-findings`, stress-test with `/review-research`, optionally turn the
 synthesis into a design deliverable, then `/close-research` and
-`/publish-research`. **Only one research is active at a time** — run
-`/close-research` before starting the next, or `/new-research` will warn you.
+`/publish-research`. **Several studies can run in parallel** — `/new-research` appends
+to the registry and binds this terminal to the new study; use `/focus-research <folder>`
+to switch a terminal's focus, and `/close-research` to retire one study from the registry.
 
 | Command | What it does |
 |---|---|
@@ -143,7 +149,8 @@ synthesis into a design deliverable, then `/close-research` and
 | `/brief-feature [folder]` | Turns a synthesized study into a Canva stakeholder deck, gated by the Principal Designer before it's built in Canva. Defaults to the active research. |
 | `/draft-spec [folder]` | Turns a **reviewed** synthesis into a build-ready `SPEC.md` (functional requirements, user flow, information architecture), gated by the Principal Designer. Defaults to the active research. |
 | `/design-prototype [folder]` | Turns a synthesized study (ideally via its `SPEC.md`) into a clickable, self-contained HTML prototype published as a claude.ai Artifact, gated by the Principal Designer. Defaults to the active research. |
-| `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` pattern library via the Principal Designer, marks the research closed, and clears the active pointer. |
+| `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` pattern library via the Principal Designer, marks the research closed, and removes it from the active registry (other active studies stay). |
+| `/focus-research <folder>` | Points *this terminal* at one of the active studies, so unqualified workflow commands default to it. For working several studies in parallel. |
 | `/publish-research [-m "msg"]` | Safety-checks captures for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
 | `/research-board` | Shows the research board — the active study and all past/closed research — and refreshes `BOARD.md`. |
 
@@ -217,7 +224,7 @@ summary` (task success rates, SEQ/SUS, time-on-task).
 The active study and the full history of closed/archived research live on the
 **[Research Board](BOARD.md)**. Render it to the terminal any time with
 **`/research-board`** (it also refreshes `BOARD.md` from the research folders and
-the active pointer, so the board never drifts).
+the active registry, so the board never drifts).
 
 ## Benchmark analysis lenses (optional)
 

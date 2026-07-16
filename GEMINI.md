@@ -12,13 +12,20 @@ As Gemini, you do not use the `.claude` slash commands directly. Instead, you op
 
 ### 1. Starting New Research (`new-research`)
 When the user asks to start a new research topic (or run `new-research`):
-- Read `.claude/.active-research` to ensure no research is currently active. If one is, ask the user to close it first.
+- Read the `.claude/.active-research` registry. Multiple studies may be active at once, so an existing active study does not block a new one; only warn if the new topic duplicates one already active. See `.claude/references/active-research.md`.
 - Check for an optional `--type <benchmark | usability>` flag (defaulting to `benchmark`).
 - **Confirm the goal:** Explicitly establish the `## Goal` (what we want to learn and why, or what decision the usability test informs) before scaffolding.
 - Create a new directory at `research/<YYYY-MM-DD>-<topic-slug>`.
 - Scaffold the directory by type (`README.md`, `PLAN.md`, `sources.md`, plus `platforms/` for benchmark or `sessions/` for usability).
-- Write the new folder path to `.claude/.active-research` and automatically refresh `BOARD.md` to show the new study as **Active**.
+- **Append** the new folder path to the `.claude/.active-research` registry (preserving other active studies), bind this terminal to it by writing `.claude/.current-research/<session-id>`, and automatically refresh `BOARD.md` to show the new study as **Active**.
 - Dispatch the Principal Researcher (`Mode A`) to review the drafted `PLAN.md` before user approval and capture/fielding.
+
+### 1b. Focusing a Terminal (`focus-research`)
+When several studies are active and the user wants *this* terminal to default to a
+specific one (or runs `focus-research`):
+- Confirm the named `<folder>` is a line in the `.claude/.active-research` registry; if not, tell the user to start it with `new-research` or check `research-board`.
+- Write the folder path to `.claude/.current-research/<session-id>` (the session id is the UUID segment of the scratchpad path; create the dir if absent). See `.claude/references/active-research.md`.
+- Report the terminal's new focus and list the other active studies.
 
 ### 2. Capturing Evidence (`benchmark` Studies)
 - **Browser Control:** Use your available browser/web tools to navigate and interact with benchmarked platforms.
@@ -33,7 +40,7 @@ When the active study is `Type: usability` and the user asks to design the test 
 
 ### 4. Synthesizing Findings (`synth-findings`)
 When asked to synthesize the active research:
-- Read the active folder path from `.claude/.active-research` and note its `Type`.
+- Resolve the target study per `.claude/references/active-research.md` (explicit folder, else this terminal's binding, else the sole active study, else ask) and note its `Type`.
 - **Benchmark:** Read `platforms/*/notes.md` and generate `SYNTHESIS.md` with the 5-part feature structure (Feature Name, Short Description, Key Findings, Rationale, Validation). Ensure the key findings section follows the flow: **what the user sees, what the user does, and what the system does**.
 - **Usability:** Read `test-plan.md` and `sessions/session-*.md` and generate `SYNTHESIS.md` ordered by **severity (highest first)**, citing pseudonymized participants (P01…).
 - Embed relative Markdown images directly (`![flow](../platforms/app/flow.gif)`).
@@ -54,8 +61,8 @@ When asked to create a Canva presentation deck for a reviewed study:
 ### 7. Build-Ready Spec Drafting (`draft-spec`)
 When asked to turn a reviewed study into a build-ready spec — optional, run only on
 request, one `SPEC.md` per study at the study root:
-- Locate the study (named folder or `.claude/.active-research`); confirm `SYNTHESIS.md`
-  exists, else tell the user to run `synth-findings` first.
+- Locate the study (named folder, else resolve per `.claude/references/active-research.md`);
+  confirm `SYNTHESIS.md` exists, else tell the user to run `synth-findings` first.
 - **Hard gate:** require `SYNTHESIS.md` to already contain an `## Agent Review` section
   (written by `review-research`). If absent, stop and tell the user to run
   `review-research` first — proceed only on an explicit override.
@@ -116,7 +123,7 @@ on request:
 When asked to close the active research:
 - Verify that `SYNTHESIS.md` exists and check whether `## Agent Review` is present.
 - **Pattern Extraction:** Dispatch the Principal Designer (`Mode P`) to extract reusable design patterns (`benchmark-observed` or `usability-validated`) and merge them into `research/PATTERNS.md`.
-- Mark the status in the research's `README.md` to `Closed` and empty `.claude/.active-research`.
+- Mark the status in the research's `README.md` to `Closed`, remove the study's line from the `.claude/.active-research` registry (leaving other active studies), and prune any per-terminal binding in `.claude/.current-research/` that pointed at it.
 - Refresh `BOARD.md` so the study moves from **Active** to **Closed & archived**.
 
 ### 10. Publishing (`publish-research`)

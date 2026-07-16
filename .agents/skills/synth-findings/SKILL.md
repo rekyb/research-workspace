@@ -9,7 +9,7 @@ Arguments: if the user prompt/arguments contain `--docx`, also produce a Word fi
 
 Steps:
 
-1. **Locate the research & read its type.** Read `.claude/.active-research` for the folder path. If it's missing or empty, STOP and tell the user to run `new-research` first. Read the folder's `README.md` and note its `Type` (`benchmark` or `usability`). Everything below branches on it.
+1. **Locate the research & read its type.** Resolve the target study per `.claude/references/active-research.md` (explicit `[folder]` arg, else this terminal's binding, else the sole active study, else ask). If the registry is empty, STOP and tell the user to run `new-research` first. Read the folder's `README.md` and note its `Type` (`benchmark` or `usability`). Everything below branches on it.
 
 2. **Gather the evidence — by type.**
    - **Benchmark:** read `README.md`, `sources.md`, and every `platforms/*/notes.md` and `platforms/*/flow.md`. Note which platforms have screenshots and a `flow.gif`. If there are no platform notes yet, STOP — capture some platforms first.

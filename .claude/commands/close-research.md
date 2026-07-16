@@ -1,13 +1,15 @@
 ---
-description: Close the active research — verify synthesis exists, mark it closed, clear the active pointer.
+description: Close a research study — verify synthesis exists, mark it closed, remove it from the active registry.
 ---
 
-Close out the currently active research.
+Close out a research study (one of possibly several active).
 
 Steps:
 
-1. **Locate the research.** Read `.claude/.active-research`. If missing/empty, tell the
-   user there's no active research and stop.
+1. **Locate the research.** Resolve which study to close per
+   `.claude/references/active-research.md` (explicit `[folder]` arg, else this
+   terminal's binding, else the sole active study, else ask). If the registry is empty,
+   tell the user there's no active research and stop.
 
 2. **Check for synthesis.** Confirm `SYNTHESIS.md` exists in the research folder.
    If it does NOT, warn the user and ask whether to run `/synth-findings` first or
@@ -27,11 +29,15 @@ Steps:
    `**Closed:** <date from `date +%F`>` line, and append a dated "research closed"
    entry to the Log.
 
-5. **Clear the pointer.** Empty (or delete) `.claude/.active-research`.
+5. **Update the registry & bindings.** Remove the closed study's line from
+   `.claude/.active-research`, leaving every other active study's line intact. Delete
+   this terminal's binding if it pointed at the closed study, and prune any file in
+   `.claude/.current-research/` whose path is no longer in the registry. See
+   `.claude/references/active-research.md`.
 
 6. **Refresh the board.** Update `BOARD.md` so the just-closed study moves from
-   **Active** to **Closed & archived** and nothing shows as active — re-derive it
-   from the `research/` folders + the (now empty) active pointer exactly as
+   **Active** to **Closed & archived** while any other active studies remain — re-derive
+   it from the `research/` folders + the updated active registry exactly as
    `/research-board` does (update both tables and the `_Last updated:_` date). Keep
    the file in sync; no need to print the full board.
 

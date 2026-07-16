@@ -1,6 +1,9 @@
 # Local Claude Code config (machine-specific permissions)
 .claude/settings.local.json
 
+# Per-terminal active-research binding (machine-local, ephemeral)
+.claude/.current-research/
+
 # Raw / working research data (not committed)
 raw-data/
 

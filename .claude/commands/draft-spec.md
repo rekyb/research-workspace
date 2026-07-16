@@ -24,25 +24,29 @@ say so explicitly as a flagged **assumption**, exactly as the lenses flag infere
 ## Steps
 
 1. **Locate the study & its synthesis.** If `$ARGUMENTS` names a study folder, use
-   it; otherwise read `.claude/.active-research` for the folder path. If neither
+   it; otherwise resolve it per `.claude/references/active-research.md` (this
+   terminal's binding, else the sole active study, else ask). If nothing
    resolves, STOP and tell the user to pass a study folder or run `/new-research`.
    Confirm `<folder>/SYNTHESIS.md` exists — if not, STOP and tell the user to run
    `/synth-findings` first (there is nothing to spec yet).
 
-2. **Require a reviewed synthesis (hard gate).** Check that `SYNTHESIS.md` contains an
-   `## Agent Review` section (written by `/review-research`). If it is **absent**,
-   STOP and tell the user to run `/review-research` first — a spec commits design and
-   engineering effort, so it builds only on findings stakeholders have signed off.
-   Proceed only if the user explicitly overrides after being told.
+2. **Require a reviewed synthesis (hard gate).** Check that `SYNTHESIS.md` contains a
+   `## Peer Review` section (written by `/review-research`), or a legacy `## Agent Review`
+   section from a study reviewed before the peer-review debate existed. If **neither** is
+   present, STOP and tell the user to run `/review-research` first: a spec commits design
+   and engineering effort, so it builds only on findings that have been debated and
+   strengthened. Proceed only if the user explicitly overrides after being told.
 
 3. **Read the ground truth & note the type.** Read `SYNTHESIS.md` in full (including
-   its `## Agent Review` verdicts and any `## Gaps & caveats`), plus the research
+   its `## Peer Review` (or legacy `## Agent Review`) verdicts and any `## Gaps & caveats`), plus the research
    `README.md` for the `Type` and the stated `## Goal` / `## Scope`. The spec branches
    on `Type`:
    - **benchmark** → a **forward spec.** The synthesized features are "what good looks
      like"; the spec defines the product *we* would build informed by them. Priority
-     follows the synthesis's own recommendation/sequencing and the `## Agent Review`
-     calls (a No-Go feature must not become a requirement).
+     follows the synthesis's own recommendation/sequencing and the `## Peer Review`
+     strengthening (drop Unsupported findings; do not build on findings the debate could
+     not support). Go/No-Go is decided here at spec time by the stakeholder review in
+     step 5, not read from the synthesis.
    - **usability** → a **redesign spec.** The findings' recommendations become the
      requirements (fixes); the user flow is the *corrected* flow; the IA is the
      *revised* structure. Priority follows **severity** (severity 4 → Must, and so
@@ -76,39 +80,57 @@ say so explicitly as a flagged **assumption**, exactly as the lenses flag infere
    Keep the requirements grounded and minimal: prefer the smallest set that satisfies
    the goal. Present the draft in chat and refine it with the user before review.
 
-5. **Principal Designer review (Mode S — quality gate).** Dispatch the Principal
+5. **Stakeholder review of the drafted SPEC (build gate).** Dispatch three personas with
+   the Agent tool (`general-purpose`), chained so each reads the prior, each judging the
+   SPEC's **functional requirements** (not the raw synthesis):
+   1. **Product Manager** — `.claude/personas/product-manager.md`. Per-FR product
+      soundness: **Sound / Needs refinement / Reject**.
+   2. **Tech Lead** — `.claude/personas/tech-lead.md`. Per-FR build effort **Low / Medium
+      / High** + the top feasibility risk; has read the PM.
+   3. **Head of Product** — `.claude/personas/head-of-product.md`. Per-FR **Go /
+      Conditional Go / No-Go** + sequencing; decides last, having read both.
+   Assemble a `## Stakeholder Review` section for the SPEC: one `###` per persona, a
+   `### Consolidated verdict` table (FR | PM | Tech Lead | Head of Product), and a
+   `### Legend` (PM soundness · Tech Lead effort · HoP call, same definitions as the
+   personas' specs). **Revise the spec** in light of it: an FR marked **No-Go** must not
+   remain a Must (drop it or move it to Won't with the reason); reprioritize per the
+   verdicts. Then continue to the Principal Designer review.
+
+6. **Principal Designer review (Mode S — quality gate).** Dispatch the Principal
    Designer as a subagent (Agent tool, `general-purpose`) in **Mode S**, handing it
-   `.claude/personas/principal-designer.md`, the drafted `SPEC.md`, `SYNTHESIS.md`
-   (incl. its `## Agent Review`), and the `README.md` (goal + type). It judges the
+   `.claude/personas/principal-designer.md`, the drafted `SPEC.md` (including its
+   `## Stakeholder Review`), `SYNTHESIS.md` (incl. its `## Peer Review`, or legacy
+   `## Agent Review`), and the `README.md` (goal + type). It judges the
    spec for **traceability** (every FR maps to a synthesis source — nothing invented),
-   **scope discipline** (no unsupported features; No-Go/low-priority findings not
-   smuggled in as Musts), **flow completeness** (no dead-ends, error/empty branches
+   **scope discipline** (no unsupported features; no FR the `## Stakeholder Review`
+   marked No-Go left as a Must; low-priority findings not smuggled in as Musts),
+   **flow completeness** (no dead-ends, error/empty branches
    covered), **IA coherence** (every screen reachable and justified by an FR), and
    **completeness of the set** (all sections present). It returns a verdict —
    **ready / revise / reject** — with specific, section-referenced reasons. **Revise
    the spec** to address its points, then re-run if it said *reject*. Relay the
    verdict to the user.
 
-6. **PII / guardrail gate.** Any capture the spec embeds carries the same PII rules
+7. **PII / guardrail gate.** Any capture the spec embeds carries the same PII rules
    as the rest of the workspace — re-check that no un-redacted real names (incl. third
    parties on social/leaderboard captures), avatars, emails, account data, or
    un-pseudonymized participants ride along. Never invent evidence to fill a gap.
 
-7. **Checkpoint — get explicit approval to write.** Present the review-cleared spec
+8. **Checkpoint — get explicit approval to write.** Present the review-cleared spec
    and confirm the user wants it saved. Only on a clear yes, write `SPEC.md` to the
    study folder root. (Mirrors the workspace rule to confirm before writing a
    deliverable.)
 
-8. **Optional docx.** If `$ARGUMENTS` contains `--docx`, run:
+9. **Optional docx.** If `$ARGUMENTS` contains `--docx`, run:
    `python3 .claude/scripts/md_to_docx.py "<research-folder>/SPEC.md"` and confirm the
    path. Note to the user that Mermaid diagrams render as fenced code blocks in the
    `.docx` (python-docx does not render Mermaid) — the GitHub view is the diagram
    source of truth.
 
-9. **Update the log** in the study `README.md` with a dated "spec drafted" entry (FR
+10. **Update the log** in the study `README.md` with a dated "spec drafted" entry (FR
    count, screen count, Principal Designer Mode S verdict).
 
-10. **Report** to the user: the spec path, the requirement/screen counts, the
+11. **Report** to the user: the spec path, the requirement/screen counts, the
     Principal Designer's verdict and what was addressed, any assumptions flagged for
     validation, and any PII items caught.
 
@@ -120,7 +142,7 @@ say so explicitly as a flagged **assumption**, exactly as the lenses flag infere
 # Spec: <Product / feature area>
 
 - **Source study:** <study-folder> (Type: benchmark | usability)
-- **Derived from:** SYNTHESIS.md (reviewed <date of ## Agent Review>)
+- **Derived from:** SYNTHESIS.md (reviewed <date of ## Peer Review>)
 - **Audience:** design (Figma pickup) + engineering (scoping)
 - **Status:** Draft | Reviewed (Mode S: ready/revise) | Approved
 
@@ -188,4 +210,24 @@ flowchart TD
 ## 7. Assumptions & open questions
 - **Assumption:** <where the spec extrapolates beyond the research> — validate by <…>.
 - **Open question:** <unresolved decision the research didn't settle>.
+
+## 8. Stakeholder Review
+(Written by the /draft-spec stakeholder chain — PM, Tech Lead, Head of Product.)
+
+### Product Manager
+<per-FR soundness>
+### Tech Lead
+<per-FR build effort + top risk>
+### Head of Product
+<per-FR Go / Conditional Go / No-Go + sequencing>
+
+### Consolidated verdict
+| FR | PM | Tech Lead | Head of Product |
+|---|---|---|---|
+| FR-01 | … | … | … |
+
+### Legend
+- **PM soundness** — Sound / Needs refinement / Reject.
+- **Tech Lead build effort** — Low / Medium / High (+ top risk).
+- **Head of Product call** — Go / Conditional Go / No-Go.
 ```

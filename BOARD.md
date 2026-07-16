@@ -1,20 +1,23 @@
 # Research Board
 
-A single view of every research effort in this workspace — the one **active**
-study and all **closed / archived** ones. This is the human-readable board;
+A single view of every research effort in this workspace — the **active**
+studies and all **closed / archived** ones. This is the human-readable board;
 `/research-board` renders it to the terminal and refreshes it as studies open and
 close. The source of truth is each study's own `README.md` (`Type`, `Started`,
-`Closed`, `Status`) plus the active pointer `.claude/.active-research`.
+`Closed`, `Status`) plus the active registry `.claude/.active-research` (one active
+study per line).
 
-_Last updated: 2026-07-13_
+_Last updated: 2026-07-16_
 
 ## Active
 
-The currently active study (only one at a time — see `.claude/.active-research`).
+The currently active studies (several may run in parallel — one line per study in
+`.claude/.active-research`; each terminal focuses on one via `/focus-research`).
 
 | Research | Type | Started | Status |
 |---|---|---|---|
-| _(none — no active research)_ | | | |
+| [Indonesian Teacher EdTech Onboarding & Activation Literature](research/2026-07-16-indonesian-teacher-onboarding-literature/) | benchmark | 2026-07-16 | Active |
+| [AI-Literacy Upskilling for Indonesian Teachers](research/2026-07-14-ai-literacy-upskilling-indonesian-teachers/) | benchmark | 2026-07-14 | Active |
 
 ## Closed &amp; archived
 

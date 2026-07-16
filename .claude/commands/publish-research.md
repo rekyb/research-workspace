@@ -9,8 +9,10 @@ captures can contain sensitive data and this repo may be public.
 
 Steps:
 
-1. **Locate the research.** Read `.claude/.active-research`. If missing/empty, tell
-   the user there's no active research and stop.
+1. **Locate the research.** Resolve the target study per
+   `.claude/references/active-research.md` (explicit `[folder]` arg, else this
+   terminal's binding, else the sole active study, else ask). If the registry is
+   empty, tell the user there's no active research and stop.
 
 2. **Confirm the remote & auth.** Run `gh auth status`. If not logged in, tell the
    user to run `gh auth login` themselves (never handle their credentials) and stop.

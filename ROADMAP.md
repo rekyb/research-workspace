@@ -1,14 +1,15 @@
 # Roadmap
 
-Next-step options for the workspace. Last reconciled **2026-07-15**.
+Next-step options for the workspace. Last reconciled **2026-07-16**.
 
-- **Branch:** `feature/ux-research-expansion`, committed and pushed, **in sync with
-  origin** (working tree clean apart from a new, unpublished study scaffold).
-- **PR:** open at **[#4](https://github.com/rekyb/research-workspace/pull/4)** —
-  "Type-aware research spine + /design-prototype workflow + onboarding benchmark
-  study". Awaiting review/merge into `main`.
+- **PR #4:** **Merged into `main`** (`b06a393`). The `feature/ux-research-expansion` branch changes are fully upstream in `main`.
+- **Current Workspace State:**
+  - **Unstaged cleanups:** 16 deleted legacy `prototype/...` files (old landing pages and design system drafts).
+  - **Active research studies:** Two untracked studies in `research/` (`2026-07-14-ai-literacy-upskilling-indonesian-teachers` and `2026-07-16-indonesian-teacher-onboarding-literature`) plus untracked `design/genggam-ai/` UX specs.
+  - **In-progress research type (`litreview`):** Approved design spec (`docs/superpowers/specs/2026-07-16-litreview-research-type-design.md`) and scaffolded study (`2026-07-16`), awaiting implementation of the `/gather-evidence` command.
 
 ## Shipped (the type-aware-spine chapter — done)
+- **PR #4 Merged into `main`** — Full expansion of the UX-research workspace including the type-aware research spine, `/draft-spec`, `/design-prototype` workflow, benchmark analysis lenses, and published onboarding benchmark (`2026-07-13`).
 - **Type-aware research spine** — one lifecycle (create → design/capture → synthesize
   → review → close → publish) branching on `--type` (`benchmark`, `usability`).
 - **Pattern library** (2026-07-13) — `research/PATTERNS.md`, grown by the Principal
@@ -100,8 +101,27 @@ Fill the *front half* of the arc. Surveys and A/B tests are already stubbed as p
 
 ---
 
+## Current Diagnostics & Architectural Suggestions (2026-07-16 Review)
+
+From our workspace audit on 2026-07-16, four immediate technical debt and architectural stabilization items were identified:
+
+1. **Multiple-Active Study Support & `BOARD.md` Drift:** ✅ *Resolved 2026-07-16.*
+   - The workspace now formally supports several active studies via a two-layer model — a multi-line `.claude/.active-research` **registry** plus per-terminal `.claude/.current-research/<session-id>` bindings, resolved by the shared rule in `.claude/references/active-research.md`. The stopgap `.claude/.active-research-2` pointer is retired and both studies are registered cleanly. See `docs/superpowers/specs/2026-07-16-multiple-active-research-design.md`.
+2. **Complete the `litreview` Research Type Implementation:**
+   - While the `litreview` design spec (`docs/superpowers/specs/2026-07-16-litreview-research-type-design.md`) is approved and a study has been scaffolded (`research/2026-07-16-indonesian-teacher-onboarding-literature`), the actual `/gather-evidence` command has not been implemented.
+   - **Recommendation:** Build `/gather-evidence` in `.claude/commands/gather-evidence.md` and `.agents/skills/gather-evidence/SKILL.md`, and add `litreview` branch logic to `CLAUDE.md`, `GEMINI.md`, and `/synth-findings`.
+3. **Clean Up Working Tree & Stale Prototype Artifacts:**
+   - There are 16 unstaged deletions (`prototype/...` landing pages and design system drafts) and untracked `design/` experiment folders.
+   - **Recommendation:** Cleanly stage the deletions and `.gitignore` or commit any experimental folders so `git status` remains pristine for research evidence commits.
+4. **Accelerate Theme A (Engine vs. Content Decoupling):**
+   - As more study types and studies accumulate, the coupling between core tooling (`.claude/`, `.agents/`) and data (`research/`) creates friction.
+   - **Recommendation:** Prioritize extracting the R&D Toolkit engine into a portable plugin to allow fresh project installs without historical research baggage.
+
+---
+
 ## Near-term (independent of the big themes)
-- **Merge PR #4** into `main` (review or direct merge).
+- **Complete `litreview` & resolve active-study collision** (see Diagnostics above).
+- **Stage/commit working tree cleanups** — remove stale `prototype/...` files and track `design/genggam-ai/` specs.
 - **Run a *real* usability study** — the one lifecycle step never exercised for real
   (fielding needs live participants): `/new-research … --type usability` →
   `/plan-usability` → field externally (P01…) → `/synth-findings` → `/review-research`
@@ -110,9 +130,7 @@ Fill the *front half* of the arc. Surveys and A/B tests are already stubbed as p
   research → prototype loop for the first time.
 
 ## Recommended sequence
-1. Merge PR #4.
-2. Land **Theme A** (engine/content split + plugin packaging) — it de-risks and
-   accelerates everything after it.
-3. Then pick a capability slice by demand: **`/synth-data`** (B) if you have real data
-   waiting, or **`/plan-interview` + survey/abtest** (B) to open generative research.
-4. Exercise it end-to-end on a real study (usability fielding, or data synthesis).
+1. **Stabilize & Clean Up (`Immediate`):** ~~Resolve `.active-research-2` multi-study drift~~ (done — multi-active model shipped), cleanly stage `prototype/` deletions, track `design/` specs, and complete the missing `/gather-evidence` command/skill for `litreview`.
+2. **Land Theme A (Engine vs. Content Decoupling):** Extract `.claude/` and `.agents/` into a portable R&D Toolkit plugin so fresh projects don't carry previous study data (`research/`).
+3. **Expand Capability by Demand (Theme B):** Build **`/synth-data`** if real quantitative/qualitative data is waiting, or **`/plan-interview` + survey/abtest** to open generative discovery research.
+4. **Exercise End-to-End on a Real Study:** Run a full usability study fielding or data synthesis pass through the new toolkit.

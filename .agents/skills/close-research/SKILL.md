@@ -1,13 +1,13 @@
 ---
 name: close-research
-description: Close the active research — verify synthesis exists, extract/merge PATTERNS.md (if benchmark), mark it closed, and clear the active pointer.
+description: Close a research study — verify synthesis exists, extract/merge PATTERNS.md (if benchmark), mark it closed, and remove it from the active registry.
 ---
 
-Close the active research. This is the official completion step of the research lifecycle: it locks the study, extracts reusable patterns into the workspace pattern library (`PATTERNS.md`), and frees up `.claude/.active-research` so a new effort can start.
+Close a research study. This is the official completion step of the research lifecycle: it locks the study, extracts reusable patterns into the workspace pattern library (`PATTERNS.md`), and removes the study from the active registry (`.claude/.active-research`). Other active studies are left untouched.
 
 ## Steps
 
-1. **Locate the research.** Read `.claude/.active-research`. If it is missing or empty, STOP — there is no active research to close. Read the folder's `README.md` and check its `Type` (`benchmark` or `usability`).
+1. **Locate the research.** Resolve which study to close per `.claude/references/active-research.md` (explicit `[folder]` arg, else this terminal's binding, else the sole active study, else ask). If the registry is empty, STOP — there is no active research to close. Read the folder's `README.md` and check its `Type` (`benchmark` or `usability`).
 
 2. **Verify readiness.**
    - Check that `SYNTHESIS.md` exists inside the research folder. If it does not, STOP and tell the user to run `synth-findings` first (never close an unsynthesized research).
@@ -18,12 +18,12 @@ Close the active research. This is the official completion step of the research 
 
 4. **Mark closed.**
    - In `<folder>/README.md`, change `Status: Active` to `Status: Closed` and set `Closed: <YYYY-MM-DD>` (today's date). Add a dated entry to the `## Log` saying the research was closed and patterns extracted into `PATTERNS.md`.
-   - Empty `.claude/.active-research` (write the empty string or delete its contents so it reads zero bytes).
+   - **Remove the closed study's line** from `.claude/.active-research`, leaving every other active study's line intact. Then prune per-terminal bindings: delete this terminal's binding if it pointed at the closed study, and remove any file in `.claude/.current-research/` whose path is no longer in the registry. See `.claude/references/active-research.md`.
 
-5. **Refresh the board.** Run the same board-reconciliation logic (`BOARD.md`) as `research-board` does: re-derive `BOARD.md` from the `research/` folders + the now-empty `.claude/.active-research` so the study moves from the `## Active` table to the `## Closed & archived` table (most recent first) and the `_Last updated:_` date reflects today. Do not print the full board here — just keep `BOARD.md` in sync.
+5. **Refresh the board.** Run the same board-reconciliation logic (`BOARD.md`) as `research-board` does: re-derive `BOARD.md` from the `research/` folders + the updated `.claude/.active-research` registry so the closed study moves from the `## Active` table to the `## Closed & archived` table (most recent first), any other active studies stay in `## Active`, and the `_Last updated:_` date reflects today. Do not print the full board here — just keep `BOARD.md` in sync.
 
 6. **Report** to the user:
    - What research was closed (`<folder>`).
    - Which reusable patterns were added or updated in `research/PATTERNS.md`.
    - That `BOARD.md` was updated (`Active` → `Closed & archived`).
-   - That `.claude/.active-research` is cleared, and they can start a new topic anytime with `new-research`.
+   - That the study was removed from the `.claude/.active-research` registry (and how many studies remain active), and that they can start a new topic anytime with `new-research`.
