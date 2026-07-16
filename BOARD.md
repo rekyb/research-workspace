@@ -16,7 +16,7 @@ The currently active studies (several may run in parallel — one line per study
 
 | Research | Type | Started | Status |
 |---|---|---|---|
-| [Certificate vs Badge Gamification for Teacher EdTech (Indonesia)](research/2026-07-17-certificate-vs-badge-gamification/) | benchmark | 2026-07-17 | Active |
+| [Certificate of Completion vs Badges as Gamification for Teacher EdTech (Indonesia)](research/2026-07-17-certificate-vs-badge-gamification/) | benchmark | 2026-07-17 | Active |
 
 ## Closed &amp; archived
 
@@ -28,7 +28,7 @@ Past studies, most recent first.
 | [Indonesian Teacher EdTech Onboarding & Activation Literature](research/2026-07-16-indonesian-teacher-onboarding-literature/) | benchmark | 2026-07-16 | 2026-07-17 | Closed |
 | [Onboarding & Activation in Education Apps](research/2026-07-13-onboarding-activation-education-apps/) | benchmark | 2026-07-13 | 2026-07-13 | Closed |
 | [Benchmark Synthesis For The Learn-To-Hire Loop](research/2026-07-09-benchmark-synthesis-learn-to-hire-loop/) | benchmark | 2026-07-09 | 2026-07-09 | Closed |
-| [Learning loop, engagement loop &amp; measuring real upskilling (Khan Academy)](research/2026-07-06-benchmark-learning-effectiveness-loops/) | benchmark | 2026-07-06 | 2026-07-06 | Closed |
-| [Busuu — 3 most valuable learning-experience features](research/2026-07-03-busuu-learning-experience/) | benchmark | 2026-07-03 | 2026-07-03 | Closed |
-| [DataCamp — 3 most valuable learning-experience features](research/2026-07-03-datacamp-learning-experience/) | benchmark | 2026-07-03 | 2026-07-03 | Closed |
-| [Brilliant — early benchmark notes](research/2026-07-02-briliant/) | benchmark | 2026-07-02 | — | Archived (notes only) |
+| [Learning loop, engagement loop &amp; measuring real upskilling](research/2026-07-06-benchmark-learning-effectiveness-loops/) | benchmark | 2026-07-06 | 2026-07-06 | Closed |
+| [Benchmark DataCamp — 3 most valuable learning-experience features](research/2026-07-03-datacamp-learning-experience/) | benchmark | 2026-07-03 | 2026-07-03 | Closed |
+| [Benchmark Busuu — 3 most valuable learning-experience features](research/2026-07-03-busuu-learning-experience/) | benchmark | 2026-07-03 | 2026-07-03 | Closed |
+| [Briliant — early benchmark notes](research/2026-07-02-briliant/) | benchmark | 2026-07-02 | — | Archived (notes only) |
