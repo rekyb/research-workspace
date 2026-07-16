@@ -11,7 +11,7 @@ This is a synthesis-to-deliverable step, not a capture step. Every slide must tr
 
 ## Steps
 
-1. **Locate the study & its synthesis.** If arguments name a study folder, use it; otherwise read `.claude/.active-research` for the folder path. If neither resolves, STOP and tell the user to pass a study folder or run `new-research`. Confirm `<folder>/SYNTHESIS.md` exists — if not, STOP and tell the user to run `synth-findings` first (there is nothing to brief yet).
+1. **Locate the study & its synthesis.** If arguments name a study folder, use it; otherwise resolve it per `.claude/references/active-research.md` (this terminal's binding, else the sole active study, else ask). If nothing resolves, STOP and tell the user to pass a study folder or run `new-research`. Confirm `<folder>/SYNTHESIS.md` exists — if not, STOP and tell the user to run `synth-findings` first (there is nothing to brief yet).
 
    **Prefer a reviewed synthesis.** If `SYNTHESIS.md` has no `## Agent Review` section, warn the user that the deck will present findings that haven't passed `review-research`, and ask whether to proceed anyway. Only continue on their yes.
 

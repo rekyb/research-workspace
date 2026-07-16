@@ -77,9 +77,21 @@ differs: instead of `platforms/` it holds `test-plan.md` (the instrument, built 
 `/plan-usability`) and `sessions/session-NN.md` (one per participant, PII-redacted).
 See **Research types** below.
 
-The **currently active** research is tracked in `.claude/.active-research`
-(a pointer file holding the folder path). The workflow commands read/write it
-so you rarely need to name the folder explicitly.
+**Several studies can be active at once**, worked in parallel across different
+terminals. Tracking is two layers (full spec: `.claude/references/active-research.md`):
+
+- **The registry** — `.claude/.active-research` lists every active study, one folder
+  path per line (committed; `BOARD.md`'s Active table is derived from it). A single line
+  behaves exactly like the old single-pointer model.
+- **The per-terminal current** — `.claude/.current-research/<session-id>` (gitignored)
+  records which active study *this* terminal is focused on, so unqualified commands
+  default to it without colliding with other terminals.
+
+When a command needs a target study it applies the shared **resolution rule**: an
+explicit `[folder]` wins; else this terminal's current binding; else the sole active
+study; else it asks. Use `/focus-research <folder>` to point a terminal at a different
+active study. The workflow commands read/write these files so you rarely need to name
+the folder explicitly.
 
 ### Principal Researcher (quality gate)
 
@@ -168,16 +180,19 @@ deliverable, each gated by the Principal Designer:
 | `/brief-feature [folder]` | Turns a synthesized study into a Canva stakeholder deck (type-aware). Drafts the slide story with you, gates it through the Principal Designer (Mode R), runs the PII check, then builds it in Canva on approval. Defaults to the active research. |
 | `/draft-spec [folder]` | *(optional)* Turns a **reviewed** synthesis into a build-ready `SPEC.md` — functional requirements, user flow, and information architecture (plus acceptance criteria, edge cases, and a wireframe-level screen list). Type-aware, gated by the Principal Designer (Mode S). Requires `/review-research` to have run. Defaults to the active research. |
 | `/design-prototype [folder]` | *(optional)* Turns a synthesized study into a clickable **HTML prototype** published as a claude.ai Artifact, generated and audited against the design gates (`.claude/references/design-gates.md`). Type-aware, gated by the Principal Designer (Mode T). Prefers a `SPEC.md`; supports `--fidelity lo\|hi` and à-la-carte `--gate` passes. Defaults to the active research. |
-| `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` library via the Principal Designer, marks the research closed, and clears the active pointer. |
+| `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` library via the Principal Designer, marks the research closed, and removes it from the active registry (other active studies stay). |
+| `/focus-research <folder>` | Points *this terminal* at one of the active studies, so unqualified workflow commands default to it. Used when several studies are active at once. |
 | `/publish-research [-m "msg"]` | Safety-checks for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
-| `/research-board` | Shows the research board — the active study and all past/closed research — in the terminal, derived fresh from the research folders, and refreshes `BOARD.md`. Read-only except for `BOARD.md`. |
+| `/research-board` | Shows the research board — every active study and all past/closed research — in the terminal, derived fresh from the research folders, and refreshes `BOARD.md`. Read-only except for `BOARD.md`. |
 
-Only one research is active at a time. Run `/close-research` before starting
-the next, or `/new-research` will warn you.
+Multiple studies can be active at once — `/new-research` no longer blocks on an open
+study; it appends to the registry and binds the current terminal to the new study. Each
+terminal keeps its own current study (set with `/focus-research`); `/close-research`
+removes one study from the registry and leaves the rest active.
 
 The **research board** (`BOARD.md`, rendered by `/research-board`) is the at-a-glance
-index of every study — one active, the rest closed/archived. It is derived from each
-study's `README.md` and the active pointer, so it never needs manual editing.
+index of every study — one or more active, the rest closed/archived. It is derived from
+each study's `README.md` and the active registry, so it never needs manual editing.
 
 ### Benchmark analysis lenses (optional)
 

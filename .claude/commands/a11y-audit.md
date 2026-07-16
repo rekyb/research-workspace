@@ -11,8 +11,9 @@ never browses the platforms, so it works on a closed study too.
 Steps:
 
 1. **Locate the study & confirm it's a benchmark.** If `$ARGUMENTS` names a folder,
-   use it; otherwise read `.claude/.active-research`. If neither yields a folder,
-   STOP and ask which study to audit. Read its `README.md` and check `Type`:
+   use it (a lens may target a **closed** study); otherwise resolve it per
+   `.claude/references/active-research.md` (this terminal's binding, else the sole
+   active study, else ask which study to audit). Read its `README.md` and check `Type`:
    - **Benchmark-only** (reads `platforms/*/`). If `Type` is `usability` or there's
      no `platforms/` folder, STOP and say so.
 

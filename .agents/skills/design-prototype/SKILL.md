@@ -50,7 +50,7 @@ The **Definition of Done (G1–G8)** is the acceptance contract, not just a gate
 
 ## Steps
 
-1. **Locate the study & its synthesis.** If arguments name a study folder, use it; otherwise read `.claude/.active-research` for the folder path. If neither resolves, STOP and tell the user to pass a study folder or run `new-research`. Confirm `<folder>/SYNTHESIS.md` exists — if not, STOP and tell the user to run `synth-findings` first (there is nothing to prototype yet).
+1. **Locate the study & its synthesis.** If arguments name a study folder, use it; otherwise resolve it per `.claude/references/active-research.md` (this terminal's binding, else the sole active study, else ask). If nothing resolves, STOP and tell the user to pass a study folder or run `new-research`. Confirm `<folder>/SYNTHESIS.md` exists — if not, STOP and tell the user to run `synth-findings` first (there is nothing to prototype yet).
 
 2. **À-la-carte fast path.** If `--gate`/`--deepen` is present, skip to running those named passes (registry above) against the study's existing prototype Artifact, redeploying the same file path → same URL. If no prototype exists yet, tell the user to run a default `design-prototype` first, then STOP.
 

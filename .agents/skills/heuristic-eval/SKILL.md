@@ -7,7 +7,7 @@ Run an expert **heuristic evaluation** over a benchmark study's already-captured
 
 Steps:
 
-1. **Locate the study & confirm it's a benchmark.** If arguments name a folder, use it; otherwise read `.claude/.active-research`. If neither yields a folder, STOP and ask which study to evaluate. Read its `README.md` and check `Type`:
+1. **Locate the study & confirm it's a benchmark.** If arguments name a folder, use it (a lens may target a **closed** study); otherwise resolve it per `.claude/references/active-research.md` (this terminal's binding, else the sole active study, else ask which study to evaluate). Read its `README.md` and check `Type`:
    - This lens is **benchmark-only** (it reads `platforms/*/`). If `Type` is `usability` (or anything without a `platforms/` folder), STOP and tell the user heuristic evaluation runs on benchmark captures — a usability study's expert review belongs in its `SYNTHESIS.md` findings instead.
 
 2. **Gather the evidence.** For each `platforms/<platform>/`, read `notes.md` and `flow.md`, and list the `screenshots/*.png` (and `flow.gif`). If no platform has any captured evidence, STOP — there's nothing to evaluate yet.

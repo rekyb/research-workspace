@@ -11,10 +11,12 @@ Runs only when the active research is `TYPE: usability`.
 
 Steps:
 
-1. **Locate & type-check.** Read `.claude/.active-research`. If missing/empty, STOP
-   and tell the user to run `/new-research "<topic>" --type usability` first. Read
-   the folder's `README.md`; if `TYPE` is not `usability`, STOP and tell the user
-   this command only applies to usability research (their active one is
+1. **Locate & type-check.** Resolve the target study per
+   `.claude/references/active-research.md` (explicit `[folder]` arg, else this
+   terminal's binding, else the sole active study, else ask). If the registry is
+   empty, STOP and tell the user to run `/new-research "<topic>" --type usability`
+   first. Read the folder's `README.md`; if `TYPE` is not `usability`, STOP and tell
+   the user this command only applies to usability research (the resolved study is
    `TYPE: <that type>`).
 
 2. **Read the objectives.** Read `PLAN.md` (objectives + research questions) and the

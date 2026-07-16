@@ -7,7 +7,7 @@ Run an **accessibility audit** over a benchmark study's captured evidence agains
 
 Steps:
 
-1. **Locate the study & confirm it's a benchmark.** If arguments name a folder, use it; otherwise read `.claude/.active-research`. If neither yields a folder, STOP and ask which study to audit. Read its `README.md` and check `Type`: this lens is **benchmark-only** (it reads `platforms/*/`). If `Type` is `usability` or there's no `platforms/` folder, STOP and say so.
+1. **Locate the study & confirm it's a benchmark.** If arguments name a folder, use it (a lens may target a **closed** study); otherwise resolve it per `.claude/references/active-research.md` (this terminal's binding, else the sole active study, else ask which study to audit). Read its `README.md` and check `Type`: this lens is **benchmark-only** (it reads `platforms/*/`). If `Type` is `usability` or there's no `platforms/` folder, STOP and say so.
 
 2. **Gather the evidence.** For each `platforms/<platform>/`, list `screenshots/*.png` and note `flow.gif` / `flow.md`. If nothing is captured, STOP.
 

@@ -11,8 +11,9 @@ platforms, so it works on a closed study just as well as the active one.
 Steps:
 
 1. **Locate the study & confirm it's a benchmark.** If `$ARGUMENTS` names a folder,
-   use it; otherwise read `.claude/.active-research`. If neither yields a folder,
-   STOP and ask which study to evaluate. Read its `README.md` and check `Type`:
+   use it (a lens may target a **closed** study); otherwise resolve it per
+   `.claude/references/active-research.md` (this terminal's binding, else the sole
+   active study, else ask which study to evaluate). Read its `README.md` and check `Type`:
    - This lens is **benchmark-only** (it reads `platforms/*/`). If `Type` is
      `usability` (or anything without a `platforms/` folder), STOP and tell the user
      heuristic evaluation runs on benchmark captures — a usability study's expert

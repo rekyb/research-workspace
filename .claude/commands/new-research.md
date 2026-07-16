@@ -8,10 +8,11 @@ optional `--type` flag.
 
 Follow these steps exactly:
 
-1. **Check for an already-active research.** Read `.claude/.active-research` if it
-   exists. If it points to a research whose `README.md` is not marked `Status: Closed`,
-   STOP and tell the user there's an open research (`<path>`); ask them to run
-   `/close-research` first, or confirm they want to switch anyway.
+1. **Check the active registry.** Read `.claude/.active-research` (the registry — see
+   `.claude/references/active-research.md`). Multiple studies may be active at once, so
+   an existing active study is fine and does **not** block a new one. Only if the new
+   topic would duplicate an existing active study (same slug) should you warn and
+   confirm with the user before proceeding.
 
 2. **Determine the research type.** Look for `--type <value>` in `$ARGUMENTS`.
    - Accepted values: `benchmark` (default if the flag is absent) and `usability`.
@@ -60,12 +61,16 @@ Follow these steps exactly:
      instrument (`test-plan.md`) is **not** created here — it is built by
      `/plan-usability` in step 7.
 
-6. **Set the active pointer and refresh the board.** Write the folder path (no
-   trailing slash) into `.claude/.active-research`, then refresh `BOARD.md` so the
-   new study shows as **Active** — re-derive it from the `research/` folders + the
-   active pointer exactly as `/research-board` does (update the `## Active` and
-   `## Closed & archived` tables and the `_Last updated:_` date). Don't print the
-   full board here; just keep the file in sync.
+6. **Register the study, bind this terminal, and refresh the board.** **Append** the
+   folder path (no trailing slash) as a new line in `.claude/.active-research` — do
+   **not** overwrite existing lines, so other active studies are preserved. Then bind
+   this terminal to it: derive your session id from the scratchpad path and write the
+   folder path into `.claude/.current-research/<session-id>` (create the dir if absent).
+   See `.claude/references/active-research.md`. Finally refresh `BOARD.md` so the new
+   study shows as **Active** — re-derive it from the `research/` folders + the registry
+   exactly as `/research-board` does (update the `## Active` and `## Closed & archived`
+   tables and the `_Last updated:_` date). Don't print the full board here; just keep
+   the file in sync.
 
 7. **Draft the plan and run the quality gate — by type.**
 

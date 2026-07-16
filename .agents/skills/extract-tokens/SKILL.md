@@ -7,7 +7,7 @@ Extract a first-pass **design-token set** — colour, typography, spacing, radiu
 
 Steps:
 
-1. **Locate the study & confirm it's a benchmark.** If arguments name a folder, use it; otherwise read `.claude/.active-research`. If neither yields a folder, STOP and ask which study. Read `README.md`, check `Type`: this lens is **benchmark-only** (it reads `platforms/*/screenshots/`). If `Type` is `usability` or there's no `platforms/` folder, STOP and say so. If the study has more than one platform, extract tokens **per platform** (design systems don't merge) — one section each; do not blend palettes across products.
+1. **Locate the study & confirm it's a benchmark.** If arguments name a folder, use it (a lens may target a **closed** study); otherwise resolve it per `.claude/references/active-research.md` (this terminal's binding, else the sole active study, else ask). Read `README.md`, check `Type`: this lens is **benchmark-only** (it reads `platforms/*/screenshots/`). If `Type` is `usability` or there's no `platforms/` folder, STOP and say so. If the study has more than one platform, extract tokens **per platform** (design systems don't merge) — one section each; do not blend palettes across products.
 
 2. **Gather the screenshots.** List `platforms/<platform>/screenshots/*.png`. If none, STOP — there are no pixels to sample.
 

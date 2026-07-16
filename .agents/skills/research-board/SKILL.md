@@ -3,13 +3,13 @@ name: research-board
 description: Show the research board — the active study and all past/closed research — in the terminal, and refresh BOARD.md.
 ---
 
-Render the **research board** to the terminal: the one currently active study and every past (closed / archived) one. Then refresh `BOARD.md` so the committed board never drifts from what's actually on disk.
+Render the **research board** to the terminal: every currently active study and every past (closed / archived) one. Then refresh `BOARD.md` so the committed board never drifts from what's actually on disk.
 
 The **source of truth** is the research folders themselves — never trust a stale table. Derive everything fresh, then reconcile `BOARD.md` to match.
 
 Steps:
 
-1. **Find the active study.** Read `.claude/.active-research`. If it names a folder, that study is the single **Active** row. If the file is missing/empty, there is no active study — say so in the Active section.
+1. **Find the active studies.** Read `.claude/.active-research` (the registry — see `.claude/references/active-research.md`). **Each line** names an active study; every one is an **Active** row (there may be several). If the file is missing/empty, there is no active study — say so in the Active section. As housekeeping, prune stale per-terminal bindings: delete any file in `.claude/.current-research/` whose path is not a line in the registry.
 
 2. **Enumerate every study.** List the folders under `research/` (ignore `PATTERNS.md` and any non-study file). For each folder, read its `README.md` and extract:
    - **Title** — the first `#` heading (strip a leading `Research:` prefix).
@@ -22,7 +22,7 @@ Steps:
 3. **Print the board to the terminal**, most recent first within each group:
 
    - A short header line: total studies, and how many active vs closed/archived.
-   - **Active** — a table (or "No active research — run `new-research` to start one.") with columns: Research (title + folder path) · Type · Started · Status.
+   - **Active** — a table (or "No active research — run `new-research` to start one.") with one row per registry line and columns: Research (title + folder path) · Type · Started · Status.
    - **Closed & archived** — a table with columns: Research · Type · Started · Closed · Status.
 
    Keep it skimmable — link each study to its folder.
