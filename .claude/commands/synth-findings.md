@@ -27,6 +27,10 @@ Steps:
      to run `/plan-usability` first. If there are no session notes yet, STOP — the
      sessions must be fielded and written into `sessions/` before there's anything to
      synthesize.
+   - **Litreview:** read `README.md`, `sources.md`, and `evidence.md`. If there is no
+     `evidence.md`, STOP and tell the user to run `/gather-evidence` first. Use only the
+     `## Verified claims` as findings input; keep the `## Refuted / weak claims` aside to
+     reproduce in the synthesis's own refuted section — never promote them to findings.
 
 3. **Write `SYNTHESIS.md`** in the research folder, using the template for the type.
 
@@ -57,6 +61,18 @@ Steps:
    4. **Recommendation** — the concrete design change it implies.
    Then add a `## What worked` section (positive findings worth preserving).
 
+   **Litreview → themes → design implications.** Lead with a `## TL;DR`, then one
+   `## Theme N — <name>` section per theme. Under each theme, list findings as bullets,
+   each with a **confidence** label and its `[S#]` citation(s) traced to `evidence.md`,
+   e.g. `- Deferred onboarding lifts activation (confidence: High) [S3][S7]`. After the
+   themes, add a numbered `## Design implications` section (what each theme means for
+   what we build), a `## Refuted / weak claims` section (reproduced from `evidence.md`,
+   kept out of the findings), a `## Evidence gaps for primary research` section (what the
+   literature could not answer and needs a survey/usability study), and a
+   `## Sources table (S1..Sn)` mirroring `sources.md`. Every finding MUST trace to a
+   source in `evidence.md`; confidence labels are honest; no generalization beyond what
+   the sources support; no fabricated sources or findings.
+
    For **both** types, end with a `## Gaps & caveats` section (methodological limits,
    paywalls, thin evidence, unanswered questions). Be analytical and opinionated as a
    Senior UI/UX Designer. **Do not invent findings, participants, or sources** —
@@ -68,9 +84,11 @@ Steps:
    the freshly written `SYNTHESIS.md`, the `README.md` (goal/scope/type), and the
    type's source material (benchmark: every `platforms/*/notes.md` and
    `platforms/*/flow.md`; usability: `test-plan.md` and every
-   `sessions/session-*.md`). Tell it the research **type** so it checks the right
-   required fields (the five feature fields, or the four finding fields +
-   severity-ordering). It will:
+   `sessions/session-*.md`; litreview: `evidence.md` and `sources.md`). Tell it the
+   research **type** so it checks the right required fields (the five feature fields,
+   or the four finding fields + severity-ordering, or — for litreview — every finding
+   tracing to a source in `evidence.md`, honest confidence labels, refuted claims
+   excluded from findings, and no over-generalization). It will:
    - **review** each entry for its required fields, evidence grounding (no
      fabrication), testable/actionable next steps, and gaps/overlaps;
    - **auto-fix prose** directly in `SYNTHESIS.md` and the source notes — rewrite
