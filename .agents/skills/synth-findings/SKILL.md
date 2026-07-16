@@ -9,7 +9,7 @@ Arguments: if the user prompt/arguments contain `--docx`, also produce a Word fi
 
 Steps:
 
-1. **Locate the research & read its type.** Resolve the target study per `.claude/references/active-research.md` (explicit `[folder]` arg, else this terminal's binding, else the sole active study, else ask). If the registry is empty, STOP and tell the user to run `new-research` first. Read the folder's `README.md` and note its `Type` (`benchmark` or `usability`). Everything below branches on it.
+1. **Locate the research & read its type.** Resolve the target study per `.claude/references/active-research.md` (explicit `[folder]` arg, else this terminal's binding, else the sole active study, else ask). If the registry is empty, STOP and tell the user to run `new-research` first. Read the folder's `README.md` and note its `Type` (`benchmark`, `usability`, or `litreview`). Everything below branches on it.
 
 2. **Gather the evidence — by type.**
    - **Benchmark:** read `README.md`, `sources.md`, and every `platforms/*/notes.md` and `platforms/*/flow.md`. Note which platforms have screenshots and a `flow.gif`. If there are no platform notes yet, STOP — capture some platforms first.
@@ -49,4 +49,4 @@ Steps:
 
 6. **Update the log** in the research `README.md` with a dated "synthesis written" entry (note the type, the entry count, and that the Principal Researcher QA pass ran with the flagged-item count).
 
-7. **Report** to the user: the type, how many features/findings were synthesized, the file path(s), the Principal Researcher's readiness verdict, the content items it flagged for resolution, and any gaps you noticed (thin evidence, few participants).
+7. **Report** to the user: the type, how many features/findings/themes were synthesized, the file path(s), the Principal Researcher's readiness verdict, the content items it flagged for resolution, and any gaps you noticed (thin evidence, few participants).

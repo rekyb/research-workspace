@@ -14,7 +14,7 @@ Steps:
    `.claude/references/active-research.md` (explicit `[folder]` arg, else this
    terminal's binding, else the sole active study, else ask). If the registry is
    empty, STOP and tell the user to run `/new-research` first. Read the folder's
-   `README.md` and note its `Type` (`benchmark` or `usability`). Everything below
+   `README.md` and note its `Type` (`benchmark`, `usability`, or `litreview`). Everything below
    branches on it.
 
 2. **Gather the evidence — by type.**
@@ -108,6 +108,6 @@ Steps:
    entry (note the type, the entry count, and that the Principal Researcher QA pass
    ran with the flagged-item count).
 
-7. **Report** to the user: the type, how many features/findings were synthesized, the
+7. **Report** to the user: the type, how many features/findings/themes were synthesized, the
    file path(s), the Principal Researcher's readiness verdict, the content items it
    flagged for resolution, and any gaps you noticed (thin evidence, few participants).
