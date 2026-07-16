@@ -7,6 +7,9 @@
 # Raw / working research data (not committed)
 raw-data/
 
+# Litreview user-supplied source documents (copyright/size/PII — never committed)
+research/*/corpus/
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db

@@ -15,7 +15,8 @@ Follow these steps exactly:
    confirm with the user before proceeding.
 
 2. **Determine the research type.** Look for `--type <value>` in `$ARGUMENTS`.
-   - Accepted values: `benchmark` (default if the flag is absent) and `usability`.
+   - Accepted values: `benchmark` (default if the flag is absent), `usability`, and
+     `litreview` (evidence synthesis from documents — see step 5/7 for its scaffold and gate).
    - `survey` and `abtest` are planned but not yet implemented — if asked, tell the
      user those types aren't wired up yet and offer `benchmark` or `usability`.
    - Strip the flag out of the topic string before deriving the slug.
@@ -60,6 +61,10 @@ Follow these steps exactly:
      `session-NN.md` per participant gets added after fielding). The detailed
      instrument (`test-plan.md`) is **not** created here — it is built by
      `/plan-usability` in step 7.
+   - **`litreview` (evidence from documents):** also create
+     `research/<...>/corpus/` (empty; user drops supplied PDFs/reports here — it is
+     **gitignored**, never committed). Do **not** create `platforms/` or `data/`. The
+     verified `evidence.md` is produced later by `/gather-evidence`, not here.
 
 6. **Register the study, bind this terminal, and refresh the board.** **Append** the
    folder path (no trailing slash) as a new line in `.claude/.active-research` — do
@@ -100,6 +105,22 @@ Follow these steps exactly:
      Researcher methodology review before any sessions are fielded. **Do not** start
      designing tasks here.
 
+   **Litreview** (the plan the Principal Researcher signs off on before any
+   evidence gathering — gathering is expensive, so it waits for approval):
+   - **Draft `PLAN.md`** (litreview template below): derive the research
+     question(s) from the `## Goal`, list any corpus documents the user has already
+     provided, propose search angles to fill gaps, and state inclusion criteria
+     (what makes a source credible/relevant enough to cite).
+   - **Dispatch the Principal Researcher (Mode A)** via the Agent tool
+     (`general-purpose`) with `.claude/personas/principal-researcher.md`, the drafted
+     `PLAN.md`, and the `README.md`. For litreview it checks: are the questions
+     answerable *from literature*? are the search angles + inclusion criteria sound?
+     is the provided corpus relevant and credible? It returns must-fixes.
+   - **Revise `PLAN.md`** and **present it to the user for approval.** Then tell the
+     user the next step is **`/gather-evidence`**, which runs the `deep-research`
+     harness over the approved plan and writes the verified `evidence.md` +
+     `sources.md`. **Do not** start gathering evidence here.
+
 8. **Confirm** to the user: folder created, the type, the confirmed goal, the
    approved plan, and the correct next step for the type (capture via Claude-in-Chrome
    for benchmark; `/plan-usability` for usability).
@@ -113,7 +134,7 @@ fields TBD only where genuinely unknown):
 # Research: <Topic>
 
 - **Status:** Active
-- **Type:** <benchmark | usability>
+- **Type:** <benchmark | usability | litreview>
 - **Started:** <YYYY-MM-DD>
 - **Researcher:** Claude (acting Senior UI/UX Designer)
 
@@ -126,7 +147,7 @@ state which product/flow is under test and what decision the results inform.
 ## Scope
 <what's in / out of scope>
 
-## <Platforms to benchmark | Product & participants>        <!-- benchmark: platforms list; usability: product under test + participant profile -->
+## <Platforms to benchmark | Product & participants | Corpus & questions>   <!-- benchmark: platforms list; usability: product under test + participant profile; litreview: provided corpus + research questions -->
 - [ ] <platform 1, or participant-profile note>
 - [ ] <platform 2>
 
@@ -187,6 +208,37 @@ PLAN.md template — **usability**:
 
 > Next: run `/plan-usability` to design the test-plan.md instrument (tasks,
 > moderator script, metrics) and pass its methodology review before fielding.
+```
+
+PLAN.md template — **litreview**:
+
+```
+# Research Plan: <Topic>
+
+- **Status:** Draft (pending Principal Researcher review + user approval)
+- **Type:** litreview
+- **Goal it serves:** <one line — the confirmed goal from the README>
+
+## Key research questions
+- <question 1 derived from the goal — answerable from literature/reports>
+
+## Provided corpus
+- <document the user supplied, dropped in corpus/ — or "none yet; all sources to be found">
+
+## Search angles
+- <angle 1 — how /gather-evidence should search to fill gaps beyond the provided corpus>
+
+## Inclusion criteria
+- <what makes a source credible + relevant enough to cite (recency, venue, methodology, region)>
+
+## Success criteria (what "done" looks like)
+- <e.g. "each research question backed by ≥2 independent verified sources in evidence.md">
+
+## Principal Researcher review
+<filled in during step 7: critique summary + verdict, then user approval>
+
+> Next: run `/gather-evidence` to run the deep-research harness over this plan and
+> write the verified evidence.md + sources.md, before /synth-findings.
 ```
 
 After creating everything, do NOT jump ahead. Complete the type-appropriate plan gate
