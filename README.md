@@ -152,7 +152,7 @@ to switch a terminal's focus, and `/close-research` to retire one study from the
 | `/close-research` | Verifies synthesis exists, updates the `PATTERNS.md` pattern library via the Principal Designer, marks the research closed, and removes it from the active registry (other active studies stay). |
 | `/focus-research <folder>` | Points *this terminal* at one of the active studies, so unqualified workflow commands default to it. For working several studies in parallel. |
 | `/publish-research [-m "msg"]` | Safety-checks captures for PII, commits the active research, and pushes to GitHub via the `gh` CLI. |
-| `/research-board` | Shows the research board — the active study and all past/closed research — and refreshes `BOARD.md`. |
+| `/research-board` | Shows the research board — every active study and all past/closed research — and refreshes `BOARD.md`. |
 
 `/brief-feature`, `/draft-spec`, and `/design-prototype` are three **optional
 design-output steps**, run only when asked, each gated by the Principal
@@ -221,7 +221,7 @@ summary` (task success rates, SEQ/SUS, time-on-task).
 
 ## Research board
 
-The active study and the full history of closed/archived research live on the
+Every active study and the full history of closed/archived research live on the
 **[Research Board](BOARD.md)**. Render it to the terminal any time with
 **`/research-board`** (it also refreshes `BOARD.md` from the research folders and
 the active registry, so the board never drifts).
