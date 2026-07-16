@@ -20,3 +20,9 @@ Running log of every URL visited during this benchmark, with the date accessed.
 | CodeSignal — signup | https://identity.codesignal.com/auth/signup | 2026-07-13 | Account-first wall (name/email/password + SSO/Apple/Google); skill assessment gated beyond |
 | Elsa Speak — landing (ID) | https://id.elsaspeak.com/ | 2026-07-13 | Indonesian-localized marketing landing; value framing + subscription paywall (Flash Sale) |
 | Elsa Speak — English test | https://id.elsaspeak.com/english-test/ | 2026-07-13 | App-onboarding mockups (coach pick, score/level) + a real web speaking assessment (sentence + audio + mic) |
+| "I Studied 1,460 Onboarding Flows" (video) | https://www.youtube.com/watch?v=Qsq-Sj_rojU | 2026-07-15 | Practitioner study (986 apps/websites); the lead that prompted F11/F12. Secondary source |
+| First Round Review — Superhuman Onboarding Playbook | https://review.firstround.com/superhuman-onboarding-playbook/ | 2026-07-15 | F11 evidence: founder-led / human-led onboarding; >65% full transition (~2× self-serve), 2× referrals. Case study (post-signup, B2B) |
+| UserGuiding — Duolingo onboarding UX breakdown | https://userguiding.com/blog/duolingo-onboarding-ux | 2026-07-15 | F12 education instance: in-lesson tooltips (tap a word for meaning), contextual highlights. Teardown |
+| UserOnboarding Academy — Contextual onboarding | https://useronboarding.academy/post/contextual-onboarding | 2026-07-15 | F12: Slack progressive disclosure + benefit-framed tooltip copy ("get around Slack faster"). Teardown |
+| Appcues — tooltip examples / best practice | https://www.appcues.com/blog/feature-adoption-tooltips | 2026-07-15 | F12 best practice: ≤~7 tooltips, short benefit-framed copy, progress indicator |
+| Userpilot — onboarding checklist completion benchmarks | https://userpilot.com/blog/onboarding-checklist-completion-rate-benchmarks/ | 2026-07-15 | F12: interactive setup-checklist completion data (endowed-progress / Zeigarnik in practice) |

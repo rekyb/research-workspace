@@ -1,0 +1,43 @@
+{
+  "_meta": {
+    "platform": "MagicSchool AI",
+    "study": "2026-07-14-ai-literacy-upskilling-indonesian-teachers",
+    "status": "DRAFT — UNVALIDATED",
+    "warning": "Inferred from marketing screenshots via pixel sampling, NOT the real CSS. Confirm every value with a colour picker / the platform stylesheet before reuse. Hex quantized to nearest 8/channel; type sizes eyeballed; [eyeballed] tokens are least reliable.",
+    "source": "lenses/tokens.md"
+  },
+  "color": {
+    "primitive": {
+      "cream-50": "#FFFFF0",
+      "cream-100": "#FFF8D8",
+      "white": "#FFFFFF",
+      "purple-900": "#301070",
+      "purple-600": "#7828F8",
+      "purple-500": "#8840E0",
+      "lavender-100": "#E8E0FF",
+      "mauve-400": "#B868A0"
+    },
+    "semantic": {
+      "surface": "{color.primitive.cream-50}",
+      "surface-alt": "{color.primitive.cream-100}",
+      "surface-raised": "{color.primitive.white}",
+      "surface-tint": "{color.primitive.lavender-100}",
+      "brand-primary": "{color.primitive.purple-600}",
+      "brand-primary-strong": "{color.primitive.purple-900}",
+      "brand-primary-soft": "{color.primitive.purple-500}",
+      "text-heading": "{color.primitive.purple-900}",
+      "text-body": "#1A1A1A",
+      "accent-gradient": "{color.primitive.mauve-400}",
+      "accent-warm": "#F5A623 [eyeballed — coral/orange hero accent, not histogram-sampled]"
+    }
+  },
+  "typography": {
+    "_note": "Sizes are eyeballed estimates in px; family reads as a rounded geometric sans.",
+    "display": { "size": 68, "weight": 700 },
+    "h2": { "size": 40, "weight": 700 },
+    "body": { "size": 18, "weight": 400 },
+    "label": { "size": 16, "weight": 500 }
+  },
+  "space": { "_base": 8, "scale": [4, 8, 16, 24, 32, 48] },
+  "radius": { "button": 10, "card": 16, "pill": 999 }
+}

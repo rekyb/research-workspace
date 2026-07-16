@@ -33,8 +33,9 @@ Follow these steps exactly:
      - `research/<...>/sources.md` — header `# Sources — <topic>` and a table with columns: Source | URL | Accessed | Notes.
      - `research/<...>/README.md` — the research brief (template below; set the `Type` line to the chosen type).
      - `research/<...>/PLAN.md` — the plan (template below).
-   - **`benchmark`:** also create `research/<...>/platforms/` (empty; one subfolder per platform gets added during capture).
-   - **`usability`:** also create `research/<...>/sessions/` (empty; one `session-NN.md` per participant gets added after fielding). The detailed instrument (`test-plan.md`) is **not** created here — it is built by `plan-usability` in step 7.
+   - **`benchmark` (platform observation):** create `research/<...>/platforms/` (empty; one subfolder per platform gets added during capture).
+   - **`usability`:** create `research/<...>/sessions/` (empty; one `session-NN.md` per participant gets added after fielding). The detailed instrument (`test-plan.md`) is **not** created here — it is built by `plan-usability` in step 7.
+   - **Other research aside of platform benchmarks (literature reviews, desk research, quantitative/data studies, or non-platform benchmark studies):** do **not** use `platforms/`. Create `research/<...>/data/` (`data/`) instead to save thematic notes, pillars, and analysis files (`data/<pillar-or-topic>/notes.md`).
 
 6. **Register the study, bind this terminal, and refresh the board.** **Append** the folder path (no trailing slash) as a new line in `.claude/.active-research` — do **not** overwrite existing lines, so other active studies are preserved. Then bind this terminal to it: derive your session id from the scratchpad path and write the folder path into `.claude/.current-research/<session-id>` (create the dir if absent). See `.claude/references/active-research.md`. Finally refresh `BOARD.md` so the new study shows as **Active** — re-derive it from the `research/` folders + the registry exactly as `research-board` does (update the `## Active` and `## Closed & archived` tables and the `_Last updated:_` date). Don't print the full board here; just keep the file in sync.
 

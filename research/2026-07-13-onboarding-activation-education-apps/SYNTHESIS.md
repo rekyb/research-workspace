@@ -380,6 +380,104 @@ messages, not just lesson content.
 
 ---
 
+## Feature 11: Humanizing touches that build trust
+
+> **Provenance (read first).** Unlike Features 1–10, this feature is **not** from our
+> first-party, logged-out teardown of the five education apps: those apps show no
+> humanizing/founder touch on their public surfaces, and the pattern lives mostly *after*
+> signup, which our guardrails (no account creation, no paid access) prevent us reaching.
+> It was added on 2026-07-15 from a practitioner-study lead (the ["1,460 onboarding flows"
+> study](https://www.youtube.com/watch?v=Qsq-Sj_rojU)) and is grounded in **public case
+> studies / teardowns**, cited inline and logged in `sources.md`. Treat it as a
+> cross-industry hypothesis to validate, not an observed education-app finding.
+
+**Short description.** Signals of a *real human* behind the product, a founder's note, a
+personal welcome, a named human guide, used to convert a cold signup into a relationship.
+Distinct from Feature 8's cartoon mascot: this is human presence and authorship, not a
+character.
+
+**Key findings.** *What the user sees:* in the strongest public example, Superhuman's
+onboarding is led by a real, named specialist rather than a bot, and the broader pattern
+appears as founder's notes and personal welcome messages signed by a human. *What the user
+does:* engages in a short personal exchange (a discovery conversation about their workflow),
+and in Superhuman's case verbally commits to a usage goal, then receives personal follow-up.
+*What the system does:* routes new users to a human-led or human-authored welcome so the
+*relationship*, not only the UI, carries activation. The reported impact is large but
+context-specific: per First Round Review's Superhuman Onboarding Playbook, the founder
+personally onboarded hundreds of early customers, and after human-led onboarding **over 65%
+of new customers fully transitioned their email (more than double the self-serve rate), with
+a ~2× uplift in referrals** ([First Round Review](https://review.firstround.com/superhuman-onboarding-playbook/)).
+The 1,460-flow study separately reports that personalization correlates with materially
+higher retention. *(Cross-industry, post-signup, high-touch B2B; not education-specific and
+not first-party-observed, see Provenance.)*
+
+**Why this feature works (rationale).** People respond socially to human cues even when they
+know a machine is involved, so a visible human, a name, a note, a face, converts a
+transactional signup into a reciprocal relationship, raising trust and commitment in a way a
+faceless form cannot. [ref: Nass, Steuer & Tauber 1994, "Computers are Social Actors"; see
+references.md] **Honest caveat:** the headline conversion numbers are industry case-study
+data from a high-price, high-touch B2B product, not peer-reviewed evidence, and 1:1 human
+onboarding does not scale to a low-cost, high-volume, low-context education audience. What
+plausibly transfers is a *scalable* humanizing touch (a signed founder's note, a named human
+voice at the wall), which is the hypothesis to test, not the white-glove model itself.
+
+**How to validate this feature in the future.** A/B the cheapest scalable form first, a short
+signed founder's note (or a named human voice) at the save-progress wall or first session,
+versus no human touch. Measure self-reported trust, activation rate, and D1/D7 return with our
+low-context audience. Only escalate toward higher-touch humanization if the lightweight
+version moves trust and retention.
+
+---
+
+## Feature 12: Contextual, just-in-time education
+
+> **Provenance (read first).** Added 2026-07-15 from the same [practitioner
+> study](https://www.youtube.com/watch?v=Qsq-Sj_rojU). Its clearest *education-app*
+> instance (Duolingo's in-lesson tooltips) is documented in a public teardown and is
+> logged-out-observable; the checklist / progressive-disclosure examples (Slack, plus SaaS
+> setup-checklist benchmarks) are cross-industry and drawn from public teardowns cited inline.
+> Not part of the original
+> first-party five-app teardown; validate before building.
+
+**Short description.** Teaching the product *in context as the user acts*, one benefit-framed
+tooltip at the moment of need, plus an interactive setup checklist, instead of front-loading
+a multi-screen tutorial before the user has done anything.
+
+**Key findings.** *What the user sees:* in Duolingo (an education app), tapping a word inside
+a lesson reveals its meaning, and tooltips surface *during* a lesson to highlight the specific
+element that is relevant right then, rather than a tutorial up front
+([UserGuiding Duolingo teardown](https://userguiding.com/blog/duolingo-onboarding-ux)). In
+Slack, the Slackbot teaches one feature at a time via progressive disclosure, and tooltip copy
+is benefit-framed ("get around Slack faster," not "search messages")
+([UserOnboarding Academy](https://useronboarding.academy/post/contextual-onboarding)). *What
+the user does:* acts first (starts a lesson, sends a message) and learns each feature exactly
+when it becomes
+relevant, and works down a checklist of first tasks. *What the system does:* withholds
+instruction until a contextual trigger fires, and tracks checklist completion, showing bounded
+progress. The consolidated best practice from these teardowns: keep contextual tours short
+(≤~7 tooltips), copy benefit-framed and brief, with a visible progress indicator
+([Appcues](https://www.appcues.com/blog/feature-adoption-tooltips)).
+
+**Why this feature works (rationale).** A front-loaded tutorial imposes extraneous cognitive
+load before the user has any schema to attach it to, so it is largely forgotten; delivering one
+lesson at the point of need keeps load low and relevance high. [ref: Sweller 1988, cognitive
+load; see references.md] An interactive setup checklist exploits the drive to close open loops
+and the endowed-progress effect to pull users through first-run tasks. [ref: Zeigarnik 1927;
+Nunes & Drèze 2006; see references.md] Benefit-framed tooltip copy (Slack) sells the *outcome*
+of a feature rather than naming it, the same principle as Feature 2's value-framing.
+**Scope note:** contextual education lives mostly in the *post-activation learning home*, which
+this study's onboarding arc treats as a boundary (out of scope for the pre-win flow). So this
+feature primarily informs the first-session-and-beyond surface adjacent to the wall, not the
+minimal routing intake.
+
+**How to validate this feature in the future.** A/B an interactive setup checklist plus
+in-context tooltips (≤7, benefit-framed) in the first session against a front-loaded tutorial.
+Measure feature adoption, checklist-completion rate, time-to-second-task, and return-for-second-
+session. For our low-literacy audience, additionally test tooltip comprehension (icon + short
+localized copy) so the contextual teaching does not itself become a reading barrier.
+
+---
+
 ## Gaps & caveats
 
 - **Desktop-web capture; mobile/native not fully observed.** All captures are desktop web at
@@ -407,6 +505,13 @@ messages, not just lesson content.
   Problem-recognition placement, icon-first intake, permission priming, and localization are
   strong evidence for the low-literacy case, but confirming they *work* for that population
   requires the usability tests proposed under each feature.
+- **Features 11–12 are secondary-sourced, not first-party.** F11 (humanizing touches) and
+  F12 (contextual education) were added 2026-07-15 from a practitioner-study lead and are
+  grounded in public case studies / teardowns (plus one logged-out education instance for
+  F12), because the patterns live mostly post-signup where our no-account / no-pay guardrails
+  block first-party capture. They carry louder caveats than F1–F10 and each has a first-party
+  validation step. F11's conversion evidence in particular comes from a high-touch B2B context
+  that may not transfer to this audience.
 
 ---
 
@@ -470,22 +575,45 @@ removed once addressed:
 
 **Status: ready for `/review-research`.**
 
+### Addendum — F11 & F12 QA (2026-07-15)
+
+Two features (F11 Humanizing touches, F12 Contextual just-in-time education) were added after the
+original review from a practitioner-study lead ([the "1,460 onboarding flows"
+study](https://www.youtube.com/watch?v=Qsq-Sj_rojU)), grounded in public teardowns / case studies
+(secondary evidence) per an explicit user decision, because the patterns live post-signup where
+guardrails block first-party capture. A Principal Researcher Mode B pass over **only these two**:
+
+- **Structure:** both carry the five required fields in order; the see/do/system logic is present.
+- **Provenance:** the secondary, cross-industry, post-signup nature is disclosed clearly and not
+  overclaimed as observed education-app evidence; F11's high-touch-B2B caveat is adequate.
+- **External validation:** Nass et al. 1994 (F11) and Sweller 1988 / Nunes & Drèze 2006 /
+  Zeigarnik 1927 (F12) are real and correctly matched; F11's peer-reviewed-anchor vs.
+  industry-metric split is handled honestly; no fabricated or stretched citation.
+- **Verdict: revise (light) → resolved.** Two precision fixes applied: (A) removed an em-dash in
+  the F11 provenance prose; (B) dropped the uncited Notion example so every F12 example stays
+  grounded.
+
+**Not yet done for F11/F12:** F1–F10 carry the full chained stakeholder `## Agent Review` below;
+F11/F12 have passed only this Principal Researcher QA. Before FR-14/FR-15 are committed they should
+go through `/review-research` (PM / Tech Lead / Head of Product) and the Principal Designer Mode S
+gate, like the rest.
+
 ---
 
 ## Agent Review
 
-### Review — 2026-07-13 (goal: benchmark feeding a build decision)
+### Review — 2026-07-15 (goal: benchmark feeding a build decision) — full synthesis F1–F12
 
-Three stakeholder personas reviewed the 10 synthesized features, chained so each read the prior. Goal: inform our mobile-first, 0-to-1, guest-friendly onboarding for low tech-literacy, low-context, and advanced learners.
+This supersedes the 2026-07-13 review, extending it to the two features added 2026-07-15: **F11 (Humanizing touches)** and **F12 (Contextual, just-in-time education)**, both **secondary-sourced** (public teardowns / case studies, not first-party captures — see each feature's Provenance block and the F11/F12 QA addendum). F1–F10 were unchanged; all three personas affirmed their prior verdicts and concentrated fresh scrutiny on F11/F12. Chained PM → Tech Lead → Head of Product.
 
 ### Product Manager — soundness
-8 of 10 Sound; 2 need refinement. **F1 deferred registration** is the spine (resolves email-less / cold-wall / duplicate-account pains) and highest-leverage, alongside **F2 single-CTA landing** (our "CTA-as-ad" problem). **F3+F4** should be treated as *one placement surface* (framing + mechanic), the core answer to novice-vs-advanced. **F5 assessment-as-onboarding, Needs refinement:** highest evidence risk (Elsa's score observed-as-claimed-not-returned; CodeSignal's interior unseen); sequence after F4/F7. **F9 momentum, Needs refinement:** a grab-bag to decompose (the bounded progress bar is the near-free win). **F6** rank hinges on whether program/facilitator links are a primary acquisition channel. Top priorities: **F1+F2, then F6 (if links primary), then F3+F4**. Cross-cutting concern: **personalization-depth vs. time-to-first-win**, since our own "goal → level → profile → path" model is itself pre-win extraction, in tension with "win first, wall later."
+Both new features are legitimate patterns with a product-fit gap for our audience, and both belong as **post-MVP experiments, not build commitments**. **F11:** its only quantified evidence is Superhuman — high-touch, high-price B2B, founder onboarding hundreds 1:1 — the opposite of a low-cost, high-volume, low-context education product; 1:1 does not scale. The buildable residue is a signed founder's note / named human voice at the save-progress wall (a cheap A/B that pairs with F1), but it's held back because the trust deficit it fixes isn't among this study's grounding pains, it overlaps F8's mascot warmth, and a note leans on reading and on caring who the founder is — weak levers for low-literacy/low-context users. **F12:** well-evidenced (Sweller; Duolingo's in-lesson tooltips; benefit-framed copy echoing F2) but it straddles the scope line: the in-scope half is the anti-pattern "don't front-load a multi-screen tutorial before the first task" (reinforcing guest-first/win-first); the out-of-scope half (setup checklist + post-win tooltip tours) is a post-activation learning-home workstream that must not be smuggled into the minimal routing intake — and a tooltip is itself reading, a literacy barrier for our audience. F1–F10 carried forward. **Top concern:** both new features sit at/beyond the activation boundary and rest on a single, education-non-analogous, B2B-heavy lead; sequence them as cheaply-validated post-MVP experiments, don't pull relationship/teaching surfaces into the 0-to-1 spine.
 
 ### Tech Lead — build effort & feasibility (read the PM review)
-Cheapest strong levers are **F2, F4, F8-icon-first (Low)**; **F5 is High** (a net-new ML pronunciation-scoring engine with no observed reference, so it must not be smuggled into the MVP). Three load-bearing risks: **(1) guest-to-registered account-merge** (where the duplicate-account pain reappears if botched), **(2) i18n architecture from day one** (ruinous to retrofit), **(3) on-device mic-permission handling plus the scoring engine** (the OS mobile prompt was never observed). Sequencing: **infra first** (guest-session/account-merge, i18n layer, design-system primitives), then F2+F1, then F3+F4, then F8-icon plus F9-progress-bar, then F6 (if links primary), then F7, then **F5 last, as its own scoped workstream.** The guest-session infra is exactly what makes "extract minimum to route, defer the rest" cheap.
+On feasibility the two are near-opposites. **F11 is Low — pure content, no infra:** a string plus a slot in F1's registration wall (S7), no state/service/ML/targeting; it can't exist without F1, so it's a rider on that workstream, not its own. White-glove 1:1 isn't an engineering estimate (human labour + scheduling) and is rejected. Its only real cost is **localizing free-text warm prose per locale** (the hardest copy to translate sincerely — EN/ID today) plus owning a **named-human identity** (PII/content governance). **F12 splits:** (i) *not* front-loading a tutorial is a **free constraint** (negative work, ship now); (ii) the interactive checklist + tooltip engine is a real **Medium** post-activation workstream — per-user task state (needs F1 account infra), tooltip targeting + per-tooltip dismissal persistence + i18n, usually **bought, not built**. Its top risk: tooltip targeting is anchored to a **mobile DOM we never observed** (all captures desktop-web ~1280px; the product is mobile-first; anchoring is most fragile across breakpoints) — build it later, buy-vs-build, on the real UI. Neither feature adds infra beyond the F1 account-merge and F10 i18n already mandated. F1–F10 effort ratings affirmed unchanged (see the sequencing in the prior review: infra first — guest/account-merge, i18n, DS primitives — then F2+F1, F3+F4, F8-icon + F9-bar, F6 if links primary, F7, F5 last).
 
 ### Head of Product — final call (read both)
-**The synthesis is fit to drive our build direction: yes, with confidence.** Trustworthy precisely because it is honestly caveated (it owns the desktop-web, single-variant, unseen-interior, and Elsa-scoring limits). Standing limitation accepted: every finding is a desktop-web hypothesis while our product is mobile-first, so this sets direction, it does not replace our first usability round. **The one strategic decision to resolve first:** how much personalization we extract *before* the first win vs. after, with the steer being *extract the minimum to route, defer the rest post-activation* (guest-session infra makes this cheap). **The single biggest risk accepted:** the guest-to-registered account-merge, which must be resourced as a first-class workstream inside F1 or we ship the old duplicate-account problem in a new wrapper.
+The MVP's job is unchanged: **prove value before the wall, extract the minimum to route, defer the rest.** Neither new feature — secondary-sourced from a non-analogous B2B lead, sitting at/past the activation boundary — earns a place in the pre-win MVP; only the sliver that fits inside that job cheaply survives. **F11 — Conditional Go:** admit only the scalable signed-note/named-voice at F1's wall, as a **post-MVP A/B**; reject white-glove; **condition** — it must lift self-reported trust and D1/D7 return for our audience before any build beyond a copy slot (scope it as content; mind per-locale warm-prose localization and the named-human identity). **F12 — split:** **Go** on (i) the free "no front-loaded tutorial" constraint (adopt in MVP, the one in-scope, education-observed piece); **No-Go / defer** on (ii) the checklist + tooltip engine — quarantine as a separate post-activation buy-vs-build workstream (blind mobile targeting + literacy-barrier risk). **Net entering the MVP from F11/F12: only F12's free constraint.** F1–F10 calls re-affirmed, no reversals; the synthesis remains fit to drive the build precisely because it is honestly caveated. The two prerequisites to resource first remain the pre-win-vs-post-win extraction decision and the guest-to-registered account-merge — which F11/F12 now also depend on.
 
 ### Consolidated verdict
 
@@ -501,10 +629,12 @@ Cheapest strong levers are **F2, F4, F8-icon-first (Low)**; **F5 is High** (a ne
 | F8 — Character-guided, icon-first intake | Sound | Low (icon-first) | **Go** — build icon-first; defer the guide character |
 | F9 — Momentum & motivation scaffolding | Needs refinement | Low–Medium | **Conditional Go** — build the progress bar now; defer the trigger-driven pieces |
 | F10 — Deep localization | Sound | Medium | **Go** — as a day-one i18n architecture decision |
+| F11 — Humanizing touches | Needs refinement | Low (scalable note only) | **Conditional Go** — signed note/named voice at F1's wall as a post-MVP A/B; white-glove rejected; condition: proven to lift trust/return for our audience |
+| F12 — Contextual just-in-time education | Needs refinement | (i) ~free / (ii) Medium | **Go on (i)** the "no front-loaded tutorial" constraint; **No-Go on (ii)** the checklist/tooltip engine — defer to a separate post-activation workstream |
 
 ### Legend
 - **PM soundness** — *Sound* (right feature for the goal, well-scoped and coherent, ship/validate as-is) · *Needs refinement* (valuable but has scope, framing, or evidence gaps to resolve before committing) · *Reject* (not the right feature for the goal).
 - **Tech Lead build effort** — *Low* (authored content/config or standard components; no novel infra or ML) · *Medium* (non-trivial but well-trodden engineering: state, routing, aggregation; no major new risk surface) · *High* (a major workstream: novel infra, a security surface, or recurring ML/inference cost plus eval).
 - **Head of Product call** — *Go* (build it; clear impact and fit) · *Conditional Go* (pursue once the stated condition is met) · *No-Go* (do not build now).
 
-**Verdict summary:** 7 Go, 3 Conditional Go, 0 No-Go. The synthesis is endorsed to drive the build, with F5/F6/F9 gated on stated conditions and one strategic decision (pre-win vs. post-win extraction) to resolve first.
+**Verdict summary:** 8 Go, 3 Conditional Go, 1 split (F12: Go on the constraint / No-Go on the engine). No feature adds infrastructure beyond the F1 account-merge and F10 i18n already mandated. F11 and F12 are endorsed as *direction*, not MVP scope — only F12's free "don't front-load a tutorial" constraint enters the MVP.

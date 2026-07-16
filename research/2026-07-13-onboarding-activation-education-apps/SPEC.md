@@ -1,9 +1,9 @@
 # Spec: Guest-First Onboarding-to-Activation Flow (0-to-1 Learning Product)
 
 - **Source study:** research/2026-07-13-onboarding-activation-education-apps (Type: benchmark)
-- **Derived from:** SYNTHESIS.md (reviewed 2026-07-13, `## Agent Review`: 7 Go, 3 Conditional Go, 0 No-Go)
+- **Derived from:** SYNTHESIS.md (reviewed 2026-07-15, `## Agent Review`: 8 Go, 3 Conditional Go, 1 split — F1–F12; supersedes the 2026-07-13 F1–F10 review)
 - **Audience:** design (Figma pickup) + engineering (scoping)
-- **Status:** Reviewed (Principal Designer Mode S: revise → all items resolved 2026-07-14)
+- **Status:** Reviewed (Principal Designer Mode S: revise → resolved 2026-07-14). Updated 2026-07-15 to reconcile FR-14/FR-15/FR-16 with the F1–F12 review; **Mode S re-run: ready** (2 cosmetic polish notes applied).
 
 ## Overview
 
@@ -42,8 +42,10 @@ through the first task* (FR-06, FR-07), rather than the intake mechanics.
 ## 1. Functional Requirements
 
 MoSCoW priority tracks the synthesis recommendation and the `## Agent Review` verdicts.
-Conditional-Go features are scoped down (F6) or deferred as their own workstream (F5); no
-feature was a No-Go.
+Conditional-Go features are scoped down (F6) or deferred as their own workstream (F5, F11→FR-14).
+Per the 2026-07-15 F1–F12 review, F12 was **split**: its in-scope constraint ships as FR-15 (Go),
+while its checklist/tooltip *engine* is a **No-Go for this MVP** (FR-16), deferred to a separate
+post-activation workstream.
 
 ### FR-01 — Guest-first session  ·  Priority: Must
 - **Requirement:** The system must let a first-time user complete goal selection, level
@@ -256,6 +258,71 @@ feature was a No-Go.
     primed-permission slot as a separate workstream.
 - **Edge cases:** n/a (explicitly deferred).
 
+### FR-14 — Humanizing / trust touch  ·  Priority: Could (post-MVP A/B, Conditional)
+- **Requirement:** A single lightweight, **scalable** human trust signal, a signed founder's
+  note or a named human voice at the save-progress wall (S7), authored once and shown to all
+  (asynchronous / templated), distinct from the deferred mascot (FR-03). It rides on FR-01's
+  wall as content in a slot (no new infra) and must not add a blocking step before the win.
+  The white-glove / 1:1 human-led onboarding model is explicitly **out of scope** (it does not
+  scale to a low-cost, high-volume, low-context audience). This is a **post-MVP A/B experiment**,
+  not an MVP element.
+- **Source:** SYNTHESIS §F11 "Humanizing touches that build trust." **Secondary evidence**
+  (public case studies, not the first-party five-app teardown): Superhuman Onboarding Playbook
+  (high-touch B2B, not analogous); the "1,460 onboarding flows" study. **2026-07-15 Agent Review
+  — Conditional Go** (scalable note only; white-glove rejected; post-MVP A/B). Hence **Could**,
+  gated on validation.
+- **Acceptance criteria:**
+  - Given the wall (S7), when it renders, then a human-authored, named/signed welcome element is
+    present (copy attributable to a real person, not the mascot).
+  - Given any locale, when it renders, then the note is localized as **warm prose** with correct
+    register per locale (not a machine-default), consistent with FR-11.
+  - Given the critical path to the win, when the touch is added, then it introduces no blocking
+    or mandatory step before activation.
+  - Given the MVP, when built, then the white-glove 1:1 model is **not** implemented, only the
+    templated note/voice slot.
+- **Condition (from Agent Review):** build beyond a copy slot only if a lightweight A/B **lifts
+  self-reported trust and D1/D7 return** for our low-context audience.
+- **Edge cases:** must not read as a fake/auto persona or be confused with the mascot; must not
+  delay or gate the win; a note naming a specific person must stay accurate if that person
+  leaves (content-governance / PII ownership).
+
+### FR-15 — Contextual-first education (no front-loaded tutorial)  ·  Priority: Should
+- **Requirement:** The pre-win onboarding must **not** front-load a multi-screen tutorial or
+  product tour before the first interactive win; any feature guidance shown inside the arc is
+  delivered **in context** (a single benefit-framed, dismissible tooltip at the point of need),
+  never as an up-front tour. This is the in-scope half of §F12 and reinforces the
+  guest-first / win-first spine (FR-06).
+- **Source:** SYNTHESIS §F12 (in-scope constraint) [Duolingo in-lesson tooltips, an education
+  app, logged-out-observable]. **2026-07-15 Agent Review — Go** on the constraint (the only
+  F11/F12 piece entering the MVP).
+- **Acceptance criteria:**
+  - Given the pre-win onboarding, when it runs, then it does **not** present a multi-screen
+    tutorial / tour before the first win (consistent with FR-06).
+  - Given a feature the user first encounters in the arc, when guidance is shown, then it is a
+    single contextual, benefit-framed, dismissible tooltip, not a modal tour.
+  - Given any tooltip, when it renders, then its copy is localized and legible for low-literacy
+    users (icon + short copy), so the teaching itself is not a reading barrier (FR-11).
+- **Edge cases:** don't stack/overlap tooltips; honour reduced-motion; a dismissed tooltip must
+  not reappear on every visit.
+
+### FR-16 — Contextual education engine (setup checklist + tooltip tours)  ·  Priority: Won't (this MVP)
+- **Requirement:** An interactive **setup checklist** (per-user first-run task state + bounded
+  progress) and a multi-step **contextual tooltip-tour engine** are **out of scope for the MVP**
+  and belong to a separate **post-activation learning-home** workstream (the learning home is a
+  boundary node in §3), to be evaluated **buy-vs-build** on the real mobile UI.
+- **Source:** SYNTHESIS §F12 (out-of-scope half). **2026-07-15 Agent Review — No-Go / defer:**
+  the tooltip engine targets a mobile DOM never observed (all captures desktop-web ~1280px;
+  anchoring is most fragile across breakpoints), per-user checklist state depends on FR-01
+  account infra, a tooltip is itself a reading/literacy barrier, and such engines are usually
+  bought, not built.
+- **Acceptance criteria:**
+  - Given the MVP, when the onboarding arc runs, then no setup-checklist state store or
+    tooltip-tour engine is built into the pre-win flow.
+  - Given the roadmap, when contextual education is later pursued, then it is scoped as a
+    post-activation workstream on the real mobile UI, reusing FR-01 account state and FR-11
+    i18n, and evaluated buy-vs-build.
+- **Edge cases:** n/a (explicitly deferred).
+
 ---
 
 ## 2. User Flow
@@ -465,6 +532,9 @@ surfaces). They intentionally have no FR or §4 screen entry.
 | FR-11 Day-one i18n | §F10 | Go | all screens |
 | FR-12 Code-first entry | §F6 | Conditional Go | S8 |
 | FR-13 ML-scored assessment | §F5 | Conditional Go → deferred | (none — out of MVP) |
+| FR-14 Humanizing / trust touch | §F11 (secondary-sourced) | Conditional Go — post-MVP A/B; white-glove rejected | S7 content slot (post-MVP; S7 itself does not claim it) |
+| FR-15 Contextual-first (no front-loaded tutorial) | §F12 (in-scope half) | Go — the only F11/F12 piece in the MVP | S2–S6 (arc-wide constraint, like FR-11) |
+| FR-16 Contextual education engine (checklist + tooltips) | §F12 (out-of-scope half) | No-Go / deferred | boundary: learning home (post-activation) |
 
 ---
 
@@ -502,3 +572,16 @@ surfaces). They intentionally have no FR or §4 screen entry.
   single-variant**; our product is mobile-first. This spec sets direction; it does not replace
   a first mobile usability round. F5's scoring interior and CodeSignal's placement interior
   were never observed, so no requirement here depends on them.
+- **Assumption — FR-14 / FR-15 / FR-16 rest on secondary evidence (added 2026-07-15).** Unlike
+  FR-01–FR-13, these trace to SYNTHESIS §F11/§F12, which are **public-teardown / case-study
+  sourced**, not first-party captures. The 2026-07-15 F1–F12 review resolved their standing:
+  **FR-14** (humanizing) is a post-MVP A/B (Conditional Go; white-glove rejected); **FR-15** (the
+  "no front-loaded tutorial" constraint) is the only piece entering the MVP (Go); **FR-16** (the
+  checklist + tooltip engine) is a **No-Go for this MVP**, deferred to a post-activation
+  workstream. FR-14's conversion evidence comes from a high-touch B2B context that may not
+  transfer to this audience. *Validate by* the A/B tests in §F11/§F12 before building FR-14
+  beyond a copy slot, or before pursuing FR-16.
+- **Open question — is the first-session / learning-home surface in scope? (FR-16).** §3 treats
+  the learning home as a boundary node, and the review confirmed FR-16 (checklist + tooltip
+  engine) lives there, out of the MVP. *Resolve before* pursuing FR-16: give it its own
+  post-activation spec on the real mobile UI, and decide buy-vs-build for the tooltip engine.

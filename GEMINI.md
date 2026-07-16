@@ -16,7 +16,7 @@ When the user asks to start a new research topic (or run `new-research`):
 - Check for an optional `--type <benchmark | usability>` flag (defaulting to `benchmark`).
 - **Confirm the goal:** Explicitly establish the `## Goal` (what we want to learn and why, or what decision the usability test informs) before scaffolding.
 - Create a new directory at `research/<YYYY-MM-DD>-<topic-slug>`.
-- Scaffold the directory by type (`README.md`, `PLAN.md`, `sources.md`, plus `platforms/` for benchmark or `sessions/` for usability).
+- Scaffold the directory by type (`README.md`, `PLAN.md`, `sources.md`, plus `platforms/` for platform benchmarks, `data/` for non-platform/literature/desk-research studies, or `sessions/` for usability). **Rule:** when doing other research aside from a platform benchmark, do not use `platforms/` to save notes or pillars — use `data/` (`data/<topic>/notes.md`) instead.
 - **Append** the new folder path to the `.claude/.active-research` registry (preserving other active studies), bind this terminal to it by writing `.claude/.current-research/<session-id>`, and automatically refresh `BOARD.md` to show the new study as **Active**.
 - Dispatch the Principal Researcher (`Mode A`) to review the drafted `PLAN.md` before user approval and capture/fielding.
 

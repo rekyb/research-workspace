@@ -5,7 +5,7 @@ Next-step options for the workspace. Last reconciled **2026-07-17**.
 - **PRs #4 and #5:** Both **merged into `main`** (`#4` = `b06a393`, `#5` = `25be809`). The type-aware spine, the **multiple-active-studies** model, and the **peer-review debate** rework are all upstream in `main`.
 - **Current Workspace State:**
   - **Unstaged cleanups:** 15 deleted legacy `prototype/...` files (old landing pages and design-system drafts) still pending a stage/commit.
-  - **Active research studies:** Two untracked studies in `research/` (`2026-07-14-ai-literacy-upskilling-indonesian-teachers` and `2026-07-16-indonesian-teacher-onboarding-literature`) plus untracked `design/genggam-ai/` UX specs — none committed yet.
+  - **Active research studies:** Two studies in `research/` (`2026-07-14-ai-literacy-upskilling-indonesian-teachers` and `2026-07-16-indonesian-teacher-onboarding-literature`) plus `design/ai-literacy-app/` UX specs, now committed (product name anonymized before publishing to the public repo).
   - **`litreview` research type — design-only:** The design spec (`docs/superpowers/specs/2026-07-16-litreview-research-type-design.md`) exists, but the type is **not implemented**: no `/gather-evidence` command/skill, no `litreview` branch in `CLAUDE.md` / `GEMINI.md` / `/synth-findings`, and the `2026-07-16` study is typed `benchmark` (not `litreview`, using `platforms/` folders as evidence pillars). Nothing is scaffolded against the type yet.
 
 ## Shipped (the type-aware-spine chapter — done)
@@ -133,7 +133,7 @@ From our workspace audit on 2026-07-16, four immediate technical debt and archit
 
 ## Near-term (independent of the big themes)
 - **Complete `litreview` & resolve active-study collision** (see Diagnostics above).
-- **Stage/commit working tree cleanups** — remove stale `prototype/...` files and track `design/genggam-ai/` specs.
+- ~~**Stage/commit working tree cleanups** — remove stale `prototype/...` files and track `design/ai-literacy-app/` specs.~~ (done 2026-07-17)
 - **Run a *real* usability study** — the one lifecycle step never exercised for real
   (fielding needs live participants): `/new-research … --type usability` →
   `/plan-usability` → field externally (P01…) → `/synth-findings` → `/review-research`

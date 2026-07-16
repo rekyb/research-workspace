@@ -147,11 +147,60 @@ this pass; none is fabricated. Each entry notes the finding and whether it
   - **Supports** that interface language and translation quality materially
     affect usability, i.e. localizing UI strings (not only content) matters.
 
+## Feature 11 — Humanizing touches that build trust (added 2026-07-15)
+
+- **Nass, C., Steuer, J., & Tauber, E. R. (1994).** "Computers are Social Actors."
+  *Proceedings of CHI '94*, 72–78. ACM.
+  https://dl.acm.org/doi/10.1145/191666.191703
+  - Finding: people apply social rules and responses to computers, and respond to
+    social cues (personality, human presence) even when they know the source is a
+    machine (the "computers are social actors" / media-equation paradigm).
+  - **Supports** the rationale that a visible *human* signal (a founder's note, a
+    named human guide) triggers a social/relational response that a faceless form
+    does not, raising trust and reciprocity.
+  - **Provenance caveat (important):** the strong conversion figures cited for this
+    feature (Superhuman: >65% full transition, ~2× self-serve; 2× referral uplift)
+    are **industry case-study data, not peer-reviewed**, and come from a **high-touch,
+    high-price B2B** context (First Round Review, Superhuman Onboarding Playbook,
+    logged in sources.md). Whether a *scalable* humanizing touch (a signed note, not
+    1:1 onboarding) transfers to a low-cost, high-volume, low-context education
+    audience is a hypothesis, not a settled result — see the feature's validation plan.
+
+## Feature 12 — Contextual, just-in-time education (added 2026-07-15)
+
+- **Sweller, J. (1988).** *Cognitive Science*, 12(2), 257–285. (Reused from F6/F8.)
+  https://onlinelibrary.wiley.com/doi/10.1207/s15516709cog1202_4
+  - **Supports** teaching in context over front-loading: a multi-screen tutorial
+    shown before the user has acted imposes extraneous cognitive load with no schema
+    to attach it to; one lesson delivered at the point of need keeps load low and
+    relevance high.
+- **Nunes, J. C., & Drèze, X. (2006).** *Journal of Consumer Research*, 32(4),
+  504–512. (Reused from F9.)
+  https://academic.oup.com/jcr/article-abstract/32/4/504/1787425
+  - **Supports** the interactive-checklist mechanic: framing first-run setup as an
+    already-begun, incomplete list raises completion (the endowed-progress effect).
+- **Zeigarnik, B. (1927).** "Das Behalten erledigter und unerledigter Handlungen"
+  ("On the retention of completed and uncompleted tasks"). *Psychologische Forschung*,
+  9, 1–85. *(Classic source; no open-access primary retrieved — cited as the origin of
+  the completion-drive claim, corroborated by the modern checklist-completion evidence
+  logged in sources.md.)*
+  - **Supports** the checklist mechanic: unfinished tasks stay in working memory and
+    create a drive to close the loop, which an incomplete setup checklist exploits.
+
 ---
 
 ### Summary
 
-- Directly supported by the literature: F1, F2, F3, F6, F7, F8, F9, F10 (8).
+- Directly supported by the literature: F1, F2, F3, F6, F7, F8, F9, F10, F12 (9).
 - Partially supported (principle holds; the specific applied/conversion claim is
-  untested and left to the feature's own validation plan): F4, F5 (2).
+  untested and left to the feature's own validation plan): F4, F5, F11 (3). F11 is a
+  special case: its psychological anchor (social response to human cues, Nass 1994) is
+  peer-reviewed, but its headline conversion metrics are industry case-study data from a
+  non-analogous high-touch context.
 - Contradicted by the literature: none.
+- **Provenance note for F11–F12:** unlike F1–F10 (first-party desk-research captures of
+  the five education apps, logged-out), F11 and F12 were added from a practitioner-study
+  lead (the "1,460 onboarding flows" video) and are grounded in **public teardowns and
+  case studies** plus one education-app instance (Duolingo in-lesson tooltips, F12), per
+  the 2026-07-15 secondary-evidence decision. Their SYNTHESIS entries flag this, and both
+  carry a first-party / usability validation step.

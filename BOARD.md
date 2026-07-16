@@ -7,7 +7,7 @@ close. The source of truth is each study's own `README.md` (`Type`, `Started`,
 `Closed`, `Status`) plus the active registry `.claude/.active-research` (one active
 study per line).
 
-_Last updated: 2026-07-16_
+_Last updated: 2026-07-17_
 
 ## Active
 
@@ -16,7 +16,6 @@ The currently active studies (several may run in parallel — one line per study
 
 | Research | Type | Started | Status |
 |---|---|---|---|
-| [Indonesian Teacher EdTech Onboarding & Activation Literature](research/2026-07-16-indonesian-teacher-onboarding-literature/) | benchmark | 2026-07-16 | Active |
 | [AI-Literacy Upskilling for Indonesian Teachers](research/2026-07-14-ai-literacy-upskilling-indonesian-teachers/) | benchmark | 2026-07-14 | Active |
 
 ## Closed &amp; archived
@@ -25,6 +24,7 @@ Past studies, most recent first.
 
 | Research | Type | Started | Closed | Status |
 |---|---|---|---|---|
+| [Indonesian Teacher EdTech Onboarding & Activation Literature](research/2026-07-16-indonesian-teacher-onboarding-literature/) | benchmark | 2026-07-16 | 2026-07-17 | Closed |
 | [Onboarding & Activation in Education Apps](research/2026-07-13-onboarding-activation-education-apps/) | benchmark | 2026-07-13 | 2026-07-13 | Closed |
 | [Benchmark Synthesis For The Learn-To-Hire Loop](research/2026-07-09-benchmark-synthesis-learn-to-hire-loop/) | benchmark | 2026-07-09 | 2026-07-09 | Closed |
 | [Learning loop, engagement loop &amp; measuring real upskilling (Khan Academy)](research/2026-07-06-benchmark-learning-effectiveness-loops/) | benchmark | 2026-07-06 | 2026-07-06 | Closed |
