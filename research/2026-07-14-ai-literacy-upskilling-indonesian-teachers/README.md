@@ -1,8 +1,9 @@
 # Research: AI-Literacy Upskilling for Indonesian Teachers
 
-- **Status:** Active
+- **Status:** Closed
 - **Type:** benchmark
 - **Started:** 2026-07-14
+- **Closed:** 2026-07-17
 - **Researcher:** Claude (acting Senior UI/UX Designer)
 
 ## Goal
@@ -133,3 +134,11 @@ Tiered to stay tractable (core = deep capture; secondary = lighter, targeted pas
   WhatsApp-led; PMM incumbent; nascent AI literacy; hands-on/tool-specific preference). Grounds RQ7
   and the **F8 primary-research precondition** externally; flags 4 gaps only primary research can close.
   Kept separate from `SYNTHESIS.md`/`references.md` by design.
+- 2026-07-17 — **research closed** (`/close-research`). Principal Designer (Mode P) harvested reusable
+  patterns into `research/PATTERNS.md`: **6 added** (form-first "no blank box" generation; bounded
+  observed sandbox/Rooms; fluency ladder shield→minimize→teach; ethics-after-first-win sequencing;
+  concept→exercise→reflect micro-unit loop; grab-and-go run-tomorrow lessons + dilemma-discussion),
+  **5 updated** (productive-struggle remediation w/ Khanmigo Socratic + guided-scaffold caveat;
+  institution-recognized credentials; layered motivation stack w/ Starchamps reward-for-speed
+  anti-pattern; character-guided icon-first intake; deep localization of onboarding chrome),
+  **0 contradictions**. Removed from the active registry.

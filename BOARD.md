@@ -16,7 +16,7 @@ The currently active studies (several may run in parallel — one line per study
 
 | Research | Type | Started | Status |
 |---|---|---|---|
-| [AI-Literacy Upskilling for Indonesian Teachers](research/2026-07-14-ai-literacy-upskilling-indonesian-teachers/) | benchmark | 2026-07-14 | Active |
+| [Certificate vs Badge Gamification for Teacher EdTech (Indonesia)](research/2026-07-17-certificate-vs-badge-gamification/) | benchmark | 2026-07-17 | Active |
 
 ## Closed &amp; archived
 
@@ -24,6 +24,7 @@ Past studies, most recent first.
 
 | Research | Type | Started | Closed | Status |
 |---|---|---|---|---|
+| [AI-Literacy Upskilling for Indonesian Teachers](research/2026-07-14-ai-literacy-upskilling-indonesian-teachers/) | benchmark | 2026-07-14 | 2026-07-17 | Closed |
 | [Indonesian Teacher EdTech Onboarding & Activation Literature](research/2026-07-16-indonesian-teacher-onboarding-literature/) | benchmark | 2026-07-16 | 2026-07-17 | Closed |
 | [Onboarding & Activation in Education Apps](research/2026-07-13-onboarding-activation-education-apps/) | benchmark | 2026-07-13 | 2026-07-13 | Closed |
 | [Benchmark Synthesis For The Learn-To-Hire Loop](research/2026-07-09-benchmark-synthesis-learn-to-hire-loop/) | benchmark | 2026-07-09 | 2026-07-09 | Closed |
