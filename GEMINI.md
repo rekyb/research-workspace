@@ -66,14 +66,10 @@ request, one `SPEC.md` per study at the study root:
 - **Hard gate:** require `SYNTHESIS.md` to already contain a `## Peer Review` section
   (written by `review-research`), or a legacy `## Agent Review`. If neither is present,
   stop and tell the user to run `review-research` first — proceed only on an explicit override.
-- After drafting, run a **stakeholder review** of the SPEC's functional requirements via
-  the chained `product-manager`, `tech-lead`, and `head-of-product` personas (PM soundness;
-  build effort; Go/Conditional Go/No-Go), recording a `## Stakeholder Review` section and
-  dropping any No-Go FR, before the Principal Designer Mode S gate.
 - Read `SYNTHESIS.md` (incl. its `## Peer Review`, or legacy `## Agent Review`, and any `## Gaps & caveats`) plus the
   `README.md` `Type`/`Goal`/`Scope`. Branch on `Type`: **benchmark** → a forward spec
-  (features become requirements, prioritized by the synthesis's own sequencing and
-  review verdicts — no No-Go feature becomes a requirement); **usability** → a redesign
+  (features become requirements, prioritized by the synthesis's own sequencing; Go/No-Go
+  is decided at the stakeholder review below, not read from the synthesis); **usability** → a redesign
   spec (findings' recommendations become requirements, priority follows severity).
 - Draft `SPEC.md` with the user section by section: MoSCoW-prioritized **functional
   requirements** (each with a stable ID, a **Source** back-reference to its synthesis
@@ -83,6 +79,10 @@ request, one `SPEC.md` per study at the study root:
   states), cross-cutting **edge cases & error states**, a **traceability matrix** (FR ↔
   synthesis source ↔ screen), and flagged **assumptions & open questions**. Every
   requirement must trace to a synthesis entry — never invent scope.
+- After drafting, run a **stakeholder review** of the SPEC's functional requirements via
+  the chained `product-manager`, `tech-lead`, and `head-of-product` personas (PM soundness;
+  build effort; Go/Conditional Go/No-Go), recording a `## Stakeholder Review` section and
+  dropping any No-Go FR, before the Principal Designer Mode S gate.
 - Gate the draft through the Principal Designer (`Mode S — spec review`) for
   traceability, scope discipline, flow completeness, IA coherence, and completeness of
   the required set; revise on `revise`/`reject` and relay the verdict.
