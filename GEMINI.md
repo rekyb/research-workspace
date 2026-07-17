@@ -1,8 +1,8 @@
 # Gemini Integration Guide (Antigravity CLI)
 
-This workspace is optimized for desk-research, UX benchmarking, and usability testing. While originally configured for Claude Code via the `.claude/commands/` slash commands, it is fully compatible with Gemini running within the Antigravity CLI. 
+This workspace is optimized for desk-research, UX benchmarking, usability testing, and litreview (evidence synthesis from documents). While originally configured for Claude Code via the `.claude/commands/` slash commands, it is fully compatible with Gemini running within the Antigravity CLI. 
 
-This file acts as the bridge for Gemini to understand how to operate this workspace natively. All 13 slash commands have been fully ported into first-class Gemini Skills (`.agents/skills/*/SKILL.md`).
+This file acts as the bridge for Gemini to understand how to operate this workspace natively. All 15 slash commands have been fully ported into first-class Gemini Skills (`.agents/skills/*/SKILL.md`).
 
 ---
 
@@ -13,10 +13,10 @@ As Gemini, you do not use the `.claude` slash commands directly. Instead, you op
 ### 1. Starting New Research (`new-research`)
 When the user asks to start a new research topic (or run `new-research`):
 - Read the `.claude/.active-research` registry. Multiple studies may be active at once, so an existing active study does not block a new one; only warn if the new topic duplicates one already active. See `.claude/references/active-research.md`.
-- Check for an optional `--type <benchmark | usability>` flag (defaulting to `benchmark`).
+- Check for an optional `--type <benchmark | usability | litreview>` flag (defaulting to `benchmark`).
 - **Confirm the goal:** Explicitly establish the `## Goal` (what we want to learn and why, or what decision the usability test informs) before scaffolding.
 - Create a new directory at `research/<YYYY-MM-DD>-<topic-slug>`.
-- Scaffold the directory by type (`README.md`, `PLAN.md`, `sources.md`, plus `platforms/` for platform benchmarks, `data/` for non-platform/literature/desk-research studies, or `sessions/` for usability). **Rule:** when doing other research aside from a platform benchmark, do not use `platforms/` to save notes or pillars — use `data/` (`data/<topic>/notes.md`) instead.
+- Scaffold the directory by type (`README.md`, `PLAN.md`, `sources.md`, plus `platforms/` for platform benchmarks, `data/` for non-platform/literature/desk-research studies, `sessions/` for usability, or `corpus/` for litreview). **Rule:** when doing other research aside from a platform benchmark, do not use `platforms/` to save notes or pillars — use `data/` (`data/<topic>/notes.md`) instead. For `litreview`, create `corpus/` instead — it is **gitignored**, so any user-supplied PDFs/reports dropped there never get committed; do not create `platforms/` or `data/` for a litreview study. The verified `evidence.md` is produced later by `gather-evidence`, not at scaffold time.
 - **Append** the new folder path to the `.claude/.active-research` registry (preserving other active studies), bind this terminal to it by writing `.claude/.current-research/<session-id>`, and automatically refresh `BOARD.md` to show the new study as **Active**.
 - Dispatch the Principal Researcher (`Mode A`) to review the drafted `PLAN.md` before user approval and capture/fielding.
 
@@ -32,6 +32,26 @@ specific one (or runs `focus-research`):
 - **Redaction is CRITICAL (Hard Rule):** Before saving any visual evidence, you MUST inject CSS or manipulate the DOM to blur personal data (avatars, names, emails) to comply with the workspace's zero-PII policy. 
 - Save screenshots as numbered PNGs in `platforms/<platform>/screenshots/`.
 
+### 2b. Gathering Evidence (`litreview` Studies) (`gather-evidence`)
+When the active study is `Type: litreview` and the user asks to gather evidence (or
+runs `gather-evidence`), this is the litreview analogue of benchmark capture — the
+one method-specific step that produces the raw material `synth-findings` reads:
+- Confirm the study is `Type: litreview`, and confirm `PLAN.md`'s Principal
+  Researcher review recorded an **approved** verdict. This step is expensive
+  (multi-agent adversarial verification) and must **not** run before that plan gate.
+- Read `PLAN.md`'s research questions, provided corpus, search angles, and inclusion
+  criteria, plus any documents already dropped into `corpus/` (these count as
+  `provided` sources; anything the harness finds on the web counts as `found`).
+- Invoke the `deep-research` skill/harness with a brief assembled from those inputs.
+  Let it fan out searches, fetch sources, and adversarially verify claims (search →
+  fetch → 3-vote), folding in the `corpus/` documents as anchor evidence.
+- Write `sources.md` (one row per source `S1..Sn`: source, URL, provenance
+  `provided`/`found`, accessed date, notes).
+- Write `evidence.md` with `## Verified claims` (confidence label + `[S#]` citation
+  per claim) and `## Refuted / weak claims` (quarantined — never promoted to
+  findings).
+- Report verified/refuted counts and point to `synth-findings` as the next step.
+
 ### 3. Usability Instrument Planning (`plan-usability`)
 When the active study is `Type: usability` and the user asks to design the test plan:
 - Draft `test-plan.md` in the research folder with non-leading task scenarios, moderator script, metrics (SEQ/SUS), and severity scale (0–4).
@@ -43,6 +63,7 @@ When asked to synthesize the active research:
 - Resolve the target study per `.claude/references/active-research.md` (explicit folder, else this terminal's binding, else the sole active study, else ask) and note its `Type`.
 - **Benchmark:** Read `platforms/*/notes.md` and generate `SYNTHESIS.md` with the 5-part feature structure (Feature Name, Short Description, Key Findings, Rationale, Validation). Ensure the key findings section follows the flow: **what the user sees, what the user does, and what the system does**.
 - **Usability:** Read `test-plan.md` and `sessions/session-*.md` and generate `SYNTHESIS.md` ordered by **severity (highest first)**, citing pseudonymized participants (P01…).
+- **Litreview:** Read `evidence.md` and `sources.md` (if `evidence.md` is missing, stop and tell the user to run `gather-evidence` first). Use only the `## Verified claims` as findings input. Generate `SYNTHESIS.md` as **themes → design implications**: a `## TL;DR`, then one `## Theme N` section per theme with findings as bullets carrying a confidence label and `[S#]` citation(s), a `## Design implications` section, a `## Refuted / weak claims` section (reproduced from `evidence.md`, never promoted to findings), a `## Evidence gaps for primary research` section, and a `## Sources table` mirroring `sources.md`.
 - Embed relative Markdown images directly (`![flow](../platforms/app/flow.gif)`).
 - Gate through the Principal Researcher (`Mode B — synthesis QA`) to auto-fix prose and flag structural gaps via inline `> [Principal Researcher]...` annotations before any `.docx` export (`python3 .claude/scripts/md_to_docx.py`).
 
@@ -126,7 +147,7 @@ on request:
 ### 9. Closing Research & Pattern Extraction (`close-research`)
 When asked to close the active research:
 - Verify that `SYNTHESIS.md` exists and check whether `## Peer Review` (or legacy `## Agent Review`) is present.
-- **Pattern Extraction:** Dispatch the Principal Designer (`Mode P`) to extract reusable design patterns (`benchmark-observed` or `usability-validated`) and merge them into `research/PATTERNS.md`.
+- **Pattern Extraction:** Dispatch the Principal Designer (`Mode P`) to extract reusable design patterns (`benchmark-observed` or `usability-validated`) and merge them into `research/PATTERNS.md`. For a **litreview** study it instead harvests evidence-based **design principles** (not observed UI patterns) — it must not force UI patterns where none exist; if the synthesis yields no genuine, evidence-grounded principle, it records that plainly and adds nothing.
 - Mark the status in the research's `README.md` to `Closed`, remove the study's line from the `.claude/.active-research` registry (leaving other active studies), and prune any per-terminal binding in `.claude/.current-research/` that pointed at it.
 - Refresh `BOARD.md` so the study moves from **Active** to **Closed & archived**.
 
@@ -152,4 +173,4 @@ Optional retrospective analysis passes over a **benchmark** study's captured evi
 
 ## Skill Architecture
 
-All 13 skills reside in `.agents/skills/<skill-name>/SKILL.md` with complete YAML frontmatter (`name`, `description`). Gemini automatically triggers these workflows when matching conversational intent or when invoked directly.
+All 15 skills reside in `.agents/skills/<skill-name>/SKILL.md` with complete YAML frontmatter (`name`, `description`). Gemini automatically triggers these workflows when matching conversational intent or when invoked directly.

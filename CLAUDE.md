@@ -2,7 +2,7 @@
 
 ## What this project is
 
-A **UX-research** workspace. It does two kinds of research and turns both into
+A **UX-research** workspace. It does three kinds of research and turns each into
 design-ready write-ups:
 
 - **Desk research / benchmarking** — study how existing platforms solve product
@@ -11,6 +11,9 @@ design-ready write-ups:
 - **Primary-research design & synthesis** — plan research instruments (usability
   tests today; surveys and A/B tests are planned) and synthesize the results the
   user brings back.
+- **Literature review / evidence synthesis** — gather and verify claims from a
+  corpus of documents via the `deep-research` harness, and synthesize the verified
+  evidence into themes and design implications.
 
 We *plan and synthesize* research and *observe* publicly available products. We do
 **not** field research ourselves (no live participant recruiting or running from
@@ -155,13 +158,14 @@ downstream command reads it and branches its template. One spine, several behavi
 |---|---|---|---|
 | `benchmark` (default) | Observe public products; capture screenshots + flows | `platforms/` | Feature write-ups (5 fields) |
 | `usability` | `test-plan.md` (tasks, script, metrics); moderated sessions fielded externally | `test-plan.md`, `sessions/` | Findings, severity-ranked |
+| `litreview` | `/gather-evidence` runs the `deep-research` harness over the plan | `corpus/` (gitignored) + `evidence.md` | Themes → design implications |
 | `survey` | *(planned)* questionnaire + response synthesis | — | *(planned)* |
 | `abtest` | *(planned)* experiment design + read-out | — | *(planned)* |
 
-The instrument-design step is the only method-specific command (`/plan-usability`
-for usability). Everything else on the spine — `/synth-findings`, `/review-research`,
-`/brief-feature`, `/draft-spec`, `/close-research`, `/publish-research` — is shared
-and type-aware. Three **optional design-output steps** turn a synthesized study into a
+The method-specific instrument steps are `/plan-usability` (usability) and
+`/gather-evidence` (litreview). Everything else on the spine — `/synth-findings`,
+`/review-research`, `/brief-feature`, `/draft-spec`, `/close-research`,
+`/publish-research` — is shared and type-aware. Three **optional design-output steps** turn a synthesized study into a
 deliverable, each gated by the Principal Designer:
 - `/brief-feature` — a Canva **stakeholder deck** (feature story for benchmark,
   severity-ranked findings for usability): the *narrative* — "should we build this".
@@ -174,12 +178,23 @@ deliverable, each gated by the Principal Designer:
   `SPEC.md` but will run from a reviewed synthesis; supports `--fidelity lo|hi` and
   à-la-carte `--gate` passes that update the same Artifact.
 
+### Litreview sourcing standards
+- User-supplied documents go in the study's `corpus/`, which is **gitignored**
+  (`research/*/corpus/`) — copyrighted/PII source files are never committed.
+- Every source is logged in `sources.md` with its provenance (`provided` | `found`)
+  and access date, as `S1..Sn`.
+- Claims are verified via the `deep-research` harness (search → fetch → 3-vote) into
+  `evidence.md`; refuted/weak claims are quarantined and never promoted to findings.
+- Confidence labels are honest; no fabricated sources or findings; no generalization
+  beyond what the cited evidence supports.
+
 ## Workflow commands
 
 | Command | What it does |
 |---|---|
-| `/new-research <topic> [--type benchmark\|usability]` | Creates a new dated research folder, scaffolds it **for the chosen type** (default `benchmark`), and marks it active. |
+| `/new-research <topic> [--type benchmark\|usability\|litreview]` | Creates a new dated research folder, scaffolds it **for the chosen type** (default `benchmark`), and marks it active. |
 | `/plan-usability` | *(usability studies)* Designs the `test-plan.md` instrument — tasks, moderator script, metrics — then runs a Principal Researcher methodology review before fielding. |
+| `/gather-evidence [folder]` | *(litreview studies)* Runs the `deep-research` harness over the approved `PLAN.md` (research questions + `corpus/`), then writes a verified `evidence.md` (confirmed claims with confidence + `[S#]` IDs; refuted claims quarantined) and `sources.md`. Runs only after the plan gate. |
 | `/synth-findings [--docx]` | Reads the active research and writes `SYNTHESIS.md` using the template for its `Type` (feature write-ups for benchmark, severity-ranked findings for usability); add `--docx` for a Word copy. |
 | `/review-research` | Runs a research peer-review debate over `SYNTHESIS.md` (Skeptic, Domain Expert, Evidence Auditor, moderated by the Principal Researcher) that strengthens the findings and — on approval — records a `## Peer Review` section and applies the agreed strengthenings. |
 | `/brief-feature [folder]` | Turns a synthesized study into a Canva stakeholder deck (type-aware). Drafts the slide story with you, gates it through the Principal Designer (Mode R), runs the PII check, then builds it in Canva on approval. Defaults to the active research. |
