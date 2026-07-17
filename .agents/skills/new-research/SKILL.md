@@ -1,6 +1,6 @@
 ---
 name: new-research
-description: Start a new research effort (benchmark or usability) — creates a dated folder, scaffolds it by type, and marks it active.
+description: Start a new research effort (benchmark, usability, or litreview) — creates a dated folder, scaffolds it by type, and marks it active.
 ---
 
 You are starting a new UX-research effort. Parse user request/arguments for the topic and an optional `--type` flag.

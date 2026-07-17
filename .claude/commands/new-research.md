@@ -1,6 +1,6 @@
 ---
-description: Start a new research effort (benchmark or usability) — creates a dated folder, scaffolds it by type, and marks it active.
-argument-hint: <research topic> [--type benchmark|usability]
+description: Start a new research effort (benchmark, usability, or litreview) — creates a dated folder, scaffolds it by type, and marks it active.
+argument-hint: <research topic> [--type benchmark|usability|litreview]
 ---
 
 You are starting a new UX-research effort. Parse `$ARGUMENTS` for the topic and an

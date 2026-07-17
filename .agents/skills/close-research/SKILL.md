@@ -1,6 +1,6 @@
 ---
 name: close-research
-description: Close a research study — verify synthesis exists, extract/merge PATTERNS.md (if benchmark), mark it closed, and remove it from the active registry.
+description: Close a research study — verify synthesis exists, extract/merge patterns into PATTERNS.md (type-aware), mark it closed, and remove it from the active registry.
 ---
 
 Close a research study. This is the official completion step of the research lifecycle: it locks the study, extracts reusable patterns into the workspace pattern library (`PATTERNS.md`), and removes the study from the active registry (`.claude/.active-research`). Other active studies are left untouched.
