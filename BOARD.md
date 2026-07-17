@@ -16,7 +16,7 @@ The currently active studies (several may run in parallel — one line per study
 
 | Research | Type | Started | Status |
 |---|---|---|---|
-| [Certificate of Completion vs Badges as Gamification for Teacher EdTech (Indonesia)](research/2026-07-17-certificate-vs-badge-gamification/) | benchmark | 2026-07-17 | Active |
+| [Meaningful Youth Onboarding & the Aha Moment (solve.education)](research/2026-07-17-youth-onboarding-aha-moment/) | benchmark | 2026-07-17 | Active |
 
 ## Closed &amp; archived
 
@@ -24,6 +24,7 @@ Past studies, most recent first.
 
 | Research | Type | Started | Closed | Status |
 |---|---|---|---|---|
+| [Certificate of Completion vs Badges as Gamification for Teacher EdTech (Indonesia)](research/2026-07-17-certificate-vs-badge-gamification/) | benchmark | 2026-07-17 | 2026-07-17 | Closed |
 | [AI-Literacy Upskilling for Indonesian Teachers](research/2026-07-14-ai-literacy-upskilling-indonesian-teachers/) | benchmark | 2026-07-14 | 2026-07-17 | Closed |
 | [Indonesian Teacher EdTech Onboarding & Activation Literature](research/2026-07-16-indonesian-teacher-onboarding-literature/) | benchmark | 2026-07-16 | 2026-07-17 | Closed |
 | [Onboarding & Activation in Education Apps](research/2026-07-13-onboarding-activation-education-apps/) | benchmark | 2026-07-13 | 2026-07-13 | Closed |
