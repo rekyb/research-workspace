@@ -32,6 +32,11 @@ Steps:
      capture or session note may contain PII, STOP and flag it to the user before
      pushing.
    - Confirm no paid-feature transaction happened.
+   - **Litreview corpus guard:** if the study is `Type: litreview`, confirm `corpus/`
+     is not staged (it must stay gitignored via `research/*/corpus/`). If any
+     `research/*/corpus/*` file is tracked or staged, STOP and tell the user — supplied
+     source documents (copyright/PII) must never be pushed. Only `sources.md` records
+     what was used.
    Only continue once this is clean.
 
 4. **Stage & commit.** Stage the active research folder (and any workspace docs you

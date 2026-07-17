@@ -13,7 +13,7 @@ Steps:
 
 2. **Enumerate every study.** List the folders under `research/` (ignore `PATTERNS.md` and any non-study file). For each folder, read its `README.md` and extract:
    - **Title** — the first `#` heading (strip a leading `Research:` prefix).
-   - **Type** — the `**Type:**` line if present; if absent, treat it as `benchmark` (the workspace default, pre-dating the type-aware spine).
+   - **Type** — the `**Type:**` line if present; if absent, treat it as `benchmark` (the workspace default, pre-dating the type-aware spine). `litreview` is a fully valid `Type` value and renders in the tables exactly like `benchmark` or `usability` — no special-casing needed.
    - **Started** — the `**Started:**` date.
    - **Closed** — the `**Closed:**` date if present, else `—`.
    - **Status** — the `**Status:**` value (Active / Closed).

@@ -1,6 +1,6 @@
 ---
 name: publish-research
-description: Publish the active research to GitHub — safety-check for PII across both benchmark captures and usability sessions, commit, and push via the gh CLI.
+description: Publish the active research to GitHub — safety-check for PII across benchmark captures and usability sessions, and confirm litreview corpus/ stays gitignored, then commit and push via the gh CLI.
 ---
 
 Publish the currently active research to the GitHub remote using the `gh` CLI. This is an **explicit** publish step — it is never run automatically, because captures and session notes can contain sensitive data and this repo may be public.
@@ -16,6 +16,7 @@ Steps:
    - **Usability sessions:** skim every new/changed `sessions/session-*.md` for participant PII — real names, emails, or identifying quotes. Participants must be pseudonymized (P01, P02…); if a real identity is present, STOP and flag it.
    - If the remote repo is **public** (`gh repo view --json visibility`), and any capture or session note may contain PII, STOP and flag it to the user before pushing.
    - Confirm no paid-feature transaction happened.
+   - **Litreview corpus guard:** if the study is `Type: litreview`, confirm `corpus/` is not staged (it must stay gitignored via `research/*/corpus/`). If any `research/*/corpus/*` file is tracked or staged, STOP and tell the user — supplied source documents (copyright/PII) must never be pushed. Only `sources.md` records what was used.
    Only continue once this is clean.
 
 4. **Stage & commit.** Stage the active research folder (and any workspace docs you changed this session — `README.md`, `CLAUDE.md`, `.claude/`, `.agents/`). Show `git status --short` first. Commit with a clear, conventional message summarizing what was captured/synthesized (or use the user's custom message if provided). End the commit body with the standard `Co-Authored-By` trailer.

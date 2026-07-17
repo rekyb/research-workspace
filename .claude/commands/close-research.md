@@ -25,6 +25,13 @@ Steps:
    `SYNTHESIS.md` was missing and the user chose to close anyway, skip this step and
    say so.
 
+   For a **litreview** study the Principal Designer harvests **evidence-based design
+   principles** into `PATTERNS.md` (not observed UI patterns). It must **not force UI
+   patterns where there are none** — a litreview study often has no interface to
+   observe. If the synthesis yields no genuine, evidence-grounded principle, it records
+   that plainly and adds nothing to `PATTERNS.md`; it never invents a pattern to fill
+   the slot.
+
 4. **Mark closed.** In the research `README.md`, set `**Status:** Closed`, add a
    `**Closed:** <date from `date +%F`>` line, and append a dated "research closed"
    entry to the Log.

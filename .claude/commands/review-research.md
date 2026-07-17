@@ -24,7 +24,7 @@ invent evidence, metrics, findings, or citations.**
 2. **Gather the ground truth & note the type.** Read `SYNTHESIS.md` in full, the research
    `README.md` (for `## Goal` and `Type`), and the type's evidence — benchmark:
    `platforms/*/notes.md` and `flow.md`; usability: `test-plan.md` + `sessions/*`;
-   litreview: `evidence.md` + `references.md` + `sources.md`. If the user passed a focus in
+   litreview: `evidence.md` + `sources.md`. If the user passed a focus in
    `$ARGUMENTS`, weight the debate toward it but still cover the whole synthesis. If the
    README `## Goal` is vague or missing, STOP and ask the user to state it — the debate is
    only meaningful against an explicit goal.
@@ -34,8 +34,10 @@ invent evidence, metrics, findings, or citations.**
      actually support each "why it works" rationale?
    - **usability** — signal vs noise at small N; are severity ratings justified; are there
      alternative explanations for the behavior?
-   - **litreview** — source quality, contradictions between papers, over-generalization,
-     confidence calibration (classic peer review of the sources in `evidence.md`).
+   - **litreview** — does every finding trace to a verified source in `evidence.md`?
+     are confidence labels justified by the cited evidence (not overstated)? are
+     refuted/weak claims correctly kept out of the findings? do the design
+     implications actually follow from the evidence, without over-generalization?
 
 3. **Run the debate panel as chained subagents.** Dispatch each persona with the Agent tool
    (`general-purpose`), handing it its spec file plus the ground truth from step 2, and pass
